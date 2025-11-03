@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+    <menuitem name="todo-root" parent="base-root" title="Todo App" icon="fa-file" icon-background="brown" order="500" />
+    <menuitem  name="todo-list" parent="todo-root" title="Todo List" order="100" action="action-task-list"/>
+
+    <action-view name="action-task-list" title="Todo List" model="com.axelor.todo.model.Task">
+        <view type="grid" name="task-grid" />
+        <view type="form" name="task-form" />
+    </action-view>
+</object-views>

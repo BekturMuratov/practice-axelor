@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+  <grid title="Queue Slots" name="queue-slots-grid" model="com.axelor.apps.eq.db.QueueSlots">
+    <field name="border_point" title="Border Point" widget="singleWidget"/>
+    <field name="slot_time" title="Slot Time" widget="singleWidget"/>
+    <field name="status" title="Status" widget="singleWidget"/>
+    <field name="created_at" title="Created At"/>
+  </grid>
+  <form title="Queue Slots" name="queue-slots-form" model="com.axelor.apps.eq.db.QueueSlots">
+    <panel name="overviewPanel" title="Queue Slots Information">
+      <field name="border_point" title="Border Points"/>
+      <field name="slot_time" title="Slot Time"/>
+      <field name="status" title="Status"/>
+      <field name="created_at" title="Created At"/>
+    </panel>
+  </form>
+</object-views>

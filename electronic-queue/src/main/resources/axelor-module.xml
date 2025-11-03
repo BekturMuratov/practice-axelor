@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+  <name>electronic-queue</name>
+  <title>Electronic Queue</title>
+  <description>Module for managing electronic vehicle queue</description>
+  <version>1.0.0</version>
+
+  <depends>
+    <module name="axelor-base"/>
+  </depends>
+  <domains>
+    <domain>domains/Vehicles.xml</domain>
+  </domains>
+  <views>
+    <view>views/ElectronicQueueMenu.xml</view>
+  </views>
+</module>

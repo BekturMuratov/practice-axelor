@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+  <grid title="Bookings" name="bookings-grid" model="com.axelor.apps.eq.db.Bookings">
+    <field name="vehicle" title="Vehicle" widget="singleWidget"/>
+    <field name="border_point" title="Border Point" widget="singleWidget"/>
+    <field name="queue_slots" title="Queue Slots" widget="singleWidget"/>
+    <field name="status" title="Status" widget="singleWidget"/>
+    <field name="qr_code_url" title="QR code URL"/>
+    <field name="arrived_at" title="Arrived At"/>
+    <field name="finished_at" title="Finished At"/>
+    <field name="created_at" title="Created At"/>
+  </grid>
+  <form title="Booking Form" name="bookings-form" model="com.axelor.apps.eq.db.Bookings"
+    width="large">
+    <panel name="overviewPanel" title="Booking Information">
+      <field name="vehicle" title="Vehicle" widget="single_widget"/>
+      <field name="border_point" title="Border Point" widget="single_widget"/>
+      <field name="queue_slots" title="Queue Slots" widget="single_widget"/>
+      <field name="status" title="Status" widget="single_widget"/>
+      <field name="qr_code_url" title="QR code URL"/>
+      <field name="arrived_at" title="Arrived At"/>
+      <field name="finished_at" title="Finished At"/>
+      <field name="created_at" title="Created At"/>
+    </panel>
+  </form>
+</object-views>

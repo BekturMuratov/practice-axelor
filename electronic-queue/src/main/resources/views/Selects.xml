@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+  <selection name="select.vehicles.cargo_type.select">
+    <option value="Food" color="red">Food</option>
+    <option value="Building Materials" color="orange">Building Materials</option>
+    <option value="Clothes" color="blue">Clothes</option>
+  </selection>
+
+  <selection name="select.vehicles.priority.select">
+    <option value="normal" color="neon">Normal</option>
+    <option value="perishable" color="purple">Perishable</option>
+    <option value="urgent" color="red">Urgent</option>
+  </selection>
+
+  <selection name="select.queue_slots.status.select">
+    <option value="open" color="green">Open</option>
+    <option value="closed" color="black">Closed</option>
+    <option value="full" color="red">Full</option>
+  </selection>
+
+  <selection name="select.bookings.status.select">
+    <option value="waiting" color="orange">Waiting</option>
+    <option value="active" color="green">Active</option>
+    <option value="done" color="blue">Done</option>
+    <option value="canceled" color="red">Cancelled</option>
+  </selection>
+
+  <selection name="select.notifications.type.select">
+    <option value="sms" color="orange">SMS</option>
+    <option value="telegram" color="blue">Telegram</option>
+    <option value="email" color="red">Email</option>
+  </selection>
+
+  <selection name="select.notification.status.select">
+    <option value="pending" color="orange">Pending</option>
+    <option value="sent" color="green">Sent</option>
+    <option value="failed" color="red">Failed</option>
+  </selection>
+</object-views>

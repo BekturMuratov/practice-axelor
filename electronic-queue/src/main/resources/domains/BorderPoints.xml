@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+  <module name="eq" package="com.axelor.apps.eq.db"/>
+  <entity name="BorderPoints">
+    <string name="name" title="Name"/>
+    <string name="location" title="Location"/>
+    <string name="capacity" title="Capacity"/>
+    <boolean name="is_active" title="Is Active" default="true"/>
+    <datetime name="created_at" title="Created At"/>
+  </entity>
+</domain-models>
