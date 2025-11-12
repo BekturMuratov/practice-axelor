@@ -2,12 +2,14 @@
 <object-views xmlns="http://axelor.com/xml/ns/object-views"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
     <grid title="Camera Data" name="camera-grid" model="com.axelor.apps.camera.db.CameraData">
         <toolbar>
             <button name="get data" title="getData" onClick="startListener" />
         </toolbar>
+
         <field name="crossRecordSysCode" title="Cross Record System Code" />
-        <field name="cameraIndexCide" title="Camera Index Code" />
+        <field name="cameraIndexCode" title="Camera Index Code" />
         <field name="ownerName" title="Owner Name" />
         <field name="contact" title="Contact" />
         <field name="vehiclePicUri" title="VehiclePicUri" />
@@ -23,7 +25,7 @@
     <form title="Camera Data Form" name="camera-form" model="com.axelor.apps.camera.db.CameraData">
         <panel name="Overview Panel" title="type camera data">
             <field name="crossRecordSysCode" title="Cross Record System Code" />
-            <field name="cameraIndexCide" title="Camera Index Code" />
+            <field name="cameraIndexCode" title="Camera Index Code" />
             <field name="ownerName" title="Owner Name" />
             <field name="contact" title="Contact" />
             <field name="vehiclePicUri" title="VehiclePicUri" />

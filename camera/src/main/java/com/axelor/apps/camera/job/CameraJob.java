@@ -5,10 +5,7 @@ import com.axelor.apps.base.job.UncheckedJobExecutionException;
 import com.axelor.apps.base.service.exception.TraceBackService;
 import com.axelor.apps.camera.service.CameraDataService;
 import com.axelor.inject.Beans;
-import com.google.inject.Inject;
-import org.quartz.Job;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 
 public class CameraJob extends ThreadedBaseJob {
 

@@ -1,2 +1,0 @@
-"name";"object";"canRead";"canWrite";"canCreate";"canRemove";"canExport";"condition";"conditionParams";"roleName"
-"perm.invoiceSupplier.r";"com.axelor.apps.supplierportal.db.InvoiceSupplier";"true";"false";"false";"false";"false";;;"role.supplier"

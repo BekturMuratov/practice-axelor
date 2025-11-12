@@ -2,10 +2,13 @@
 <domain-models xmlns="http://axelor.com/xml/ns/domain-models"
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
     <module name="camera" package="com.axelor.apps.camera.db" />
+
     <entity name="CameraData">
+
         <string name="crossRecordSysCode" title="Cross Record System Code" />
-        <string name="cameraIndexCide" title="Camera Index Code" />
+        <string name="cameraIndexCode" title="Camera Index Code" />
         <string name="ownerName" title="Owner Name" />
         <string name="contact" title="Contact" />
         <string name="vehiclePicUri" title="VehiclePicUri" />
