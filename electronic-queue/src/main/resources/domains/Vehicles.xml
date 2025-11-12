@@ -14,7 +14,7 @@
 
 
     <finder-method name="findByPlateNumber" using="plate_number"/>
-      <finder-method name="findByDriverId" using="driver_name" />
+    <finder-method name="findByDriverId" using="driver_name"/>
 
   </entity>
 

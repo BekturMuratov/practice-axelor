@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+  <module name="gst" package="com.axelor.apps.gst.model"/>
+  <entity name="IState">
+    <string name="name" required="true" title="State Name"/>
+    <many-to-one name="country" ref="ICountry" required="true"/>
+  </entity>
+</domain-models>

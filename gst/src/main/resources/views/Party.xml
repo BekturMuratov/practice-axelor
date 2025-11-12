@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+    <selection name="party.type.selection">
+        <option value="individual">Individual</option>
+        <option value="company">Company</option>
+    </selection>
+
+    <form name="party-form" title="Party" model="com.axelor.apps.gst.model.IParty" onSave="com.axelor.apps.gst.db.web.GstSequenceController:setPartySequence" width="large" >
+        <panel title="Party Detail" colSpan="8" name="partyDetailPanel" >
+            <field name="reference" colSpan="4" />
+            <field name="name" colSpan="4" />
+            <field name="type" colSpan="4" />
+            <field name="gstin" colSpan="4" />
+            <field name="isCustomer" colSpan="4" />
+            <field name="isSupplier" colSpan="4" />
+        </panel>
+        <panel title="Party Contact Detail" name="partyContactDetailPanel">
+            <field name="contactList" showTitle="false" colSpan="12">
+                <editor>
+                    <field name="name" />
+                    <field name="type" />
+                    <field name="primaryPhone" />
+                    <field name="primaryEmail" />
+                    <field name="secondaryPhone" />
+                    <field name="secondaryEmail" />
+                </editor>
+            </field>
+        </panel>
+        <panel title="Party Address Detail" name="partyAddressdetailPanel">
+            <field name="addressList" showTitle="false" colSpan="12">
+                <editor>
+                    <field name="line1" />
+                    <field name="line2" />
+                    <field name="city" onChange="action-attrs-set-state-on-change-city" />
+                    <field name="state" required="true" onChange="action-attrs-set-country-on-change-state" />
+                    <field name="country" />
+                </editor>
+            </field>
+        </panel>
+    </form>
+
+    <grid name="party-grid" title="Parties" model="com.axelor.apps.gst.model.IParty">
+        <field name="reference" />
+        <field name="name" />
+        <field name="type" />
+        <field name="isCustomer" />
+        <field name="isSupplier" />
+        <field name="gstin" />
+    </grid>
+    <cards name="party-cards" title="Party Details" model="com.axelor.apps.gst.model.IParty" width="300px" css="rect-image">
+        <field name="name" />
+        <field name="type" />
+        <field name="contacts" />
+        <field name="addresses" />
+        <field name="reference" />
+        <template>
+            <![CDATA[
+            <div class="span12">
+                <strong><span x-translate>Party Name:</span> {{name}}</strong> <span ng-show="record.reference">( {{ reference }} )</span>
+            </div>
+            <div>
+                <div class="span8">
+                    <i class="fa fa-address-card" aria-hidden="true"></i>
+                    {{addresses.type }}
+                </div>
+                <div class="span4 pull-right">
+                    <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                    <span ng-show="record.addresses.line1" x-translate>{{addresses.line1}}</span>
+                    <span ng-show="record.addresses.city" x-translate>{{addresses.city.name}}</span>
+                </div>
+            </div>
+            <div>
+                <div class="span6">
+                    <h5>
+                        <span class="label label-important"  ng-show="record.type"  x-translate>Party Type:{{record.type}}</span>
+                    </h5>
+                </div>
+            </div>
+            <div>
+                <div class="span12" style="margin-left:0px;">
+                    <span class="label label-default" ng-show="record.contacts.name" style="background-color: #2185D0;" x-translate>Contact Name:{{ contacts.name }}</span>
+                </div>
+                <div class="span6">
+                    <i class="fa fa-mobile"><span><strong><span x-translate>ContactNo:{{contacts.primaryPhone }}</strong></span></span></i><br/>
+            </div>
+        </div>
+        ]]>
+        </template>
+    </cards>
+
+    <action-attrs name="action-attrs-set-country-on-change-state">
+        <attribute name="domain" for="country" if="state" expr="eval: &quot;self.id =${__this__.state.country.id}&quot;"/>
+    </action-attrs>
+</object-views>

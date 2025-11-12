@@ -1,4 +1,3 @@
 package com.axelor.apps.eq.web;
 
-public class VehiclesController {
-}
+public class VehiclesController {}

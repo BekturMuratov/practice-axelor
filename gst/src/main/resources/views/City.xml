@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+    <form name="city-form" title="City" model="com.axelor.apps.gst.model.ICity">
+        <panel title="City Detail" name="cityDetailsOverview">
+            <field name="name" />
+            <field name="state" onChange="action-attrs-set-country-on-change-state" />
+            <field name="country" />
+        </panel>
+    </form>
+    <grid name="city-grid" title="Cities" model="com.axelor.apps.gst.model.ICity">
+        <field name="name" />
+        <field name="state" />
+        <field name="country" />
+    </grid>
+</object-views>

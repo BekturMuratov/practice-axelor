@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+    <selection name="invoice.status.selection">
+        <option value="draft">Draft</option>
+        <option value="validated">Validated</option>
+        <option value="paid">Paid</option>
+        <option value="cancelled">Cancelled</option>
+    </selection>
+
+
+    <grid name="invoice-grid" title="Invoices" model="com.axelor.apps.gst.model.IInvoice">
+        <field name="status" />
+        <field name="company" />
+        <field name="reference" />
+        <field name="invoiceDateT" />
+        <field name="party" />
+        <field name="invoiceAddress" />
+        <field name="shippingAddress" />
+        <field name="netAmount" />
+        <field name="netIgst" />
+        <field name="netCgst" />
+        <field name="netSgst" />
+        <field name="grossAmount" />
+        <field name="isInvoiceAddAsShipping" />
+    </grid>
+
+    <form name="invoice-form" title="Invoices" model="com.axelor.apps.gst.model.IInvoice" onNew="action-invoice-group-set-data-on-new-invoice-form" onSave="action-invoice-condition-check-for-null-values">
+        <toolbar>
+            <button name="printInvoiceBtn" onClick="save, action-invoice-report-print-invoice" showIf="id"/>
+        </toolbar>
+        <panel title="Invoice Status" colSpan="8" name="invoiceStatusPanel">
+            <field name="status" widget="nav-select" showTitle="false" colSpan="12" />
+        </panel>
+        <panel title="Invoice Detail" colSpan="8" name="invoiceDetailPanel">
+            <field name="reference" colSpan="4" showIf="reference" />
+            <field name="invoiceDate" colSpan="4" readonlyIf="status != 'draft'"/>
+            <field name="priority" colSpan="4" />
+            <field name="company" colSpan="4" onChange="action-invoice-group-set-party-data" readonlyIf="status !='draft'"/>
+            <field name="party" colSpan="4" onSelect="action-invoice-attrs-on-change-party-set-contact-address" readonlyIf="status !='draft'" />
+            <field name="partyContact" colSpan="4" onSelect="action-invoice-attrs-on-change-party-set-contact-address" readonlyIf="status != 'draft'" />
+        </panel>
+        <panel title="Address" name="addressPanel">
+            <field name="invoiceAddress" readonlyIf="status !='draft'" onChange="action-invoice-group-call-on-change"
+                   onSelect="action-invoice-attrs-on-change-party-set-contact-address" />
+            <field name="isInvoiceAddAsShipping" onChange="action-invoice-method-set-party-detail" readonlyIf="status != 'draft'" widget="boolean-switch" />
+            <field name="shippingAddress" hideIf="isInvoiceAddAsShipping" readonlyIf="status !='draft'" />
+        </panel>
+        <panel-related field="invoiceItemsList" target="com.axelor.apps.gst.model.IInvoiceLine" name="invoiceItemsPanel"
+                       onChange="action-invoice-set-total-amount"
+                       readonlyIf="(company ==null || party ==null) || status == 'paid' || status == 'cancelled'" >
+        </panel-related>
+        <panel title="Product Amounts" name="productAmountsPanel">
+            <field name="netAmount" />
+            <field name="netIgst" />
+            <field name="netCgst" />
+            <field name="netSgst" />
+            <field name="grossAmount" />
+        </panel>
+        <panel sidebar="true" colSpan="4" name="statusButtonPanel">
+            <button name="draftBtn" onClick="save, action-invoice-status-attrs-change-on-draft, save"
+                    showIf="status == 'cancelled' || status == 'validated'" title="Draft" css="btn-primary" hidden="true" />
+            <button name="validateBtn" onClick="save, action-invoice-status-attrs-change-on-paid, save" css="btn-warning"
+                    hidden="true" showIf="status == 'draft' || status =='paid'" title="Validated" />
+
+            <button name="paid" title="Paid" css="btn-success"
+                    onClick="save, action-invoice-status-attrs-change-on-paid,save"
+                    hidden="true" showIf="status == 'validated" />
+
+            <button name="cancelBtn" title="Cancel" onClick="save, action-invoice-status-attrs-change-on-cancelled, save"
+                    hideIf="status == 'cancelled'" />
+        </panel>
+    </form>
+
+    <kanban title="Invoice Kanban" name="invoice-kanban" model="com.axelor.apps.gst.model.IInvoice" columnBy="status"
+            sequenceBy="priority" limit="10"
+    draggable="true"
+    >
+        <field name="reference"/>
+        <field name="invoiceItemsList.item" />
+        <field name="invoiceDate" />
+        <field name="party.name" />
+        <field name="grossAmount" />
+        <hilite color="info" if="status =='draft'"/>
+        <hilite color="warning" if="status =='paid"/>
+        <hilite color="success" if="status == 'validated'"/>
+        <hilite color="danger" if="status == 'cancelled'"/>
+        <template>
+            <![CDATA[
+              <h4>{{reference}}</h4>
+              <div class="card-body">
+                <dl>
+                 <dt> Party Name:</dt><dd ng-show="record.party.name>{{record.party.name}}</dd>
+                 <dt ng-show="invoiceItemsList.item" x-translate>Product</dt><dd ng-show="record.invoiceItemsList.item">{{record.invoiceItemsList.item}}</dd>
+                 <dt ng-show="record.grossAmount" x-translate>Amount</dt><dd ng-show="record.grossAmount">{{$fmt('grossAmount')}}</dd>
+                 </dl>
+                 </div>
+                 <div class="card-footer">
+                 <i class='fa fa-clock-o'></i><span>{{invoiceDateT|date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                 </div>
+                 ]]>
+        </template>
+    </kanban>
+
+    <action-attrs name="action-invoice-status-attrs-change-on-draft">
+        <attribute for="status" name="value" expr="eval:'draft'"/>
+    </action-attrs>
+    
+    <action-attrs name="action-invoice-status-attrs-change-on-validated">
+        <attribute for="status" name="value" expr="eval: 'validated'"/>
+    </action-attrs>
+    
+    <action-attrs name="action-invoice-status-attrs-change-on-paid">
+        <attribute for="status" name="value" expr="eval:'paid'"/>
+    </action-attrs>
+    <action-attrs name="action-invoice-status-attrs-change-on-cancelled">
+        <attribute for="status" name="value" expr="eval: 'cancelled'"/>
+    </action-attrs>
+    
+    <action-attrs name="action-invoice-attrs-set-invoice-date">
+        <attribute for="invoiceDateT" name="value" expr="eval:__time__"/>
+    </action-attrs>
+
+    <action-attrs
+            name="action-invoice-attrs-on-change-party-set-contact-address">
+        <attribute name="domain" for="partyContact"
+                   expr="eval: party?.contactList?.collect{it.id}?.size() > 0? &quot;self.id IN (${party?.contactList?.collect{it.id}?.join(',')})&quot; : &quot;self.id IN (null) &quot;" />
+        <attribute name="domain" for="invoiceAddress"
+                   expr="eval: party?.addressList?.collect{it.id}?.size() > 0? &quot;self.id IN (${party?.addressList?.collect{it.id}?.join(',')})&quot; : &quot;self.id IN (null)&quot;" />
+        <attribute name="domain" for="shippingAddress"
+                   expr="eval:party?.addressList?.collect{it.id}?.size() > 0? &quot;self.id IN (${party?.addressList?.collect{it.id}?.join(',')})&quot; : &quot;self.id IN (null)&quot;" />
+
+    </action-attrs>
+
+    <action-method name="action-invoice-method-set-party-detail">
+        <call class="com.axelor.gst.db.web.GstInvoiceController" method="setPartyDetail" />
+    </action-method>
+
+    <action-method name="action-invoice-method-set-total-amount">
+        <call class="com.axelor.gst.db.web.GstInvoiceController" method="setTotalAmount" />
+    </action-method>
+
+    <action-method name="action-invoice-method-set-reference">
+        <call class="com.axelor.gst.db.web.GstSequenceController" method="setInvoiceSequence" />
+    </action-method>
+
+    <action-method name="action-invoice-method-set-selected-product-in-invoice">
+        <call class="com.axelor.gst.db.web.GstInvoiceController" method="getSeletedProducts" />
+    </action-method>
+
+    <action-method name="action-invoice-method-set-calculated-invoice">
+        <call class="com.axelor.gst.db.web.GstInvoiceController" method="setInvoiceLineOnChangeParty" />
+    </action-method>
+
+    <action-report output="invoice-${date}${time}"
+                   name="action-invoice-report-print-invoice" design="Invoice_Report.rptdesign">
+        <param name="invoiceId" expr="eval:id" />
+    </action-report>
+
+    <action-group name="action-invoice-group-set-data-on-new-invoice-form">
+        <action name="action-invoice-attrs-set-invoice-date" />
+        <action name="action-invoice-method-set-selected-product-in-invoice" />
+    </action-group>
+
+    <action-group name="action-invoice-group-call-on-change">
+        <action name="action-invoice-condition-check-validation" />
+        <action name="action-invoice-method-set-calculated-invoice" />
+    </action-group>
+
+    <action-group name="action-invoice-group-set-party-data">
+        <action name="action-invoice-method-set-party-detail" />
+        <action name="action-invoice-attrs-on-change-party-set-contact-address" />
+        <action name="action-invoice-group-call-on-change" />
+    </action-group>
+
+    <action-condition name="action-invoice-condition-check-for-null-values">
+        <check field="invoiceDateT" />
+        <check field="invoiceItemsList" />
+        <check field="invoiceDateT" error="pls select date" if="!invoiceDateT" />
+        <check field="invoiceItemsList" error="pls select any product"
+               if="!invoiceItemsList" />
+    </action-condition>
+
+    <action-condition name="action-invoice-condition-check-validation">
+        <check field="party" if="!party" error="please select party" />
+        <check field="company" if="!company" error="please select company" />
+        <check field="invoiceAddress" if="!invoiceAddress" error="please select Invoice Address" />
+    </action-condition>
+
+</object-views>

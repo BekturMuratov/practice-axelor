@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <object-views xmlns="http://axelor.com/xml/ns/object-views"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
 
-    <grid title="Todo Tasks" name="task-grid" model="com.axelor.todo.model.Task">
-        <field name="name"/>
-        <field name="description"/>
-        <field name="created_at" />
-        <field name="updated_at" />
-        <field name="status" />
-    </grid>
+  <grid title="Todo Tasks" name="task-grid" model="com.axelor.todo.model.Task">
+    <field name="name"/>
+    <field name="description"/>
+    <field name="created_at"/>
+    <field name="updated_at"/>
+    <field name="status"/>
+  </grid>
 
-    <form title="Task" name="task-form" model="com.axelor.todo.model.Task"
-          onLoad="task.readonly-if-done" >
+  <form title="Task" name="task-form" model="com.axelor.todo.model.Task"
+    onLoad="task.readonly-if-done">
 
-        <panel name="OverviewPanel" title="Type Todo...">
-            <field name="name" readonlyIf="status == 'Done'"/>
-            <field name="description" readonlyIf="status == 'Done'"/>
-            <field name="created_at" readonlyIf="status == 'Done'"/>
-            <field name="updated_at" readonlyIf="status == 'Done'"/>
-            <field name="status" readonlyIf="status == 'Done'"/>
-            <button title="done" name="done" onClick="action-set-done"  />
-        </panel>
-    </form>
+    <panel name="OverviewPanel" title="Type Todo...">
+      <field name="name" readonlyIf="status == 'Done'"/>
+      <field name="description" readonlyIf="status == 'Done'"/>
+      <field name="created_at" readonlyIf="status == 'Done'"/>
+      <field name="updated_at" readonlyIf="status == 'Done'"/>
+      <field name="status" readonlyIf="status == 'Done'"/>
+      <button title="done" name="done" onClick="action-set-done"/>
+    </panel>
+  </form>
 
-    <action-attrs name="task.readonly-if-done">
-        <attribute for="*" name="readonly"  expr="status == 'Done'"/>
-    </action-attrs>
+  <action-attrs name="task.readonly-if-done">
+    <attribute for="*" name="readonly" expr="status == 'Done'"/>
+  </action-attrs>
 
-    <action-method name="action-set-done">
-        <call class="com.axelor.todo.web.TodoController" method="done" />
-    </action-method>
+  <action-method name="action-set-done">
+    <call class="com.axelor.todo.web.TodoController" method="done"/>
+  </action-method>
 
 </object-views>
