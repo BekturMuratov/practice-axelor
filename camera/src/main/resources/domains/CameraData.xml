@@ -7,8 +7,9 @@
 
   <entity name="CameraData">
 
-    <string name="crossRecordSysCode" title="Cross Record System Code"/>
+    <string name="crossRecordSyscode" title="Cross Record System Code"/>
     <string name="cameraIndexCode" title="Camera Index Code"/>
+    <string name="plateNo" title="plateNo"/>
     <string name="ownerName" title="Owner Name"/>
     <string name="contact" title="Contact"/>
     <string name="vehiclePicUri" title="VehiclePicUri"/>

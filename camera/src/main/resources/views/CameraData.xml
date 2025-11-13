@@ -10,6 +10,7 @@
 
     <field name="crossRecordSyscode" title="Cross Record System Code"/>
     <field name="cameraIndexCode" title="Camera Index Code"/>
+    <field name="plateNo" title="plateNo"/>
     <field name="ownerName" title="Owner Name"/>
     <field name="contact" title="Contact"/>
     <field name="vehiclePicUri" title="VehiclePicUri"/>
