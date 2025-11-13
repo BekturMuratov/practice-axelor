@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <object-views xmlns="http://axelor.com/xml/ns/object-views"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
-    <form name="state-form" title="State" model="com.axelor.apps.gst.model.IState">
-        <panel title="State Detail" name="stateDetailPanel">
-            <field name="name" />
-            <field name="country" />
-        </panel>
-    </form>
-    <grid title="States" name="state-grid" model="com.axelor.apps.gst.model.IState">
-        <field name="name" />
-        <field name="country" />
-    </grid>
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+  <form name="state-form" title="State" model="com.axelor.apps.gst.model.IState">
+    <panel title="State Detail" name="stateDetailPanel">
+      <field name="name"/>
+      <field name="country"/>
+    </panel>
+  </form>
+  <grid title="States" name="state-grid" model="com.axelor.apps.gst.model.IState">
+    <field name="name"/>
+    <field name="country"/>
+  </grid>
 </object-views>

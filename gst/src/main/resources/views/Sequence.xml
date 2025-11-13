@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <object-views xmlns="http://axelor.com/xml/ns/object-views"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
-    <grid title="Sequences" name="sequence-grid" model="com.axelor.apps.gst.model.ISequence">
-        <field name="prefix" />
-        <field name="sufix" />
-        <field name="padding" />
-        <field name="nextNumber" />
-        <field name="model" />
-    </grid>
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+  <grid title="Sequences" name="sequence-grid" model="com.axelor.apps.gst.model.ISequence">
+    <field name="prefix"/>
+    <field name="sufix"/>
+    <field name="padding"/>
+    <field name="nextNumber"/>
+    <field name="model"/>
+  </grid>
 
-    <form title="Sequence" name="sequence-form" model="com.axelor.apps.gst.model.ISequence">
-        <panel title="Sequence Detail" name="sequenceDetailPanel">
-            <field name="prefix" colSpan="4" />
-            <field name="padding" colSpan="4" />
-            <field name="sufix" colSpan="4" />
-            <field name="model" />
-            <field name="nextNumber" required="true" />
-        </panel>
-    </form>
+  <form title="Sequence" name="sequence-form" model="com.axelor.apps.gst.model.ISequence">
+    <panel title="Sequence Detail" name="sequenceDetailPanel">
+      <field name="prefix" colSpan="4"/>
+      <field name="padding" colSpan="4"/>
+      <field name="sufix" colSpan="4"/>
+      <field name="model"/>
+      <field name="nextNumber" required="true"/>
+    </panel>
+  </form>
 
-    <action-method name="action-sequence-method-set-next-number">
-        <call class="com.axelor.apps.gst.db.web.GstSequenceController" method="setSequenceData"/>
-    </action-method>
+  <action-method name="action-sequence-method-set-next-number">
+    <call class="com.axelor.apps.gst.db.web.GstSequenceController" method="setSequenceData"/>
+  </action-method>
 </object-views>

@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <domain-models xmlns="http://axelor.com/xml/ns/domain-models"
-               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-               xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
 
-    <module name="camera" package="com.axelor.apps.camera.db" />
+  <module name="camera" package="com.axelor.apps.camera.db"/>
 
-    <entity name="CameraData">
+  <entity name="CameraData">
 
-        <string name="crossRecordSysCode" title="Cross Record System Code" />
-        <string name="cameraIndexCode" title="Camera Index Code" />
-        <string name="ownerName" title="Owner Name" />
-        <string name="contact" title="Contact" />
-        <string name="vehiclePicUri" title="VehiclePicUri" />
-        <string name="crossTime" title="Cross Time" />
-        <long name="vehicleColor" title="Vehicle Color" />
-        <long name="vehicleType" title="Vehicle Type" />
-        <long name="country" title="Country" />
-        <long name="vehicleDirectionType" title="Vehicle Direction Type" />
-        <string name="regionName" title="Region Name" />
-        <string name="vehiclePicPath" title="Vehicle Pic Path" />
-    </entity>
+    <string name="crossRecordSysCode" title="Cross Record System Code"/>
+    <string name="cameraIndexCode" title="Camera Index Code"/>
+    <string name="ownerName" title="Owner Name"/>
+    <string name="contact" title="Contact"/>
+    <string name="vehiclePicUri" title="VehiclePicUri"/>
+    <string name="crossTime" title="Cross Time"/>
+    <long name="vehicleColor" title="Vehicle Color"/>
+    <long name="vehicleType" title="Vehicle Type"/>
+    <long name="country" title="Country"/>
+    <long name="vehicleDirectionType" title="Vehicle Direction Type"/>
+    <string name="regionName" title="Region Name"/>
+    <string name="vehiclePicPath" title="Vehicle Pic Path"/>
+  </entity>
 </domain-models>

@@ -9,10 +9,10 @@ import com.axelor.apps.camera.service.impl.CrudServiceImpl;
 
 public class CameraModule extends AxelorModule {
 
-    @Override
-    protected void configure() {
-        bind(CrudService.class).to(CrudServiceImpl.class);
-        bind(CameraDataService.class).to(CameraDataServiceImpl.class);
-        bind(CameraJob.class);
-    }
+  @Override
+  protected void configure() {
+    bind(CrudService.class).to(CrudServiceImpl.class);
+    bind(CameraDataService.class).to(CameraDataServiceImpl.class);
+    bind(CameraJob.class);
+  }
 }

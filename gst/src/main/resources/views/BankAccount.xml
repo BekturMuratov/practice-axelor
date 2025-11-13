@@ -7,8 +7,8 @@
     <option value="current">current</option>
   </selection>
 
-  <form name="bank-account-form" title="Bank account" model="com.axelor.apps.gst.model.IBankAccount"
-    width="large">
+  <form name="bank-account-form" title="Bank account"
+    model="com.axelor.apps.gst.model.IBankAccount" width="large">
     <panel title="Bank Account Details" name="bankAccountPanel">
       <field name="bank"/>
       <field name="accountNo"/>

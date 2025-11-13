@@ -5,17 +5,20 @@ import com.axelor.apps.base.job.UncheckedJobExecutionException;
 import com.axelor.apps.base.service.exception.TraceBackService;
 import com.axelor.apps.camera.service.CameraDataService;
 import com.axelor.inject.Beans;
+import com.google.inject.Singleton;
 import org.quartz.JobExecutionContext;
 
+@Singleton
 public class CameraJob extends ThreadedBaseJob {
 
-    @Override
-    public void executeInThread(JobExecutionContext context) {
-        try {
-            Beans.get(CameraDataService.class).listenQueue();
-        } catch (Exception e) {
-            TraceBackService.trace(e);
-            throw new UncheckedJobExecutionException(e);
-        }
+  @Override
+  public void executeInThread(JobExecutionContext context) {
+    try {
+      System.out.println("Starting CameraData listener...");
+      Beans.get(CameraDataService.class).listenQueue();
+    } catch (Exception e) {
+      TraceBackService.trace(e);
+      throw new UncheckedJobExecutionException(e);
     }
+  }
 }

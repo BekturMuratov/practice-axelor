@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <domain-models xmlns="http://axelor.com/xml/ns/domain-models"
-               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-               xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
-    <module name="gst" package="com.axelor.apps.gst.model"/>
-    <entity name="IProduct">
-        <string name="name" required="true" title="Product Name" />
-        <string name="code" required="true" title="Product Code" />
-        <string name="hsbn" title="HSBN" />
-        <many-to-one name="category" ref="IProductCategory" title="Product Category" />
-        <decimal name="salePrice" title="Product Sale Price" />
-        <decimal name="costPrice" title="Product Cost Price" />
-        <one-to-one name="image" ref="com.axelor.meta.db.MetaFile" title="Product Image" />
-        <decimal name="gstRate" title="Gst Rate" />
-    </entity>
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+  <module name="gst" package="com.axelor.apps.gst.model"/>
+  <entity name="IProduct">
+    <string name="name" required="true" title="Product Name"/>
+    <string name="code" required="true" title="Product Code"/>
+    <string name="hsbn" title="HSBN"/>
+    <many-to-one name="category" ref="IProductCategory" title="Product Category"/>
+    <decimal name="salePrice" title="Product Sale Price"/>
+    <decimal name="costPrice" title="Product Cost Price"/>
+    <one-to-one name="image" ref="com.axelor.meta.db.MetaFile" title="Product Image"/>
+    <decimal name="gstRate" title="Gst Rate"/>
+  </entity>
 </domain-models>

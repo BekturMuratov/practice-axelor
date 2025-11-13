@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <domain-models xmlns="http://axelor.com/xml/ns/domain-models"
-               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-               xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
-    <module name="gst" package="com.axelor.apps.gst.model"/>
-    <entity name="IContact">
-        <string name="name" required="true" title="Contact Name" />
-        <string name="type" required="true" selection="contact.type.selection" title="Contact Type" />
-        <string name="primaryEmail" title="Primary Email" />
-        <string name="secondaryEmail" title="Secondary Email" />
-        <string name="primaryPhone" title="Primary Phone" />
-        <string name="secondaryPhone" title="Secondary Phone" />
-    </entity>
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+  <module name="gst" package="com.axelor.apps.gst.model"/>
+  <entity name="IContact">
+    <string name="name" required="true" title="Contact Name"/>
+    <string name="type" required="true" selection="contact.type.selection"
+      title="Contact Type"/>
+    <string name="primaryEmail" title="Primary Email"/>
+    <string name="secondaryEmail" title="Secondary Email"/>
+    <string name="primaryPhone" title="Primary Phone"/>
+    <string name="secondaryPhone" title="Secondary Phone"/>
+  </entity>
 
 </domain-models>

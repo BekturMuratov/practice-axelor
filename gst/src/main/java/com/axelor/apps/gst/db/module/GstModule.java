@@ -10,12 +10,12 @@ import com.axelor.apps.gst.db.service.GstSequenceServiceImpl;
 import com.axelor.apps.gst.model.repo.IPartyRepository;
 import com.axelor.apps.gst.model.repo.IProductRepository;
 
-public class GstModule  extends AxelorModule {
-    @Override
-    protected void configure() {
-        bind(IPartyRepository.class).to(GstPartyRepository.class);
-        bind(IProductRepository.class).to(GstProductRepository.class);
-        bind(GstInvoiceService.class).to(GstInvoiceServiceImpl.class);
-        bind(GstSequenceService.class).to(GstSequenceServiceImpl.class);
-    }
+public class GstModule extends AxelorModule {
+  @Override
+  protected void configure() {
+    bind(IPartyRepository.class).to(GstPartyRepository.class);
+    bind(IProductRepository.class).to(GstProductRepository.class);
+    bind(GstInvoiceService.class).to(GstInvoiceServiceImpl.class);
+    bind(GstSequenceService.class).to(GstSequenceServiceImpl.class);
+  }
 }

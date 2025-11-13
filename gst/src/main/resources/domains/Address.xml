@@ -8,7 +8,7 @@
     <string name="line1" required="true" title="Address Line 1"/>
     <string name="line2" required="true" title="Address Line 2"/>
     <many-to-one name="city" ref="ICity" required="true" title="City"/>
-      <many-to-one name="state" ref="IState" title="State" />
+    <many-to-one name="state" ref="IState" title="State"/>
     <many-to-one name="country" ref="ICountry" required="true" title="Country"/>
     <string name="pinCode" title="Pinсode"/>
   </entity>

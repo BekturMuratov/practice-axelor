@@ -1,38 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <object-views xmlns="http://axelor.com/xml/ns/object-views"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
-    <grid title="Companies" name="company-grid" model="com.axelor.apps.gst.model.ICompany">
-        <field name="name" />
-        <field name="logo" />
-        <field name="gstin" />
-        <field name="address" />
-    </grid>
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+  <grid title="Companies" name="company-grid" model="com.axelor.apps.gst.model.ICompany">
+    <field name="name"/>
+    <field name="logo"/>
+    <field name="gstin"/>
+    <field name="address"/>
+  </grid>
 
-    <form title="Company" name="company-form" model="com.axelor.apps.gst.model.ICompany" width="large">
-        <panel title="Company Detail" name="companyPanel">
-            <panel name="companyLogoPanel" colSpan="4">
-                <field name="logo" widget="image" showTitle="false" />
-            </panel>
-            <panel name="companyDetailPanel" colSpan="8">
-                <field name="name" colSpan="6" />
-                <field name="gstin" colSpan="6" />
-                <field name="address" colSpan="12" />
-            </panel>
-        </panel>
-        <panel title="Contact-Detail" name="contactDetailPanel">
-            <field name="contactList" showTitle="false" colSpan="12">
-                <editor>
-                    <field name="name" colSpan="6" />
-                    <field name="type" colSpan="6" />
-                    <field name="primaryPhone" colSpan="6"/>
-                    <field name="primaryEmail" colSpan="6" />
-                    <field name="secondaryPhone" colSpan="6"/>
-                    <field name="secondaryEmail" colSpan="6"/>
-                </editor>
-            </field>
-        </panel>
-        <panel-related field="bankDetailsList" target="com.axelor.apps.gst.model.IBankAccount" name="bankDetailPanel">
-        </panel-related>
-    </form>
+  <form title="Company" name="company-form" model="com.axelor.apps.gst.model.ICompany"
+    width="large">
+    <panel title="Company Detail" name="companyPanel">
+      <panel name="companyLogoPanel" colSpan="4">
+        <field name="logo" widget="image" showTitle="false"/>
+      </panel>
+      <panel name="companyDetailPanel" colSpan="8">
+        <field name="name" colSpan="6"/>
+        <field name="gstin" colSpan="6"/>
+        <field name="address" colSpan="12"/>
+      </panel>
+    </panel>
+    <panel title="Contact-Detail" name="contactDetailPanel">
+      <field name="contactList" showTitle="false" colSpan="12">
+        <editor>
+          <field name="name" colSpan="6"/>
+          <field name="type" colSpan="6"/>
+          <field name="primaryPhone" colSpan="6"/>
+          <field name="primaryEmail" colSpan="6"/>
+          <field name="secondaryPhone" colSpan="6"/>
+          <field name="secondaryEmail" colSpan="6"/>
+        </editor>
+      </field>
+    </panel>
+    <panel-related field="bankDetailsList"
+      target="com.axelor.apps.gst.model.IBankAccount" name="bankDetailPanel">
+    </panel-related>
+  </form>
 </object-views>

@@ -1,49 +1,52 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <object-views xmlns="http://axelor.com/xml/ns/object-views"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
-    <form name="product-form" title="Product" model="com.axelor.apps.gst.model.IProduct">
-        <panel title="Product Detail" name="productDetailPanel">
-            <panel name="productImagePanel" colSpan="4">
-                <field name="image" showTitle="false" widget="image" />
-            </panel>
-            <panel colSpan="8" name="productDetailPanel">
-                <field name="code" colSpan="6" />
-                <field name="name" colSpan="6" />
-                <field name="hsbn" colSpan="6" />
-                <field name="category" colSpan="6" onChange="action-record-set-product-gstrate" />
-            </panel>
-        </panel>
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+  <form name="product-form" title="Product" model="com.axelor.apps.gst.model.IProduct">
+    <panel title="Product Detail" name="productDetailPanel">
+      <panel name="productImagePanel" colSpan="4">
+        <field name="image" showTitle="false" widget="image"/>
+      </panel>
+      <panel colSpan="8" name="productDetailPanel">
+        <field name="code" colSpan="6"/>
+        <field name="name" colSpan="6"/>
+        <field name="hsbn" colSpan="6"/>
+        <field name="category" colSpan="6" onChange="action-record-set-product-gstrate"/>
+      </panel>
+    </panel>
 
-        <panel title="Product Price" name="productPricePanel">
-            <field name="salePrice" colSpan="4" />
-            <field name="costPrice" colSpan="4" />
-            <field name="gstRate" colSpan="4" />
-        </panel>
-    </form>
+    <panel title="Product Price" name="productPricePanel">
+      <field name="salePrice" colSpan="4"/>
+      <field name="costPrice" colSpan="4"/>
+      <field name="gstRate" colSpan="4"/>
+    </panel>
+  </form>
 
-    <grid title="Products" name="product-grid" model="com.axelor.apps.gst.model.IProduct">
-        <toolbar>
-            <button name="createInvoiceBtn" title="Create Invoice" onClick="action-product-method-get-selected-product-to-set-invoice"/>
-            <button name="printBtn" title="Print" onClick="action-product-method-get-selected-product-ids, action-product-report-print-product-report" />
-        </toolbar>
-        <field name="code" />
-        <field name="name" />
-        <field name="hsbn" />
-        <field name="category" />
-        <field name="salePrice" />
-        <field name="costPrice" />
-        <field name="image" />
-        <field name="gstRate" />
-    </grid>
+  <grid title="Products" name="product-grid" model="com.axelor.apps.gst.model.IProduct">
+    <toolbar>
+      <button name="createInvoiceBtn" title="Create Invoice"
+        onClick="action-product-method-get-selected-product-to-set-invoice"/>
+      <button name="printBtn" title="Print"
+        onClick="action-product-method-get-selected-product-ids, action-product-report-print-product-report"/>
+    </toolbar>
+    <field name="code"/>
+    <field name="name"/>
+    <field name="hsbn"/>
+    <field name="category"/>
+    <field name="salePrice"/>
+    <field name="costPrice"/>
+    <field name="image"/>
+    <field name="gstRate"/>
+  </grid>
 
-    <cards name="product-cards" title="Products" model="com.axelor.apps.gst.model.IProduct" width="350px">
-        <field name="name" />
-        <field name="code" />
-        <field name="hsbn" />
-        <field name="category" />
-        <field name="hasImage" />
-        <template>
+  <cards name="product-cards" title="Products" model="com.axelor.apps.gst.model.IProduct"
+    width="350px">
+    <field name="name"/>
+    <field name="code"/>
+    <field name="hsbn"/>
+    <field name="category"/>
+    <field name="hasImage"/>
+    <template>
             <![CDATA[
               <div class="span4 card-image">
         <img ng-if="hasImage" ng-src="{{$image(null, 'image')}}">
@@ -57,22 +60,25 @@
           <strong><span ng-if="hsbn" title="Hsbn">HSBN:</span></strong> {{hsbn}}<br>
       </div>
              ]]>
-        </template>
-    </cards>
+    </template>
+  </cards>
 
-    <action-record name="action-record-set-product" model="com.axelor.apps.gst.model.IProduct">
-        <field name="gstRate" expr="eval:category.gstRate"/>
-    </action-record>
+  <action-record name="action-record-set-product"
+    model="com.axelor.apps.gst.model.IProduct">
+    <field name="gstRate" expr="eval:category.gstRate"/>
+  </action-record>
 
-    <action-method name="action-product-method-get-selected-product-ids">
-        <call class="com.axelor.apps.gst.db.web.GstProductController" method="getSelectedProductIds"/>
-    </action-method>
+  <action-method name="action-product-method-get-selected-product-ids">
+    <call class="com.axelor.apps.gst.db.web.GstProductController"
+      method="getSelectedProductIds"/>
+  </action-method>
 
-    <action-method name="action-product-method-selected-product-to-set-invoice">
-        <call class="com.axelor.apps.gst.db.web.GetProductController" method="generateNewInvoice"/>
-    </action-method>
+  <action-method name="action-product-method-selected-product-to-set-invoice">
+    <call class="com.axelor.apps.gst.db.web.GetProductController" method="generateNewInvoice"/>
+  </action-method>
 
-    <action-report name="action-product-report-print-product-report" design="Product_Report.rptdesign" output="product-${date}" attachment="true" >
-        <param name="ids" expr="eval:ids" />
-    </action-report>
+  <action-report name="action-product-report-print-product-report"
+    design="Product_Report.rptdesign" output="product-${date}" attachment="true">
+    <param name="ids" expr="eval:ids"/>
+  </action-report>
 </object-views>
