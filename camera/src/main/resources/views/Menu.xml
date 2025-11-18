@@ -4,10 +4,11 @@
   xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
 
   <menuitem name="menu-camera-app" title="Camera Data" icon="fa fa-camera"
-    icon-background="red"/>
+    icon-background="red"/>                       <!--Главное меню камеры -->
 
   <menuitem name="camera-list" parent="menu-camera-app" title="Camera List" order="100"
-    action="action-camera-list"/>
+    action="action-camera-list"/> <!--Страница список камер -->
+
   <action-view name="action-camera-list" title="Camera List"
     model="com.axelor.apps.camera.db.CameraData">
     <view type="grid" name="camera-grid"/>

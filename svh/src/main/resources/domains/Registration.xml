@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+    <module name="SVH" package="com.axelor.apps.svh.db" />
+    <sequence name="registration.sequence" increment="1" prefix="SVH"/>
+
+    <entity name="Registration">
+        <string name="uId" sequence="registration.sequence" title="UId" />
+        <datetime name="createdOn" title="Created on" />
+        <string name="transport_type" selection="svh.registration.transport_types_selections" />
+        <string name="plate_no" title="PlateNo" />
+        <string name="plate_no_trailer" title="PlateNo trailer" />
+        <string name="serial_number" title="Serial number" />
+        <string name="vin_code" title="VIN code" />
+        <decimal name="weight" title="Weight" />
+        <many-to-one name="tariff" ref="com.axelor.apps.svh.db.Tariffs" title="Tariffs" />
+        <decimal name="calculated_amount" title="calculated amount" />
+
+        <track>
+            <field name="uId"  />
+            <field name="transport_type"/>
+            <field name="plate_no" />
+            <field name="plate_no_trailer" />
+            <field name="vin_code" />
+            <field name="weight" />
+            <field name="tariff" />
+            <field name="calculated_amount" />
+        </track>
+    </entity>
+
+
+</domain-models>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+    <grid title="Registration" name="registration-grid" model="com.axelor.apps.svh.db.Registration">
+        <field name="uId" />
+        <field name="createOn" title="Create On" />
+        <field name="transport_type" widget="singleSelect" />
+        <field name="plate_no" />
+        <field name="plate_no_trailer" />
+        <field name="serial_number" />
+        <field name="vin_code" />
+        <field name="weight" />
+        <field name="tariff" />
+        <field name="calculated_amount" />
+    </grid>
+
+    <form title="Registration Form" name="registration-form" width="large" model="com.axelor.apps.svh.db.Registration">
+        <panel name="registrationOverviewPanel" title="OverviewPanel">
+            <field name="uId" readonly="true" colSpan="2" />
+            <field name="transport_type" widget="singleSelect" selection="svh.registration.transport_types_selections"/>
+            <field name="plate_no" />
+            <field name="plate_no_trailer" />
+            <field name="vin_code" />
+            <field name="weight" />
+            <field name="tariff" />
+            <field name="calculated_amount" />
+            <button name="Calculate" title="Calculate" onClick="" />
+        </panel>
+
+        <panel-mail>
+            <mail-messages/>
+        </panel-mail>
+    </form>
+
+</object-views>
