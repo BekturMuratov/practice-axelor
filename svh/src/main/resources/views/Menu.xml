@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <object-views xmlns="http://axelor.com/xml/ns/object-views"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
 
-    <menuitem name="svh.main-menu" title="SVH" icon="fa fa-home"
-              icon-background="lightblue" tag="GTI"/>                                                                             <!--Главное меню СВХ -->
+  <menuitem name="svh.main-menu" title="SVH" icon="fa fa-home" icon-background="lightblue"
+    tag="GTI"/>                                                                             <!--Главное меню СВХ -->
 
-    <menuitem name="registration-list" parent="svh.main-menu" title="Registration" order="100"
-              action="svh-registration-list"/>                                                                             <!--Страница список зарегистрированных товаров -->
+  <menuitem name="registration-list" parent="svh.main-menu" title="Registration"
+    order="100" action="svh-registration-list"/>                                                                             <!--Страница список зарегистрированных товаров -->
 
-    <menuitem name="tariffs-list" parent="svh.main-menu" title="Tariffs"
-              action="svh-tariffs-list" />
+  <menuitem name="tariffs-list" parent="svh.main-menu" title="Tariffs"
+    action="svh-tariffs-list"/>
 
-    <action-view name="svh-registration-list" title="Registration List"
-                 model="com.axelor.apps.svh.db.Registration">
-        <view type="grid" name="registration-grid"/>
-        <view type="form" name="registration-form"/>
-    </action-view>
+  <action-view name="svh-registration-list" title="Registration List"
+    model="com.axelor.apps.svh.db.Registration">
+    <view type="grid" name="registration-grid"/>
+    <view type="form" name="registration-form"/>
+  </action-view>
 
 
-    <action-view name="svh-tariffs-list" title="Tariffs List" model="com.axelor.apps.svh.db.Tariffs">
-        <view type="grid" name="tariffs-grid" />
-        <view type="form" name="tariffs-form" />
-    </action-view>
+  <action-view name="svh-tariffs-list" title="Tariffs List"
+    model="com.axelor.apps.svh.db.Tariffs">
+    <view type="grid" name="tariffs-grid"/>
+    <view type="form" name="tariffs-form"/>
+  </action-view>
 </object-views>

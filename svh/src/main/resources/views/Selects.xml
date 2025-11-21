@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <object-views xmlns="http://axelor.com/xml/ns/object-views"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
 
-    <selection name="svh.registration.transport_types_selections">
-        <option value="freight_transport" color="black">Freight Transport</option>                                       <!--Грузовой транспорт -->
-        <option value="special_equipment" color="blue">Special Equipment</option>                                        <!--Спецтехника -->
-        <option value="car_carrier" color="green">Car carrier</option>                                                   <!--Автовоз -->
-        <option value="passenger_transport" color="purple">Passenger Transport</option>                                  <!--Легковой транспорт -->
-        <option value="company_car" color="grey">Company Car</option>                                                    <!--Служебное авто -->
-    </selection>
+  <selection name="svh.registration.transport_types_selections">
+    <option value="freight_transport" color="black">Freight Transport</option>                                       <!--Грузовой транспорт -->
+    <option value="special_equipment" color="blue">Special Equipment</option>                                        <!--Спецтехника -->
+    <option value="car_carrier" color="green">Car carrier</option>                                                   <!--Автовоз -->
+    <option value="passenger_transport" color="purple">Passenger Transport</option>                                  <!--Легковой транспорт -->
+    <option value="company_car" color="grey">Company Car</option>                                                    <!--Служебное авто -->
+  </selection>
+
+  <selection name="svh.tariffs.tariff_types_selections">
+    <option value="car">Car</option>
+    <option value="goods">Goods</option>
+  </selection>
 
 </object-views>

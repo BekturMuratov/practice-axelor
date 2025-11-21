@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <domain-models xmlns="http://axelor.com/xml/ns/domain-models"
-               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-               xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
-    <module name="SVH" package="com.axelor.apps.svh.db" />
-    <entity name="Tariffs" >
-        <string name="name" />
-        <datetime name="start_date" />
-        <datetime name="end_date" />
-        <string name="price" />
-        <string name="entry_type" />
-    </entity>
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+  <module name="SVH" package="com.axelor.apps.svh.db"/>
+  <entity name="Tariffs">
+    <string name="name"/>
+    <datetime name="start_date"/>
+    <datetime name="end_date"/>
+    <integer name="base_days"/>
+    <decimal name="weight"/>
+    <decimal name="base_price"/>
+    <decimal name="next_days_price"/>
+    <string name="entry_type" selection="svh.tariffs.tariff_types_selections"/>
+  </entity>
 </domain-models>
