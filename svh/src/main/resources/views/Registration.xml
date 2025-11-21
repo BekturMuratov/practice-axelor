@@ -22,6 +22,8 @@
       <field name="uId" readonly="true" colSpan="2"/>
       <field name="transport_type" widget="singleSelect"
         selection="svh.registration.transport_types_selections"/>
+        <field name="tariff" />
+
     </panel>
 
     <panel name="companyCar" title="Company Car" showIf="transport_type == 'company_car'">
@@ -54,7 +56,7 @@
     <panel name="CalculatePanel" title="Calculate Panel"
       showIf="transport_type != 'company_car'">
       <field name="calculated_amount"/>
-      <button name="Calculate" title="Calculate" onClick="registration.calculate"/>
+        <button name="Calculate" title="Calculate" onClick="registration.calculate"/>
     </panel>
 
     <panel-mail>

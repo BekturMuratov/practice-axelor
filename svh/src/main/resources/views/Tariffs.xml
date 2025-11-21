@@ -30,8 +30,8 @@
     </panel>
 
     <panel name="TariffPanel" title="TariffPanel">
-      <field name="name"/>
-      <field name="entry_type"/>
+        <field name="name"/>
+        <field name="entry_type"/>
     </panel>
   </form>
 </object-views>
