@@ -3,25 +3,61 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
 
-  <menuitem name="svh.main-menu" title="SVH" icon="fa fa-home" icon-background="lightblue"
-    tag="GTI"/>                                                                             <!--Главное меню СВХ -->
+  <menuitem name="menu-svh-app"
+            title="SVH"
+            icon="fa fa-home"
+            icon-background="black"/>                                                                                   <!--Главное меню СВХ -->
 
-  <menuitem name="registration-list" parent="svh.main-menu" title="Registration"
-    order="100" action="svh-registration-list"/>                                                                             <!--Страница список зарегистрированных товаров -->
+  <menuitem name="registration-list"
+            parent="menu-svh-app"
+            title="Регистрация" order="100"
+    action="action-registration-list"/>                                                                                 <!--Страница регистрации товаров -->
+    <menuitem name="setting-list"
+              parent="menu-svh-app"
+              title="Настройки"
+              order="100" />
+  <menuitem
+          name="tariffs-list"
+          parent="setting-list"
+          title="Тарифы"
+          order="100"
+          action="action-tariff-list"/>                                                                                 <!--Страница список тарифов -->
 
-  <menuitem name="tariffs-list" parent="svh.main-menu" title="Tariffs"
-    action="svh-tariffs-list"/>
+    <menuitem
+          name="tariff-rules-list"
+          parent="setting-list"
+          title="Правила тарифа"
+          order="100"
+          action="action-tariff-rules-list"/>                                                                      <!--Страница список тарифов -->
 
-  <action-view name="svh-registration-list" title="Registration List"
-    model="com.axelor.apps.svh.db.Registration">
-    <view type="grid" name="registration-grid"/>
-    <view type="form" name="registration-form"/>
-  </action-view>
+    <menuitem name="report-list"
+              parent="setting-list"
+              title="Отчеты"
+              order="100"
+              action="svh.revenue.chart.action-view" />
 
 
-  <action-view name="svh-tariffs-list" title="Tariffs List"
-    model="com.axelor.apps.svh.db.Tariffs">
-    <view type="grid" name="tariffs-grid"/>
-    <view type="form" name="tariffs-form"/>
-  </action-view>
+    <action-view name="action-registration-list" title="Registration"
+       model="com.axelor.apps.svh.db.Registration">
+       <view type="grid" name="registration-grid"/>
+       <view type="form" name="registration-form"/>
+     </action-view>
+
+     <action-view name="action-tariff-list" title="Тарифы"
+        model="com.axelor.apps.svh.db.Tariff">
+        <view type="grid" name="tariff-grid"/>
+        <view type="form" name="tariff-form"/>
+     </action-view>
+
+     <action-view name="action-tariff-rules-list" title="Правила тарифа"
+       model="com.axelor.apps.svh.db.TariffRule">
+        <view type="grid" name="tariff-rules-grid"/>
+        <view type="form" name="tariff-rules-form"/>
+     </action-view>
+
+    <action-view name="svh.revenue.chart.action-view" title="Отчеты"
+                 model="com.axelor.apps.svh.db.Registration">
+        <view type="chart" name="report-revenue-list"/>
+    </action-view>
+
 </object-views>

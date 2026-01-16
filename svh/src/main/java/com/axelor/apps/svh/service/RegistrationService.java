@@ -1,12 +1,18 @@
 package com.axelor.apps.svh.service;
 
-import com.axelor.apps.svh.db.Registration;
-import com.axelor.apps.svh.db.Tariffs;
-
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Map;
 
 public interface RegistrationService {
-  BigDecimal calculate(Registration registration);
-  Tariffs getTariffForRegistration(Registration registration);
 
+    BigDecimal getTotalBetween(
+            LocalDate from,
+            LocalDate to
+    );
+
+    Map<LocalDate, BigDecimal> getDailyTotals(
+            LocalDate from,
+            LocalDate to
+    );
 }

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+    <form title="Revenue by Day" name="report-revenue-list" model="com.axelor.apps.svh.db.Registration" width="large">
+        <panel>
+            <panel-dashlet action="revenue-by-day.chart.action-view" />
+        </panel>
+    </form>
+    <chart name="svh.chart.revenue.by.day"
+           title="Revenue per day by tariff">
+
+        <search-fields>
+            <field type="datetime" name="fromDateTime" title="From Date" x-required="true"/>
+            <field type="datetime" name="toDateTime" title="To Date" x-required="true"/>
+        </search-fields>
+
+        <dataset type="jpql">
+            <![CDATA[
+        SELECT
+            SUM(self.calculatedAmount) AS amount,
+            DAY(self.createdOn) AS day,
+            MONTH(self.createdOn) AS month,
+            YEAR(self.createdOn) AS year,
+            self.transport_type AS tariff
+        FROM
+            Registration self
+        WHERE
+            self.createdOn > :fromDateTime
+            AND self.createdOn < :toDateTime
+        GROUP BY
+            YEAR(self.createdOn),
+            MONTH(self.createdOn),
+            DAY(self.createdOn),
+            self.transport_type
+        ORDER BY
+            YEAR(self.createdOn),
+            MONTH(self.createdOn),
+            DAY(self.createdOn)
+        ]]>
+        </dataset>
+
+        <category key="day" type="date" title="Day"/>
+        <series key="amount" type="bar" title="Revenue" groupBy="tariff"/>
+    </chart>
+
+    <action-view name="revenue-by-day.chart.action-view" title="">
+        <view type="chart" name="svh.chart.revenue.by.day" />
+    </action-view>
+
+</object-views>

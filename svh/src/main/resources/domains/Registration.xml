@@ -14,10 +14,19 @@
     <string name="serial_number" title="Serial number"/>
     <string name="vin_code" title="VIN code"/>
     <decimal name="weight" title="Weight"/>
-    <many-to-one name="tariff" ref="com.axelor.apps.svh.db.Tariffs" title="Tariffs"/>
     <decimal name="calculated_amount" title="calculated amount"/>
 
+      <track>
+          <field name="transport_type" on="UPDATE" />
+          <field name="plate_no" on="UPDATE" />
+          <field name="plate_no_trailer" on="UPDATE" />
+          <field name="serial_number" on="UPDATE" />
+          <field name="vin_code" on="UPDATE" />
+          <field name="weight" on="UPDATE" />
+          <field name="calculated_amount" on="ALWAYS" />
+      </track>
   </entity>
+
 
 
 </domain-models>

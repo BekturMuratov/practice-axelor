@@ -1,69 +1,127 @@
 package com.axelor.apps.svh.web;
 
 import com.axelor.apps.svh.db.Registration;
-import com.axelor.apps.svh.db.Tariffs;
-import com.axelor.apps.svh.db.repo.RegistrationRepository;
-import com.axelor.apps.svh.db.repo.TariffsRepository;
 import com.axelor.apps.svh.service.RegistrationService;
+import com.axelor.inject.Beans;
 import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
-import com.google.inject.Inject;
-import java.math.BigDecimal;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class RegistrationController {
 
-  @Inject
-  RegistrationService registrationService;
-  RegistrationRepository registrationRepository;
-  TariffsRepository tariffsRepository;
 
+    /**
+     * Устанавливает дату создания при первом сохранении
+     */
+    public void setCurrentDate(ActionRequest request, ActionResponse response) {
 
-    public void calculate(ActionRequest request, ActionResponse response) {
+        Registration registration =
+                request.getContext().asType(Registration.class);
 
-        Registration ctxReg = request.getContext().asType(Registration.class);
-
-        try {
-
-            // если id == null — пользователь не сохранял форму
-            Registration registration;
-            if (ctxReg.getId() == null) {
-                registration = ctxReg;  // работаем прямо с тем, что пришло
-            } else {
-                registration = registrationRepository.find(ctxReg.getId());
-            }
-
-            // тариф тоже может быть null
-            if (ctxReg.getTariff() == null || ctxReg.getTariff().getId() == null) {
-                response.setError("Please select a tariff");
-                return;
-            }
-
-            // подгружаем тариф
-            Tariffs selectedTariff = tariffsRepository.find(ctxReg.getTariff().getId());
-
-            registration.setTariff(selectedTariff);
-
-            BigDecimal amount = registrationService.calculate(registration);
-
-            response.setValue("calculated_amount", amount);
-            response.setNotify("Amount calculated successfully");
-
-        } catch (Exception e) {
-            response.setError("Error: " + e.getMessage());
+        if (registration.getCreatedOn() == null) {
+            registration.setCreatedOn(LocalDateTime.now());
+            response.setValue("createdOn", registration.getCreatedOn());
         }
     }
 
+    /**
+     * Нормализация полей при вводе (onChange)
+     * Без ошибок и валидаций — только UX
+     */
+    public void normalizeOnChange(ActionRequest request, ActionResponse response) {
 
+        Registration registration =
+                request.getContext().asType(Registration.class);
 
+        response.setValue("plate_no",
+                normalize(registration.getPlate_no()));
 
-    public void setCurrentDate(ActionRequest request, ActionResponse response) {
-    Registration registration = request.getContext().asType(Registration.class);
+        response.setValue("plate_no_trailer",
+                normalize(registration.getPlate_no_trailer()));
 
-    if (registration.getCreatedOn() == null) {
-      registration.setCreatedOn(LocalDateTime.now());
+        response.setValue("serial_number",
+                normalize(registration.getSerial_number()));
+
+        response.setValue("vin_code",
+                normalize(registration.getVin_code()));
     }
 
-    response.setValue("createdOn", registration.getCreatedOn());
-  }
+    /**
+     * Финальная нормализация и валидация при сохранении (onSave)
+     */
+    public void normalizeAndValidateOnSave(
+            ActionRequest request,
+            ActionResponse response) {
+
+        Registration registration =
+                request.getContext().asType(Registration.class);
+
+        registration.setPlate_no(
+                normalize(registration.getPlate_no()));
+
+        registration.setPlate_no_trailer(
+                normalize(registration.getPlate_no_trailer()));
+
+        registration.setSerial_number(
+                normalize(registration.getSerial_number()));
+
+        String vin = normalize(registration.getVin_code());
+
+        if (vin != null && vin.length() != 17) {
+            response.setError("VIN должен содержать ровно 17 символов");
+            return;
+        }
+
+        registration.setVin_code(vin);
+
+        response.setValues(registration);
+    }
+
+    /**
+     * Универсальная нормализация:
+     * - trim
+     * - убрать все пробелы
+     * - UPPER CASE
+     */
+    private String normalize(String value) {
+
+        if (value == null || value.isBlank()) {
+            return null;
+        }
+
+        return value
+                .trim()
+                .replaceAll("\\s+", "")
+                .toUpperCase();
+    }
+
+
+    public void loadDashboardStats(
+            ActionRequest request,
+            ActionResponse response
+    ) {
+        RegistrationService service = Beans.get(RegistrationService.class);
+
+        LocalDate today = LocalDate.now();
+
+        response.setValue("today_total", service.getTotalBetween(today, today));
+
+        response.setValue("week_total", service.getTotalBetween(
+                today.with(DayOfWeek.MONDAY),
+                today
+        ));
+
+        response.setValue("month_total", service.getTotalBetween(
+                today.withDayOfMonth(1),
+                today
+        ));
+
+        response.setValue("year_total", service.getTotalBetween(
+                today.withDayOfYear(1),
+                today
+        ));
+    }
 }

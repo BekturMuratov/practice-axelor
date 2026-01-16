@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+  <module name="SVH" package="com.axelor.apps.svh.db"/>
+  <entity name="TariffRule">
+    <string name="name"/>
+    <many-to-one name="tariff" ref="com.axelor.apps.svh.db.Tariff"/>
+    <integer name="start_day"/>
+    <integer name="end_day"/>
+    <decimal name="price_per_day"/>
+    <decimal name="min_weight"/>
+    <decimal name="max_weight"/>
+  </entity>
+</domain-models>
