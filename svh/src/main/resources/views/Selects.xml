@@ -3,6 +3,10 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
 
+    <selection name="select.language" id="select.language.ru" >
+        <option value="ru">Russian</option>                                                                             <!-- Русский -->
+    </selection>
+
     <selection name="svh.registration.transport_types_selections">
         <option value="FREIGHT" color="black">FREIGHT</option>
         <option value="SPECIAL" color="blue">SPECIAL</option>

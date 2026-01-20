@@ -16,15 +16,16 @@
         <string name="vin_code" title="VIN code"/>
         <decimal name="weight" title="Weight"/>
         <decimal name="calculated_amount" title="calculated amount"/>
+        <many-to-many name="tariff" ref="com.axelor.apps.svh.db.Tariff"/>
 
         <track>
-            <field name="transport_type" on="UPDATE" />
-            <field name="plate_no" on="UPDATE" />
-            <field name="plate_no_trailer" on="UPDATE" />
-            <field name="serial_number" on="UPDATE" />
-            <field name="vin_code" on="UPDATE" />
-            <field name="weight" on="UPDATE" />
-            <field name="calculated_amount" on="ALWAYS" />
+            <field name="transport_type"/>
+            <field name="plate_no"/>
+            <field name="plate_no_trailer"/>
+            <field name="serial_number"/>
+            <field name="vin_code"/>
+            <field name="weight"/>
+            <field name="calculated_amount"/>
       </track>
   </entity>
 </domain-models>

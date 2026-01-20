@@ -45,9 +45,13 @@
             <field name="weight"/>
         </panel>
 
-        <panel name="CalculatePanel" title="Calculate Panel" showIf="transport_type != 'COMPANY_CAR'"  sidebar="true">
+        <panel name="CalculatePanel" sidebar="true" title="Calculate Panel" showIf="id &amp;&amp; transport_type != 'COMPANY_CAR'">
             <field name="calculated_amount"/>
             <button name="Calculate" title="Calculate" onClick="tariff.calculate"/>
+        </panel>
+        
+        <panel name="tariffPanel" showIf="id">
+            <field name="tariff"/>
         </panel>
 
         <panel-mail>
