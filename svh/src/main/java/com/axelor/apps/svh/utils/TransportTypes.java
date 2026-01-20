@@ -1,4 +1,4 @@
-package com.axelor.apps.svh.contants;
+package com.axelor.apps.svh.utils;
 
 public final class TransportTypes {
 

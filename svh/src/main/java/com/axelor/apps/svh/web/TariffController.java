@@ -25,21 +25,21 @@ public class TariffController {
 
         System.out.println("transportObject " + transportObj);
 
-        // Проверка transportType
+                                                                                                                        // Проверка transportType
         if (!(transportObj instanceof String) || ((String) transportObj).isBlank()) {
             response.setError("Заполните тип транспорта");
             return;
         }
         String transportType = (String) transportObj;
 
-        // Проверка createdOn
+                                                                                                                        // Проверка createdOn
         if (!(createdObj instanceof LocalDateTime)) {
             response.setError("Неверный формат даты createdOn");
             return;
         }
         LocalDate createdDate = ((LocalDateTime) createdObj).toLocalDate();
 
-        // 1️⃣ Количество дней = difference between createdOn и today
+                                                                                                                        // Количество дней = difference between createdOn и today
         LocalDate today = LocalDate.now();
         long daysBetween = ChronoUnit.DAYS.between(createdDate, today);
         int days = (int) (daysBetween == 0 ? 1 : daysBetween + 1);

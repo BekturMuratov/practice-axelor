@@ -11,13 +11,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class RegistrationController {
-
-
-    /**
-     * Устанавливает дату создания при первом сохранении
-     */
+                                                                                                                        //Устанавливает дату создания при первом сохранении
     public void setCurrentDate(ActionRequest request, ActionResponse response) {
-
         Registration registration =
                 request.getContext().asType(Registration.class);
 
@@ -26,11 +21,8 @@ public class RegistrationController {
             response.setValue("createdOn", registration.getCreatedOn());
         }
     }
-
-    /**
-     * Нормализация полей при вводе (onChange)
-     * Без ошибок и валидаций — только UX
-     */
+                                                                                                                         //Нормализация полей при вводе (onChange)
+                                                                                                                         // Без ошибок и валидаций — только UX
     public void normalizeOnChange(ActionRequest request, ActionResponse response) {
 
         Registration registration =
@@ -48,10 +40,7 @@ public class RegistrationController {
         response.setValue("vin_code",
                 normalize(registration.getVin_code()));
     }
-
-    /**
-     * Финальная нормализация и валидация при сохранении (onSave)
-     */
+                                                                                                                         //Финальная нормализация и валидация при сохранении (onSave)
     public void normalizeAndValidateOnSave(
             ActionRequest request,
             ActionResponse response) {
@@ -80,12 +69,10 @@ public class RegistrationController {
         response.setValues(registration);
     }
 
-    /**
-     * Универсальная нормализация:
-     * - trim
-     * - убрать все пробелы
-     * - UPPER CASE
-     */
+                                                                                                                        //Универсальная нормализация:
+                                                                                                                        //     * - trim
+                                                                                                                        //     * - убрать все пробелы
+                                                                                                                        //     * - UPPER CASE
     private String normalize(String value) {
 
         if (value == null || value.isBlank()) {

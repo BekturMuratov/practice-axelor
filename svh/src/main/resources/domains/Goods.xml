@@ -3,7 +3,8 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
   <module name="SVH" package="com.axelor.apps.svh.db"/>
-  <entity name="Goods">
+
+    <entity name="Goods">
     <string name="name"/>
     <string name="tnved_code"/>
     <decimal name="weight"/>
@@ -21,6 +22,6 @@
     <datetime name="departure_date"/>
     <integer name="count_of_days_in_storage" default="1"/>
     <decimal name="price_for_storage"/>
-
   </entity>
+
 </domain-models>

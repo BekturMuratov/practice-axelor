@@ -2,6 +2,7 @@
 <object-views xmlns="http://axelor.com/xml/ns/object-views"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
   <grid title="Goods" name="goods-grid" model="com.axelor.apps.svh.db.Goods">
     <field name="name"/>
     <field name="tnved_code"/>
@@ -42,7 +43,7 @@
       <field name="count_of_days_in_storage" default="1"/>
       <field name="price_for_storage"/>
       <field name="tariff" widget="single_select"/>
-
     </panel>
   </form>
+
 </object-views>

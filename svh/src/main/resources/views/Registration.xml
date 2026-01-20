@@ -22,7 +22,6 @@
       <field name="uId" readonly="true" colSpan="2"/>
       <field name="transport_type" widget="singleSelect"
         selection="svh.registration.transport_types_selections"/>
-
     </panel>
 
     <panel name="companyCar" title="Company Car" showIf="transport_type == 'COMPANY_CAR'">
@@ -63,7 +62,6 @@
     </panel-mail>
   </form>
 
-
   <action-method name="tariff.calculate">
     <call class="com.axelor.apps.svh.web.TariffController" method="calculateTariff"/>
   </action-method>
@@ -71,7 +69,7 @@
   <action-method name="registration.setCreateOn">
     <call class="com.axelor.apps.svh.web.RegistrationController" method="setCurrentDate"/>
   </action-method>
-    
+
     <action-method name="registration.normalize">
         <call class="com.axelor.apps.svh.web.RegistrationController" method="normalizeOnChange"/>
     </action-method>

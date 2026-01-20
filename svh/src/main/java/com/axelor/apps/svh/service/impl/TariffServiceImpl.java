@@ -12,7 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.axelor.apps.svh.contants.TransportTypes.*;
+import static com.axelor.apps.svh.utils.TransportTypes.*;
 
 public class TariffServiceImpl implements TariffService {
 
@@ -34,12 +34,12 @@ public class TariffServiceImpl implements TariffService {
             throw new IllegalArgumentException("Days must be greater than 0");
         }
 
-        // 1️⃣ Служебное авто — всегда бесплатно
+                                                                                                                         // Служебное авто — всегда бесплатно
         if (COMPANY_CAR.equals(transportType)) {
             return BigDecimal.ZERO;
         }
 
-        // 2️⃣ Получаем тариф по коду (FREIGHT, CAR_CARRIER и т.д.)
+                                                                                                                         // Получаем тариф по коду (FREIGHT, CAR_CARRIER и т.д.)
         Tariff tariff = tariffRepository.all()
                 .filter("self.name = ?", transportType)
                 .fetchOne();
@@ -50,7 +50,7 @@ public class TariffServiceImpl implements TariffService {
             );
         }
 
-        // 3️⃣ Получаем и сортируем правила
+                                                                                                                         //  Получаем и сортируем правила
         List<TariffRule> rules = tariff.getTariff_rule()
                 .stream()
                 .sorted(Comparator.comparing(TariffRule::getStart_day))
@@ -64,17 +64,15 @@ public class TariffServiceImpl implements TariffService {
 
         BigDecimal total = BigDecimal.ZERO;
 
-        // 4️⃣ Применяем правила по календарным дням
+                                                                                                                         // Применяем правила по календарным дням
         for (TariffRule rule : rules) {
-
             if (!matchWeight(rule, weight)) {
                 continue;
             }
-
             int startDay = rule.getStart_day();
             int endDay = rule.getEnd_day();
 
-            // Сколько дней реально попадает в диапазон
+                                                                                                                         // Сколько дней реально попадает в диапазон
             int appliedDays =
                     Math.min(endDay, days)
                             - Math.max(startDay, 1)
@@ -86,7 +84,7 @@ public class TariffServiceImpl implements TariffService {
 
             BigDecimal dayPrice = rule.getPrice_per_day();
 
-            // 5️⃣ Логика по типам транспорта
+                                                                                                                         //  Логика по типам транспорта
             switch (transportType) {
 
                 case FREIGHT:
@@ -101,9 +99,8 @@ public class TariffServiceImpl implements TariffService {
                 case SPECIAL:
                 case CAR_CARRIER:
                 case PASSENGER:
-                    // ставка фиксированная
+                                                                                                                        // ставка фиксированная
                     break;
-
                 default:
                     throw new IllegalStateException(
                             "Unsupported transport type: " + transportType
@@ -120,9 +117,7 @@ public class TariffServiceImpl implements TariffService {
         return total;
     }
 
-    /**
-     * Проверка соответствия правила весу
-     */
+                                                                                                                         //Проверка соответствия правила весу
     private boolean matchWeight(
             TariffRule rule,
             BigDecimal weight) {

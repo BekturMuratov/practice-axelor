@@ -2,13 +2,14 @@
 <object-views xmlns="http://axelor.com/xml/ns/object-views"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
-  <grid title="TariffRules" name="tariff-rules-grid" model="com.axelor.apps.svh.db.TariffRule">
-    <field name="name"/>
-    <field name="tariff"/>
-    <field name="start_day"/>
-    <field name="end_day"/>
-    <field name="price_per_day"/>
-  </grid>
+
+    <grid title="TariffRules" name="tariff-rules-grid" model="com.axelor.apps.svh.db.TariffRule">
+        <field name="name"/>
+        <field name="tariff"/>
+        <field name="start_day"/>
+        <field name="end_day"/>
+        <field name="price_per_day"/>
+    </grid>
 
   <form title="TariffRules" name="tariff-rules-form" model="com.axelor.apps.svh.db.TariffRule">
     <panel>
@@ -21,4 +22,5 @@
       <field name="min_weight"/>
     </panel>
   </form>
+
 </object-views>
