@@ -11,8 +11,5 @@ public interface RegistrationService {
             LocalDate to
     );
 
-    Map<LocalDate, BigDecimal> getDailyTotals(
-            LocalDate from,
-            LocalDate to
-    );
+
 }

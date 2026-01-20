@@ -30,28 +30,4 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
 
-    @Override
-    public Map<LocalDate, BigDecimal> getDailyTotals(LocalDate from, LocalDate to) {
-        Map<LocalDate, BigDecimal> result = new HashMap<>();
-
-        List<Registration> list = registrationRepository.all()
-                .filter(
-                        "self.createdOn >= ? AND self.createdOn < ?",
-                        from.atStartOfDay(),
-                        to.plusDays(1).atStartOfDay()
-                ).fetch();
-
-        for(Registration r : list) {
-            if(r.getCalculated_amount() == null) continue;
-
-            LocalDate day = r.getCreatedOn().toLocalDate();
-
-            result.merge(
-                    day,
-                    r.getCalculated_amount(),
-                    BigDecimal::add
-            );
-        }
-        return result;
-    }
 }
