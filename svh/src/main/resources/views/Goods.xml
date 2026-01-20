@@ -1,49 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <object-views xmlns="http://axelor.com/xml/ns/object-views"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
 
-  <grid title="Goods" name="goods-grid" model="com.axelor.apps.svh.db.Goods">
-    <field name="name"/>
-    <field name="tnved_code"/>
-    <field name="weight"/>
-    <field name="quantity"/>
-    <field name="price"/>
-    <field name="currency"/>
-    <field name="dvh_number"/>
-    <field name="product_owber"/>
-    <field name="released"/>
-    <field name="operator_who_registered"/>
-    <field name="operator_who_released"/>
-    <field name="deleted"/>
-    <field name="transit_declaration_number"/>
-    <field name="arrival_date"/>
-    <field name="departure_date"/>
-    <field name="count_of_days_in_storage" default="1"/>
-    <field name="price_for_storage"/>
-  </grid>
+    <grid title="Goods" name="goods-grid" model="com.axelor.apps.svh.db.Goods">
+        <field name="name"/>
+        <field name="tnved_code"/>
+        <field name="weight"/>
+        <field name="quantity"/>
+        <field name="price"/>
+        <field name="currency"/>
+        <field name="dvh_number"/>
+        <field name="product_owber"/>
+        <field name="released"/>
+        <field name="operator_who_registered"/>
+        <field name="operator_who_released"/>
+        <field name="deleted"/>
+        <field name="transit_declaration_number"/>
+        <field name="arrival_date"/>
+        <field name="departure_date"/>
+        <field name="count_of_days_in_storage" default="1"/>
+        <field name="price_for_storage"/>
+    </grid>
 
-  <form title="Goods" name="goods-form" model="com.axelor.apps.svh.db.Goods">
-    <panel>
-      <field name="name"/>
-      <field name="tnved_code"/>
-      <field name="weight"/>
-      <field name="quantity"/>
-      <field name="price"/>
-      <field name="currency"/>
-      <field name="dvh_number"/>
-      <field name="product_owber"/>
-      <field name="released"/>
-      <field name="operator_who_registered"/>
-      <field name="operator_who_released"/>
-      <field name="deleted"/>
-      <field name="transit_declaration_number"/>
-      <field name="arrival_date"/>
-      <field name="departure_date"/>
-      <field name="count_of_days_in_storage" default="1"/>
-      <field name="price_for_storage"/>
-      <field name="tariff" widget="single_select"/>
-    </panel>
-  </form>
-
+    <form title="Goods" name="goods-form" model="com.axelor.apps.svh.db.Goods">
+        <panel>
+            <field name="name"/>
+            <field name="tnved_code"/>
+            <field name="weight"/>
+            <field name="quantity"/>
+            <field name="price"/>
+            <field name="currency"/>
+            <field name="dvh_number"/>
+            <field name="product_owber"/>
+            <field name="released"/>
+            <field name="operator_who_registered"/>
+            <field name="operator_who_released"/>
+            <field name="deleted"/>
+            <field name="transit_declaration_number"/>
+            <field name="arrival_date"/>
+            <field name="departure_date"/>
+            <field name="count_of_days_in_storage" default="1"/>
+            <field name="price_for_storage"/>
+            <field name="tariff" widget="single_select"/>
+        </panel>
+    </form>
 </object-views>

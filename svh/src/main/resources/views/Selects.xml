@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <object-views xmlns="http://axelor.com/xml/ns/object-views"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
 
     <selection name="svh.registration.transport_types_selections">
         <option value="FREIGHT" color="black">FREIGHT</option>
@@ -11,9 +11,8 @@
         <option value="COMPANY_CAR" color="grey">COMPANY_CAR</option>
     </selection>
 
-  <selection name="svh.tariffs.tariff_types_selections">
-    <option value="car">Car</option>
-    <option value="goods">Goods</option>
-  </selection>
-
+    <selection name="svh.tariffs.tariff_types_selections">
+        <option value="car">Car</option>
+        <option value="goods">Goods</option>
+    </selection>
 </object-views>

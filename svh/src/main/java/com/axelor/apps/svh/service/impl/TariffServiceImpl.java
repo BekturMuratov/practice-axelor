@@ -6,7 +6,6 @@ import com.axelor.apps.svh.db.repo.TariffRepository;
 import com.axelor.apps.svh.service.TariffService;
 import com.google.inject.Inject;
 
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
@@ -20,7 +19,6 @@ public class TariffServiceImpl implements TariffService {
     private TariffRepository tariffRepository;
 
     @Override
-    @Transactional
     public BigDecimal calculateTariff(
             String transportType,
             Integer days,
@@ -34,64 +32,47 @@ public class TariffServiceImpl implements TariffService {
             throw new IllegalArgumentException("Days must be greater than 0");
         }
 
-                                                                                                                         // Служебное авто — всегда бесплатно
-        if (COMPANY_CAR.equals(transportType)) {
+        if (COMPANY_CAR.equals(transportType)) {                                                                        // Служебное авто — всегда бесплатно
             return BigDecimal.ZERO;
         }
 
-                                                                                                                         // Получаем тариф по коду (FREIGHT, CAR_CARRIER и т.д.)
-        Tariff tariff = tariffRepository.all()
+        Tariff tariff = tariffRepository.all()                                                                          // Получаем тариф по коду (FREIGHT, CAR_CARRIER и т.д.)
                 .filter("self.name = ?", transportType)
                 .fetchOne();
 
         if (tariff == null) {
-            throw new IllegalStateException(
-                    "Tariff not found for transport type: " + transportType
-            );
+            throw new IllegalStateException("Tariff not found for transport type: " + transportType);
         }
 
-                                                                                                                         //  Получаем и сортируем правила
-        List<TariffRule> rules = tariff.getTariff_rule()
+        List<TariffRule> rules = tariff.getTariff_rule()                                                                //  Получаем и сортируем правила
                 .stream()
                 .sorted(Comparator.comparing(TariffRule::getStart_day))
                 .collect(Collectors.toList());
 
         if (rules.isEmpty()) {
-            throw new IllegalStateException(
-                    "No rules defined for tariff: " + transportType
-            );
+            throw new IllegalStateException("No rules defined for tariff: " + transportType);
         }
 
         BigDecimal total = BigDecimal.ZERO;
 
-                                                                                                                         // Применяем правила по календарным дням
-        for (TariffRule rule : rules) {
+        for (TariffRule rule : rules) {                                                                                 // Применяем правила по календарным дням
             if (!matchWeight(rule, weight)) {
                 continue;
             }
             int startDay = rule.getStart_day();
             int endDay = rule.getEnd_day();
 
-                                                                                                                         // Сколько дней реально попадает в диапазон
-            int appliedDays =
-                    Math.min(endDay, days)
-                            - Math.max(startDay, 1)
-                            + 1;
+            int appliedDays = Math.min(endDay, days) - Math.max(startDay, 1) + 1;                                       // Сколько дней реально попадает в диапазон
 
             if (appliedDays <= 0) {
                 continue;
             }
 
             BigDecimal dayPrice = rule.getPrice_per_day();
-
-                                                                                                                         //  Логика по типам транспорта
-            switch (transportType) {
-
+            switch (transportType) {                                                                                    //  Логика по типам транспорта
                 case FREIGHT:
                     if (weight == null) {
-                        throw new IllegalArgumentException(
-                                "Weight must be provided for FREIGHT"
-                        );
+                        throw new IllegalArgumentException("Weight must be provided for FREIGHT");
                     }
                     dayPrice = dayPrice.multiply(weight);
                     break;
@@ -102,26 +83,14 @@ public class TariffServiceImpl implements TariffService {
                                                                                                                         // ставка фиксированная
                     break;
                 default:
-                    throw new IllegalStateException(
-                            "Unsupported transport type: " + transportType
-                    );
+                    throw new IllegalStateException("Unsupported transport type: " + transportType);
             }
-
-            total = total.add(
-                    dayPrice.multiply(
-                            BigDecimal.valueOf(appliedDays)
-                    )
-            );
+            total = total.add(dayPrice.multiply(BigDecimal.valueOf(appliedDays)));
         }
-
         return total;
     }
 
-                                                                                                                         //Проверка соответствия правила весу
-    private boolean matchWeight(
-            TariffRule rule,
-            BigDecimal weight) {
-
+    private boolean matchWeight(TariffRule rule, BigDecimal weight) {                                                   //Проверка соответствия правила весу
         if (weight == null) {
             return true;
         }
@@ -135,7 +104,6 @@ public class TariffServiceImpl implements TariffService {
                 weight.compareTo(rule.getMax_weight()) > 0) {
             return false;
         }
-
         return true;
     }
 }

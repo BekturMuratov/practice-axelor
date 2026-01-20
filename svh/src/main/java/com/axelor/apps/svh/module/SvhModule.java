@@ -9,6 +9,7 @@ import com.axelor.apps.svh.service.impl.RegistrationServiceImpl;
 import com.axelor.apps.svh.service.impl.TariffServiceImpl;
 
 public class SvhModule extends AxelorModule {
+
   @Override
   protected void configure() {
     bind(CrudService.class).to(CrudServiceImpl.class);

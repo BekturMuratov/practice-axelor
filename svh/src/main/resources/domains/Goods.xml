@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <domain-models xmlns="http://axelor.com/xml/ns/domain-models"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
-  <module name="SVH" package="com.axelor.apps.svh.db"/>
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+    <module name="SVH" package="com.axelor.apps.svh.db"/>
 
     <entity name="Goods">
-    <string name="name"/>
-    <string name="tnved_code"/>
-    <decimal name="weight"/>
-    <decimal name="quantity"/>
-    <decimal name="price"/>
-    <string name="currency"/>
-    <string name="dvh_number"/>
-    <string name="product_owber"/>
-    <boolean name="released"/>
-    <string name="operator_who_registered"/>
-    <string name="operator_who_released"/>
-    <boolean name="deleted"/>
-    <string name="transit_declaration_number"/>
-    <datetime name="arrival_date"/>
-    <datetime name="departure_date"/>
-    <integer name="count_of_days_in_storage" default="1"/>
-    <decimal name="price_for_storage"/>
-  </entity>
-
+        <string name="name"/>                                                                                           <!-- Наименование-->
+        <string name="tnved_code"/>
+        <decimal name="weight"/>
+        <decimal name="quantity"/>
+        <decimal name="price"/>
+        <string name="currency"/>
+        <string name="dvh_number"/>
+        <string name="product_owber"/>
+        <boolean name="released"/>
+        <string name="operator_who_registered"/>
+        <string name="operator_who_released"/>
+        <boolean name="deleted"/>
+        <string name="transit_declaration_number"/>
+        <datetime name="arrival_date"/>
+        <datetime name="departure_date"/>
+        <integer name="count_of_days_in_storage" default="1"/>
+        <decimal name="price_for_storage"/>
+    </entity>
 </domain-models>

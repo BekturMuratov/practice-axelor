@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <domain-models xmlns="http://axelor.com/xml/ns/domain-models"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
-  <module name="SVH" package="com.axelor.apps.svh.db"/>
-  <sequence name="registration.sequence" increment="1" prefix="SVH"/>
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
 
-  <entity name="Registration">
-    <string name="uId" sequence="registration.sequence" title="UId"/>
-    <datetime name="createdOn" title="Created on"/>
-    <string name="transport_type" selection="svh.registration.transport_types_selections"/>
-    <string name="plate_no" title="PlateNo"/>
-    <string name="plate_no_trailer" title="PlateNo trailer"/>
-    <string name="serial_number" title="Serial number"/>
-    <string name="vin_code" title="VIN code"/>
-    <decimal name="weight" title="Weight"/>
-    <decimal name="calculated_amount" title="calculated amount"/>
+    <module name="SVH" package="com.axelor.apps.svh.db"/>
 
-      <track>
-          <field name="transport_type" on="UPDATE" />
-          <field name="plate_no" on="UPDATE" />
-          <field name="plate_no_trailer" on="UPDATE" />
-          <field name="serial_number" on="UPDATE" />
-          <field name="vin_code" on="UPDATE" />
-          <field name="weight" on="UPDATE" />
-          <field name="calculated_amount" on="ALWAYS" />
+    <sequence name="registration.sequence" increment="1" prefix="SVH"/>
+    <entity name="Registration">
+        <string name="uId" sequence="registration.sequence" title="UId"/>
+        <datetime name="createdOn" title="Created on"/>
+        <string name="transport_type" selection="svh.registration.transport_types_selections"/>
+        <string name="plate_no" title="PlateNo"/>
+        <string name="plate_no_trailer" title="PlateNo trailer"/>
+        <string name="serial_number" title="Serial number"/>
+        <string name="vin_code" title="VIN code"/>
+        <decimal name="weight" title="Weight"/>
+        <decimal name="calculated_amount" title="calculated amount"/>
+
+        <track>
+            <field name="transport_type" on="UPDATE" />
+            <field name="plate_no" on="UPDATE" />
+            <field name="plate_no_trailer" on="UPDATE" />
+            <field name="serial_number" on="UPDATE" />
+            <field name="vin_code" on="UPDATE" />
+            <field name="weight" on="UPDATE" />
+            <field name="calculated_amount" on="ALWAYS" />
       </track>
   </entity>
-
 </domain-models>

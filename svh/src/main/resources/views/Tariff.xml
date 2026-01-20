@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <object-views xmlns="http://axelor.com/xml/ns/object-views"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
 
-  <grid title="Tariff" name="tariff-grid" model="com.axelor.apps.svh.db.Tariff">
-    <field name="name"/>
-    <field name="valid_from"/>
-    <field name="valid_to"/>
-    <field name="tariff_rule"/>
-  </grid>
+    <grid title="Tariff" name="tariff-grid" model="com.axelor.apps.svh.db.Tariff">
+        <field name="name"/>
+        <field name="valid_from"/>
+        <field name="valid_to"/>
+        <field name="tariff_rule"/>
+    </grid>
 
-  <form title="Tariff" name="tariff-form" model="com.axelor.apps.svh.db.Goods">
-    <panel>
-      <field name="name" selection="svh.registration.transport_types_selections"/>
-      <field name="valid_from"/>
-      <field name="valid_to"/>
-    </panel>
-  </form>
-
+    <form title="Tariff" name="tariff-form" model="com.axelor.apps.svh.db.Goods">
+        <panel>
+            <field name="name" selection="svh.registration.transport_types_selections"/>
+            <field name="valid_from"/>
+            <field name="valid_to"/>
+        </panel>
+    </form>
 </object-views>
