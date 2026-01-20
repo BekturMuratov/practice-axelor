@@ -30,11 +30,12 @@
           order="100"
           action="action-tariff-rules-list"/>                                                                      <!--Страница список тарифов -->
 
-    <menuitem name="report-list"
-              parent="setting-list"
-              title="Отчеты"
-              order="100"
-              action="svh.revenue.chart.action-view" />
+    <menuitem
+            name="report-list"
+            parent="setting-list"
+            title="Отчеты"
+            order="100"
+            action="svh.revenue.chart.action-view"/>
 
 
     <action-view name="action-registration-list" title="Registration"
@@ -55,9 +56,10 @@
         <view type="form" name="tariff-rules-form"/>
      </action-view>
 
-    <action-view name="svh.revenue.chart.action-view" title="Отчеты"
+    <action-view name="svh.revenue.chart.action-view"
+                 title="Отчеты"
                  model="com.axelor.apps.svh.db.Registration">
-        <view type="chart" name="report-revenue-list"/>
+        <view type="form" name="report-revenue-list"/>
     </action-view>
 
 </object-views>
