@@ -4,14 +4,7 @@
                xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
 
     <module name="SVH" package="com.axelor.apps.svh.db"/>
-
-    <entity name="TariffRule">
-        <string name="name"/>
-        <many-to-one name="tariff" ref="com.axelor.apps.svh.db.Tariff"/>
-        <integer name="start_day"/>
-        <integer name="end_day"/>
-        <decimal name="price_per_day"/>
-        <decimal name="min_weight"/>
-        <decimal name="max_weight"/>
-  </entity>
+    <entity name="AllCountries">
+        <string name="name" title="name" />
+    </entity>
 </domain-models>

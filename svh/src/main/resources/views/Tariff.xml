@@ -5,16 +5,29 @@
 
     <grid title="Tariff" name="tariff-grid" model="com.axelor.apps.svh.db.Tariff">
         <field name="name"/>
-        <field name="valid_from"/>
-        <field name="valid_to"/>
-        <field name="tariff_rule"/>
+        <field name="start_day"/>
+        <field name="end_day"/>
+        <field name="price_per_day"/>
+        <field name="min_weight"/>
+        <field name="max_weight"/>
     </grid>
 
-    <form title="Tariff" name="tariff-form" model="com.axelor.apps.svh.db.Goods">
-        <panel>
-            <field name="name" selection="svh.registration.transport_types_selections"/>
-            <field name="valid_from"/>
-            <field name="valid_to"/>
+    <form title="Tariff" name="tariff-form" model="com.axelor.apps.svh.db.Tariff">
+        <panel title="General">
+            <field name="name"
+                   selection="svh.registration.transport_types_selections"
+                   required="true"/>
+        </panel>
+
+        <panel title="Days range">
+            <field name="start_day" required="true"/>
+            <field name="end_day" required="true"/>
+        </panel>
+
+        <panel title="Pricing">
+            <field name="price_per_day" required="true"/>
+            <field name="min_weight"/>
+            <field name="max_weight"/>
         </panel>
     </form>
 </object-views>

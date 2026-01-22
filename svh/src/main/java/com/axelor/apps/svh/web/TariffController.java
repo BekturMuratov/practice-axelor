@@ -19,41 +19,43 @@ public class TariffController {
     @Transactional
     public void calculateTariff(ActionRequest request, ActionResponse response) {
 
-        Object transportObj = request.getContext().get("transport_type"); // select поле
-        Object createdObj = request.getContext().get("createdOn"); // дата приезда
+        Object transportObj = request.getContext().get("transport_type");
+        Object createdObj = request.getContext().get("createdOn");
         BigDecimal weight = (BigDecimal) request.getContext().get("weight");
 
-        System.out.println("transportObject " + transportObj);
-
-                                                                                                                        // Проверка transportType
-        if (!(transportObj instanceof String) || ((String) transportObj).isBlank()) {
+        if (transportObj == null || transportObj.toString().isBlank()) {
             response.setError("Заполните тип транспорта");
             return;
         }
-        String transportType = (String) transportObj;
+        String transportType = transportObj.toString();
 
-                                                                                                                        // Проверка createdOn
-        if (!(createdObj instanceof LocalDateTime)) {
-            response.setError("Неверный формат даты createdOn");
-            return;
+        LocalDate createdDate;
+        if (createdObj instanceof LocalDateTime) {
+            createdDate = ((LocalDateTime) createdObj).toLocalDate();
+        } else {
+            createdDate = LocalDate.now();
         }
-        LocalDate createdDate = ((LocalDateTime) createdObj).toLocalDate();
 
-                                                                                                                        // Количество дней = difference between createdOn и today
         LocalDate today = LocalDate.now();
         long daysBetween = ChronoUnit.DAYS.between(createdDate, today);
-        int days = (int) (daysBetween == 0 ? 1 : daysBetween + 1);
+
+        if (daysBetween < 0) {
+            response.setError("Дата создания не может быть в будущем");
+            return;
+        }
+
+        int days = (int) daysBetween + 1;
 
         try {
-            BigDecimal totalPrice = tariffService.calculateTariff(transportType, days, weight);
-            System.out.println("calculated_amount" + totalPrice);
+            BigDecimal totalPrice =
+                    tariffService.calculateTariff(transportType, days, weight);
 
             response.setValue("calculated_amount", totalPrice);
 
         } catch (IllegalArgumentException e) {
             response.setError(e.getMessage());
         } catch (Exception e) {
-            response.setError("Ошибка при расчёте тарифа: " + e.getMessage());
+            response.setError("Ошибка при расчёте тарифа");
         }
     }
 }

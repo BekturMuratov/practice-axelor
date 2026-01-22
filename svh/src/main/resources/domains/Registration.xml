@@ -17,7 +17,11 @@
         <decimal name="weight" title="Weight"/>
         <decimal name="calculated_amount" title="calculated amount"/>
         <many-to-many name="tariff" ref="com.axelor.apps.svh.db.Tariff"/>
-
+        <string name="drivers_full_name" title="Driver's full name" />
+        <string name="phone_number" title="Phone Number" />
+        <string name="number_of_transit_declaration" title="Number Of Transit Declaration" />
+        <many-to-one name="country" ref="com.axelor.apps.svh.db.AllCountries" />
+        <many-to-many name="services" ref="com.axelor.apps.svh.db.Services" />
         <track>
             <field name="transport_type"/>
             <field name="plate_no"/>
