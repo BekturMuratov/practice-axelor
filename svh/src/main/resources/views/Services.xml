@@ -3,15 +3,17 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
 
-    <grid title="Services" name="services-grid" model="com.axelor.apps.svh.db.AllCountries">
-        <field name="name_of_service" title="name of service" />
-        <field name="price_for_service" title="price for service" />
+    <grid title="Services" name="services-grid" model="com.axelor.apps.svh.db.Services">
+        <field name="name_of_service" title="Name of Service" />
+        <field name="price_for_service" title="Price for Service" />
+        <field name="amount" title="Amount" />
     </grid>
 
-    <form title="Services" name="services-form" model="com.axelor.apps.svh.db.AllCountries" width="large">
+    <form title="Services" name="services-form" model="com.axelor.apps.svh.db.Services" width="large">
         <panel>
-            <field name="name_of_service" title="name of service" />
-            <field name="price_for_service" title="price for service" />
+            <field name="name_of_service" title="Name of Service" />
+            <field name="price_for_service" title="Price for Service" />
+            <field name="amount" title="Amount" />
         </panel>
     </form>
 

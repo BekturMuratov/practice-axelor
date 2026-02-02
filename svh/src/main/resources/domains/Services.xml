@@ -4,8 +4,12 @@
                xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
 
     <module name="SVH" package="com.axelor.apps.svh.db"/>
+
     <entity name="Services">
         <string name="name_of_service" title="name_of_service" />
         <decimal name="price_for_service" title="price_for_service" />
+        <decimal name="amount" title="amount" />
+        <many-to-one name="registration" ref="com.axelor.apps.svh.db.Registration" />
     </entity>
+
 </domain-models>

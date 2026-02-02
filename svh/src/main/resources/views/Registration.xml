@@ -51,30 +51,23 @@
         </panel>
 
         <panel name="servicesPanel">
-            <field name="services"
-                   widget="grid"
-                   grid-view="services-grid"
-                   colSpan="12"/>
+            <field name="services" widget="grid" grid-view="services-grid" colSpan="12"/>
         </panel>
-
 
         <panel name="CalculatePanel" sidebar="true" title="Calculate Panel" showIf="id !=null &amp;&amp; transport_type != 'COMPANY_CAR'">
             <field name="calculated_amount" />
             <field name="number_of_transit_declaration" />
             <button name="Calculate" title="Calculate" onClick="tariff.calculate"/>
+            <field name="services_amount" />
+            <button name="Calculate Service" title="Calculate Service" onClick="service.calculateService" />
         </panel>
-
-
 
         <panel name="formActionsPanel"
                sidebar="true"
                title="Actions">
-
             <button name="saveBtn"  title="Save"  onClick="save" color="green"/>
-
             <button name="cancelBtn" title="Cancel" onClick="cancel" color="red" />
         </panel>
-
 
         <panel-mail>
             <mail-messages/>
@@ -92,4 +85,9 @@
     <action-method name="registration.normalize">
         <call class="com.axelor.apps.svh.web.RegistrationController" method="normalizeOnChange"/>
     </action-method>
+
+    <action-method name="service.calculateService">
+        <call class="com.axelor.apps.svh.web.ServiceController" method="calculationService"/>
+    </action-method>
+
 </object-views>
