@@ -1,16 +1,26 @@
 package com.axelor.apps.svh.web;
 
 import com.axelor.apps.svh.db.Registration;
+import com.axelor.apps.svh.db.Services;
+import com.axelor.apps.svh.db.repo.RegistrationRepository;
 import com.axelor.apps.svh.service.RegistrationService;
 import com.axelor.inject.Beans;
 import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
+import com.google.inject.Inject;
 
+import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class RegistrationController {
+
+    @Inject
+    private RegistrationRepository registrationRepository;
+
+    @Inject
+    private RegistrationService registrationService;
                                                                                                                         //Устанавливает дату создания при первом сохранении
     public void setCurrentDate(ActionRequest request, ActionResponse response) {
         Registration registration =
@@ -110,5 +120,33 @@ public class RegistrationController {
                 today.withDayOfYear(1),
                 today
         ));
+    }
+
+
+    public void calculateTotal(ActionRequest request, ActionResponse response) {
+        Registration registration = request.getContext().asType(Registration.class);
+
+        if(registration == null || registration.getId() == null) {
+            response.setNotify("Сначала сохраните регистрацию");
+            return;
+        }
+
+        Registration regFromDb = registrationRepository.find(registration.getId());
+
+        if(regFromDb == null) {
+            response.setError("Registration не найден");
+            return;
+        }
+
+        try {
+            BigDecimal totalAmount = registrationService.calculateTotalForRegistration(regFromDb);
+
+            response.setValue("total_amount", totalAmount);
+        }
+        catch (IllegalArgumentException | IllegalStateException e) {
+            response.setNotify(e.getMessage());
+        }
+
+
     }
 }

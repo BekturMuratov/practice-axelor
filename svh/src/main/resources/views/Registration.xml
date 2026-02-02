@@ -6,6 +6,7 @@
     <grid title="Registration" name="registration-grid" model="com.axelor.apps.svh.db.Registration">
         <field name="uId"/>
         <field name="createdOn" title="Create On"/>
+        <field name="releasedOn" title="Released On"/>
         <field name="transport_type" widget="singleSelect"/>
         <field name="drivers_full_name"  />
         <field name="phone_number" widget="phone" x-initial-country="KG" />
@@ -50,16 +51,21 @@
             <field name="weight"/>
         </panel>
 
-        <panel name="servicesPanel">
-            <field name="services" widget="grid" grid-view="services-grid" colSpan="12"/>
+        <panel name="servicesPanel" showIf="id != null">
+            <field name="services"
+                   widget="grid"
+                   grid-view="services-grid"
+                   editable="true"
+                   colSpan="12"
+                   canSelect="true"
+            />
         </panel>
 
         <panel name="CalculatePanel" sidebar="true" title="Calculate Panel" showIf="id !=null &amp;&amp; transport_type != 'COMPANY_CAR'">
             <field name="calculated_amount" />
-            <field name="number_of_transit_declaration" />
-            <button name="Calculate" title="Calculate" onClick="tariff.calculate"/>
             <field name="services_amount" />
-            <button name="Calculate Service" title="Calculate Service" onClick="service.calculateService" />
+            <field name="total_amount" title="total_amount" />
+            <button name="Calculate total" title="Calculate total" onClick="registration.calculateAll" />
         </panel>
 
         <panel name="formActionsPanel"
@@ -89,5 +95,17 @@
     <action-method name="service.calculateService">
         <call class="com.axelor.apps.svh.web.ServiceController" method="calculationService"/>
     </action-method>
+
+
+    <action-method name="registration.calculateTotal">
+        <call class="com.axelor.apps.svh.web.RegistrationController" method="calculateTotal"/>
+    </action-method>
+
+
+    <action-group name="registration.calculateAll">
+        <action name="tariff.calculate" />
+        <action name="service.calculateService"/>
+        <action name="registration.calculateTotal"/>
+    </action-group>
 
 </object-views>

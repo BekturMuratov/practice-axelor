@@ -5,28 +5,20 @@ import com.axelor.apps.svh.db.Services;
 import com.axelor.apps.svh.service.ServicesService;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class ServiceImpl implements ServicesService {
 
-
     @Override
     public BigDecimal calculationServiceAmount(Registration registration) {
-        if (registration.getServices() == null) {
+
+        if (registration == null || registration.getServices() == null) {
             return BigDecimal.ZERO;
         }
 
         return registration.getServices().stream()
-                .filter(s -> s.getPrice_for_service() != null && s.getAmount() != null)
-                .map(s -> s.getPrice_for_service().multiply(s.getAmount()))
+                .map(Services::getPrice_for_service)              // берем amount
+                .filter(amount -> amount != null)      // защита от null
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    private boolean isValidService(Services service) {
-        return service.getPrice_for_service() != null
-                && service.getAmount() != null;
-    }
-
-    private BigDecimal calculateLineAmount(Services service) {
-        return service.getPrice_for_service().multiply(service.getAmount());
     }
 }

@@ -6,17 +6,14 @@
     <module name="SVH" package="com.axelor.apps.svh.db"/>
 
     <entity name="Tariff">
-        <string name="name"
-                title="Transport type"
-                selection="svh.registration.transport_types_selections"/>
-
-        <integer name="start_day"/>
-        <integer name="end_day"/>
-
-        <decimal name="price_per_day"/>
-
-        <decimal name="min_weight"/>
-        <decimal name="max_weight"/>
+        <string name="name" title="name"/>
+        <datetime name="startDateTime" title="startDateTime"/>
+        <datetime name="endDateTime" title="endDateTime"/>
+        <decimal name="price_per_day" title="price_per_day"/>
+        <string name="transport_type" selection="svh.registration.transport_types_selections"/>
+        <decimal name="min_weight" title="min_weight"/>
+        <decimal name="max_weight" title="max_weight"/>
     </entity>
+
 
 </domain-models>

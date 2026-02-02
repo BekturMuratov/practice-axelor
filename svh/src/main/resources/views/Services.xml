@@ -15,6 +15,7 @@
             <field name="price_for_service" title="Price for Service" />
             <field name="amount" title="Amount" />
         </panel>
+
     </form>
 
 </object-views>
