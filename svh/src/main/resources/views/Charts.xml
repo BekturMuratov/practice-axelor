@@ -1,168 +1,116 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <object-views xmlns="http://axelor.com/xml/ns/object-views"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="
-                http://axelor.com/xml/ns/object-views
-                http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
 
-    <!-- ================= DASHBOARD ================= -->
-
-    <form title="Revenue by Day — Transport Types"
-          name="report-revenue-dashboard"
-          model="com.axelor.apps.svh.db.Registration"
-          width="large">
-
-        <panel cols="2">
-
-            <panel>
-                <panel-dashlet action="chart:svh.chart.revenue.freight"/>
-            </panel>
-
-            <panel>
-                <panel-dashlet action="chart:svh.chart.revenue.special"/>
-            </panel>
-
-            <panel>
-                <panel-dashlet action="chart:svh.chart.revenue.car_carrier"/>
-            </panel>
-
-            <panel>
-                <panel-dashlet action="chart:svh.chart.revenue.passenger"/>
-            </panel>
-
-            <panel>
-                <panel-dashlet action="chart:svh.chart.revenue.company_car"/>
-            </panel>
-
-        </panel>
-    </form>
-
-    <!-- ================= INIT TODAY ================= -->
-
-    <action-attrs name="svh.chart.onInit.today">
-        <attribute for="toDateTime" name="value" expr="eval:__datetime__"/>
-        <attribute for="fromDateTime" name="value"
-                   expr="eval:__datetime__.withHour(0).withMinute(0).withSecond(0)"/>
-    </action-attrs>
-
-    <!-- ================= FREIGHT (BAR) ================= -->
-
+    <!-- ================= FREIGHT ================= -->
     <chart name="svh.chart.revenue.freight"
-           title="FREIGHT — Revenue per Day"
-           onInit="svh.chart.onInit.today">
-
+           title="Грузовые АТС — доход по дням">
         <search-fields>
-            <field type="datetime" name="fromDateTime"/>
-            <field type="datetime" name="toDateTime"/>
+            <field name="fromDateTime" type="datetime"/>
+            <field name="toDateTime" type="datetime"/>
         </search-fields>
-
         <dataset type="jpql">
             <![CDATA[
-                SELECT
-                    FUNCTION('DATE', self.createdOn) AS day,
-                    SUM(self.calculated_amount) AS amount
+                SELECT self.createdOn AS day, SUM(self.calculated_amount) AS amount
                 FROM com.axelor.apps.svh.db.Registration self
                 WHERE self.createdOn BETWEEN :fromDateTime AND :toDateTime
                   AND self.transport_type = 'FREIGHT'
-                GROUP BY FUNCTION('DATE', self.createdOn)
-                ORDER BY day
+                GROUP BY self.createdOn
+                ORDER BY self.createdOn
             ]]>
         </dataset>
-
         <category key="day" type="date"/>
-        <series key="amount" type="bar" title="Freight Revenue"/>
+        <series key="amount" type="bar" title="Доход"/>
+        <config name="colors" value="#1f77b4"/>
     </chart>
 
-    <!-- ================= SPECIAL (LINE) ================= -->
-
+    <!-- ================= SPECIAL ================= -->
     <chart name="svh.chart.revenue.special"
-           title="SPECIAL — Revenue per Day"
-           onInit="svh.chart.onInit.today">
-
+           title="Спецтехника — доход по дням">
+        <search-fields>
+            <field name="fromDateTime" type="datetime"/>
+            <field name="toDateTime" type="datetime"/>
+        </search-fields>
         <dataset type="jpql">
             <![CDATA[
-                SELECT
-                    FUNCTION('DATE', self.createdOn) AS day,
-                    SUM(self.calculated_amount) AS amount
+                SELECT self.createdOn AS day, SUM(self.calculated_amount) AS amount
                 FROM com.axelor.apps.svh.db.Registration self
                 WHERE self.createdOn BETWEEN :fromDateTime AND :toDateTime
                   AND self.transport_type = 'SPECIAL'
-                GROUP BY FUNCTION('DATE', self.createdOn)
-                ORDER BY day
+                GROUP BY self.createdOn
+                ORDER BY self.createdOn
             ]]>
         </dataset>
-
         <category key="day" type="date"/>
-        <series key="amount" type="line" title="Special Revenue"/>
+        <series key="amount" type="pie" title="Доход"/>
+        <config name="colors" value="#ff7f0e"/>
     </chart>
 
-    <!-- ================= CAR CARRIER (AREA) ================= -->
-
+    <!-- ================= CAR CARRIER ================= -->
     <chart name="svh.chart.revenue.car_carrier"
-           title="CAR CARRIER — Revenue per Day"
-           onInit="svh.chart.onInit.today">
-
+           title="Автовозы — доход по дням">
+        <search-fields>
+            <field name="fromDateTime" type="datetime"/>
+            <field name="toDateTime" type="datetime"/>
+        </search-fields>
         <dataset type="jpql">
             <![CDATA[
-                SELECT
-                    FUNCTION('DATE', self.createdOn) AS day,
-                    SUM(self.calculated_amount) AS amount
+                SELECT self.createdOn AS day, SUM(self.calculated_amount) AS amount
                 FROM com.axelor.apps.svh.db.Registration self
                 WHERE self.createdOn BETWEEN :fromDateTime AND :toDateTime
                   AND self.transport_type = 'CAR_CARRIER'
-                GROUP BY FUNCTION('DATE', self.createdOn)
-                ORDER BY day
+                GROUP BY self.createdOn
+                ORDER BY self.createdOn
             ]]>
         </dataset>
-
         <category key="day" type="date"/>
-        <series key="amount" type="area" title="Car Carrier Revenue"/>
+        <series key="amount" type="area" title="Доход"/>
+        <config name="colors" value="#2ca02c"/>
     </chart>
 
-    <!-- ================= PASSENGER (LINE) ================= -->
-
+    <!-- ================= PASSENGER ================= -->
     <chart name="svh.chart.revenue.passenger"
-           title="PASSENGER — Revenue per Day"
-           onInit="svh.chart.onInit.today">
-
+           title="Легковые авто — доход по дням">
+        <search-fields>
+            <field name="fromDateTime" type="datetime"/>
+            <field name="toDateTime" type="datetime"/>
+        </search-fields>
         <dataset type="jpql">
             <![CDATA[
-                SELECT
-                    FUNCTION('DATE', self.createdOn) AS day,
-                    SUM(self.calculated_amount) AS amount
+                SELECT self.createdOn AS day, SUM(self.calculated_amount) AS amount
                 FROM com.axelor.apps.svh.db.Registration self
                 WHERE self.createdOn BETWEEN :fromDateTime AND :toDateTime
                   AND self.transport_type = 'PASSENGER'
-                GROUP BY FUNCTION('DATE', self.createdOn)
-                ORDER BY day
+                GROUP BY self.createdOn
+                ORDER BY self.createdOn
             ]]>
         </dataset>
-
         <category key="day" type="date"/>
-        <series key="amount" type="line" title="Passenger Revenue"/>
+        <series key="amount" type="pie" title="Доход"/>
+        <config name="colors" value="#d62728"/>
     </chart>
 
-    <!-- ================= COMPANY CAR (BAR) ================= -->
-
+    <!-- ================= COMPANY CAR ================= -->
     <chart name="svh.chart.revenue.company_car"
-           title="COMPANY CAR — Revenue per Day"
-           onInit="svh.chart.onInit.today">
-
+           title="Служебные авто — доход по дням">
+        <search-fields>
+            <field name="fromDateTime" type="datetime"/>
+            <field name="toDateTime" type="datetime"/>
+        </search-fields>
         <dataset type="jpql">
             <![CDATA[
-                SELECT
-                    FUNCTION('DATE', self.createdOn) AS day,
-                    SUM(self.calculated_amount) AS amount
+                SELECT self.createdOn AS day, SUM(self.calculated_amount) AS amount
                 FROM com.axelor.apps.svh.db.Registration self
                 WHERE self.createdOn BETWEEN :fromDateTime AND :toDateTime
                   AND self.transport_type = 'COMPANY_CAR'
-                GROUP BY FUNCTION('DATE', self.createdOn)
-                ORDER BY day
+                GROUP BY self.createdOn
+                ORDER BY self.createdOn
             ]]>
         </dataset>
-
         <category key="day" type="date"/>
-        <series key="amount" type="bar" title="Company Car Revenue"/>
+        <series key="amount" type="pie" title="Доход"/>
+        <config name="colors" value="#9467bd"/>
     </chart>
 
 </object-views>

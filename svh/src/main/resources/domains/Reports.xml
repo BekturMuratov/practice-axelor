@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+    <module name="SVH" package="com.axelor.apps.svh.db"/>
+
+    <entity name="Reports">
+
+        <many-to-one
+                name="owner"
+                ref="com.axelor.auth.db.User"
+                required="true"/>
+        <datetime name="report_start_date"/>
+        <datetime name="report_end_date"/>
+        <decimal name="all_cars_total"/>
+        <decimal name="all_services_total"/>
+    </entity>
+
+</domain-models>

@@ -8,18 +8,18 @@
     <menuitem name="registration-list" title="Registration"
               parent="menu-svh-app" action="action-registration-list"/>                                                 <!--Страница регистрации товаров -->
 
-    <menuitem name="setting-list" parent="menu-svh-app" title="Settings"/>
+    <menuitem name="reports-list" title="Reports" parent="menu-svh-app" action="action-reports-list" />
+    <menuitem name="charts-list" title="Charts" parent="menu-svh-app" action="action-charts-list" />
+
+    <menuitem name="references-list" parent="menu-svh-app" title="Reference Books"/>
 
     <menuitem name="tariffs-list" title="Tariffs"
-              parent="setting-list" action="action-tariff-list"/>                                                       <!--Страница список тарифов -->
-
-    <menuitem name="report-list" title="Reports"
-              parent="setting-list" action="svh.revenue.chart.action-view"/>
+              parent="references-list" action="action-tariff-list"/>                                                       <!--Страница список тарифов -->
 
     <menuitem name="all-countries-list" title="All Countries"
-              parent="setting-list"  action="action-all-countries" />
+              parent="references-list"  action="action-all-countries" />
 
-    <menuitem name="services-list" title="Services" parent="setting-list" action="action-services" />
+    <menuitem name="services-list" title="Services" parent="references-list" action="action-services" />
 
     <action-view name="action-tariff-list" title="Tariffs"
                  model="com.axelor.apps.svh.db.Tariff">
@@ -34,10 +34,7 @@
         <view type="form" name="registration-form"/>
     </action-view>
                                                                                                                         <!--Страница графика -->
-    <action-view name="svh.revenue.chart.action-view" title="Reports"
-                 model="com.axelor.apps.svh.db.Registration">
-        <view type="form" name="report-revenue-list"/>
-    </action-view>
+
 
     <action-view name="action-all-countries" title="All Countries"
          model="com.axelor.apps.svh.db.AllCountries">
@@ -49,6 +46,16 @@
     <action-view name="action-services" title="Services" model="com.axelor.apps.svh.db.Services">
         <view type="grid" name="services-grid" />
         <view type="form" name="services-form" />
+    </action-view>
+
+
+    <action-view name="action-reports-list" title="Reports" model="com.axelor.apps.svh.db.Reports">
+        <view type="grid" name="reports-grid" />
+        <view type="form" name="reports-form" />
+    </action-view>
+
+    <action-view name="action-charts-list" title="Charts" model="com.axelor.apps.svh.db.Registration">
+        <view type="form" name="svh.revenue.dashboard" />
     </action-view>
 
 </object-views>

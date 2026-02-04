@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views
+        xmlns="http://axelor.com/xml/ns/object-views"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://axelor.com/xml/ns/object-views
+        http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+    <!-- GRID -->
+    <grid
+            name="reports-grid"
+            title="Reports"
+            model="com.axelor.apps.svh.db.Reports">
+
+        <field name="report_start_date" />
+        <field name="report_end_date"/>
+        <field name="all_cars_total"/>
+        <field name="all_services_total"/>
+        <field name="owner"/>
+
+    </grid>
+
+    <!-- FORM -->
+    <form
+            name="reports-form"
+            title="Registration Report"
+            width="large"
+            model="com.axelor.apps.svh.db.Reports">
+
+        <!-- Filters -->
+        <panel title="Filters">
+            <field name="report_start_date" widget="date"/>
+            <field name="report_end_date" widget="date"/>
+            <field name="owner"/>
+        </panel>
+
+        <!-- Actions -->
+        <panel sidebar="true" title="Actions">
+
+            <button
+                    name="search"
+                    title="Search"
+                    onClick="reports.getAllTotal"
+                    color="green"/>
+
+            <button
+                    name="export"
+                    title="Export Excel"
+                    onClick="reports.exportRegistrationsByDate"
+                    color="blue"/>
+
+        </panel>
+
+        <!-- Result -->
+        <panel title="Result">
+            <field name="all_cars_total" />
+            <field name="all_services_total" />
+        </panel>
+
+    </form>
+
+
+    <action-method name="reports.getTotalCars">
+        <call class="com.axelor.apps.svh.web.ReportsController" method="getTotalCars"/>
+    </action-method>
+
+    <action-method name="reports.getTotalServices">
+        <call class="com.axelor.apps.svh.web.ReportsController" method="getTotalServices"/>
+    </action-method>
+
+    <action-group name="reports.getAllTotal">
+        <action name="reports.getTotalCars"/>
+        <action name="reports.getTotalServices" />
+    </action-group>
+
+    <action-method name="reports.exportRegistrationsByDate">
+        <call class="com.axelor.apps.svh.web.ReportsController" method="exportRegistrations"/>
+    </action-method>
+
+</object-views>

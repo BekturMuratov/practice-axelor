@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+    <form name="svh.revenue.dashboard"
+          title="Доход по типам АТС"
+          width="large"
+          model="com.axelor.apps.svh.db.Registration">
+
+        <!-- ================= FILTER ================= -->
+        <panel cols="2">
+            <field name="fromDateTime" type="datetime" title="С"/>
+            <field name="toDateTime" type="datetime" title="По"/>
+        </panel>
+
+        <!-- ================= DASHBOARD CHARTS ================= -->
+        <panel cols="2">
+            <panel-dashlet action="chart:svh.chart.revenue.freight"
+                           expr-search-param-from="eval:__form__.fromDateTime"
+                           expr-search-param-to="eval:__form__.toDateTime"/>
+            <panel-dashlet action="chart:svh.chart.revenue.special"
+                           expr-search-param-from="eval:__form__.fromDateTime"
+                           expr-search-param-to="eval:__form__.toDateTime"/>
+            <panel-dashlet action="chart:svh.chart.revenue.car_carrier"
+                           expr-search-param-from="eval:__form__.fromDateTime"
+                           expr-search-param-to="eval:__form__.toDateTime"/>
+            <panel-dashlet action="chart:svh.chart.revenue.passenger"
+                           expr-search-param-from="eval:__form__.fromDateTime"
+                           expr-search-param-to="eval:__form__.toDateTime"/>
+            <panel-dashlet action="chart:svh.chart.revenue.company_car"
+                           expr-search-param-from="eval:__form__.fromDateTime"
+                           expr-search-param-to="eval:__form__.toDateTime"/>
+        </panel>
+
+    </form>
+
+</object-views>
