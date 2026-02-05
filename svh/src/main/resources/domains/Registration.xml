@@ -20,6 +20,7 @@
         <decimal name="total_amount" title="total_amount" />
         <many-to-many name="tariff" ref="com.axelor.apps.svh.db.Tariff"/>
         <string name="drivers_full_name" title="Driver's full name" />
+        <boolean name="released" default="false" />
         <string name="phone_number" title="Phone Number" />
         <string name="number_of_transit_declaration" title="Number Of Transit Declaration" />
         <many-to-one name="country" ref="com.axelor.apps.svh.db.AllCountries" />

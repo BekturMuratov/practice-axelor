@@ -5,7 +5,7 @@
 
     <!-- ================= FREIGHT ================= -->
     <chart name="svh.chart.revenue.freight"
-           title="Грузовые АТС — доход по дням">
+           title="Freight vehicles - daily income">
         <search-fields>
             <field name="fromDateTime" type="datetime"/>
             <field name="toDateTime" type="datetime"/>
@@ -21,13 +21,13 @@
             ]]>
         </dataset>
         <category key="day" type="date"/>
-        <series key="amount" type="bar" title="Доход"/>
+        <series key="amount" type="bar" title="Income"/>
         <config name="colors" value="#1f77b4"/>
     </chart>
 
     <!-- ================= SPECIAL ================= -->
     <chart name="svh.chart.revenue.special"
-           title="Спецтехника — доход по дням">
+           title="Special equipment - income by day">
         <search-fields>
             <field name="fromDateTime" type="datetime"/>
             <field name="toDateTime" type="datetime"/>
@@ -43,13 +43,13 @@
             ]]>
         </dataset>
         <category key="day" type="date"/>
-        <series key="amount" type="pie" title="Доход"/>
+        <series key="amount" type="pie" title="Income"/>
         <config name="colors" value="#ff7f0e"/>
     </chart>
 
     <!-- ================= CAR CARRIER ================= -->
     <chart name="svh.chart.revenue.car_carrier"
-           title="Автовозы — доход по дням">
+           title="Car carrier - daily income">
         <search-fields>
             <field name="fromDateTime" type="datetime"/>
             <field name="toDateTime" type="datetime"/>
@@ -65,13 +65,13 @@
             ]]>
         </dataset>
         <category key="day" type="date"/>
-        <series key="amount" type="area" title="Доход"/>
+        <series key="amount" type="area" title="Income"/>
         <config name="colors" value="#2ca02c"/>
     </chart>
 
     <!-- ================= PASSENGER ================= -->
     <chart name="svh.chart.revenue.passenger"
-           title="Легковые авто — доход по дням">
+           title="Passenger cars - income by day">
         <search-fields>
             <field name="fromDateTime" type="datetime"/>
             <field name="toDateTime" type="datetime"/>
@@ -87,13 +87,13 @@
             ]]>
         </dataset>
         <category key="day" type="date"/>
-        <series key="amount" type="pie" title="Доход"/>
+        <series key="amount" type="pie" title="Income"/>
         <config name="colors" value="#d62728"/>
     </chart>
 
     <!-- ================= COMPANY CAR ================= -->
     <chart name="svh.chart.revenue.company_car"
-           title="Служебные авто — доход по дням">
+           title="Company cars - daily income">
         <search-fields>
             <field name="fromDateTime" type="datetime"/>
             <field name="toDateTime" type="datetime"/>
@@ -109,7 +109,7 @@
             ]]>
         </dataset>
         <category key="day" type="date"/>
-        <series key="amount" type="pie" title="Доход"/>
+        <series key="amount" type="pie" title="Income"/>
         <config name="colors" value="#9467bd"/>
     </chart>
 

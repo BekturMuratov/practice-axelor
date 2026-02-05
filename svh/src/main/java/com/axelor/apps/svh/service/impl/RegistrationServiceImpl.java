@@ -42,6 +42,10 @@ public class RegistrationServiceImpl implements RegistrationService {
             throw new IllegalArgumentException("Registration = null");
         }
 
+        if(registration.getReleased() != true) {
+            throw new RuntimeException("This registration is released");
+        }
+
         BigDecimal caclulatedAmount = registration.getCalculated_amount();
 
         if(caclulatedAmount == null) {

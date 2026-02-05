@@ -142,6 +142,7 @@ public class RegistrationController {
             BigDecimal totalAmount = registrationService.calculateTotalForRegistration(regFromDb);
 
             response.setValue("total_amount", totalAmount);
+            response.setValue("released", true);
         }
         catch (IllegalArgumentException | IllegalStateException e) {
             response.setNotify(e.getMessage());
