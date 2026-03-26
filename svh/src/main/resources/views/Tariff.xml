@@ -5,29 +5,53 @@
 
     <grid title="Tariff" name="tariff-grid" model="com.axelor.apps.svh.db.Tariff">
         <field name="name"/>
-        <field name="startDateTime"/>
-        <field name="endDateTime"/>
-        <field name="price_per_day"/>
-        <field name="min_weight"/>
-        <field name="max_weight"/>
+        <field name="tariffType"/>
+        <field name="timeCalculationType"/>
+        <field name="baseDays" />
+        <field name="maxWeight"/>
+        <field name="priceUpToWeight"/>
+        <field name="priceUpToWeightAfter"/>
+        <field name="priceAboveWeight" />
+        <field name="priceAboveWeightAfter"/>
+        <field name="dailyPrice" />
+        <field name="priceAfterChange" />
     </grid>
 
-    <form title="Tariff" name="tariff-form" model="com.axelor.apps.svh.db.Tariff">
-        <panel title="General">
-            <field name="name"
-                   selection="svh.registration.transport_types_selections"
-                   required="true"/>
+    <form name="tariff-form"
+          title="Tariff"
+          model="com.axelor.apps.svh.db.Tariff" width="large">
+
+        <panel title="Main Information">
+            <field name="name" colSpan="3"/>
+            <field name="tariffType" colSpan="3"/>
+            <field name="startDateTime" colSpan="3"/>
+            <field name="endDateTime" colSpan="3"/>
         </panel>
 
-        <panel title="Days range">
-            <field name="startDateTime" required="true"/>
-            <field name="endDateTime" required="true"/>
+
+        <!-- Грузовой транспорт -->
+
+        <panel title="Truck tariff"
+               showIf="tariffType == 'TRUCK'">
+            <field name="maxWeight" colSpan="3"/>
+            <field name="priceUpToWeight" colSpan="3"/>
+            <field name="baseDays" colSpan="3"/>
+            <field name="priceUpToWeightAfter" colSpan="3"/>
+            <field name="timeCalculationType" colSpan="3"/>
+            <field name="priceAboveWeight" colSpan="3"/>
+            <field name="priceAboveWeightAfter" colSpan="3"/>
         </panel>
 
-        <panel title="Pricing">
-            <field name="price_per_day" required="true"/>
-            <field name="min_weight"/>
-            <field name="max_weight"/>
+
+        <!-- Автовоз / Спецтехника / Легковой -->
+
+        <panel title="Тариф хранения"
+               showIf="tariffType != 'TRUCK'">
+            <field name="dailyPrice" colSpan="3"/>
+            <field name="timeCalculationType" colSpan="3"/>
+            <field name="baseDays" colSpan="3"/>
+            <field name="priceAfterChange" colSpan="3"/>
         </panel>
+
     </form>
 </object-views>

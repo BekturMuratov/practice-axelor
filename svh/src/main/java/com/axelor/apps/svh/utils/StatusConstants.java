@@ -1,10 +1,10 @@
 package com.axelor.apps.svh.utils;
 
-public interface TransportTypes {
+public interface StatusConstants {
 
-    String FREIGHT = "FREIGHT";                                                                                         // Грузовое АТС
+    String TRUCK = "TRUCK";                                                                                         // Грузовое АТС
     String SPECIAL = "SPECIAL";                                                                                         // Спецтехника
     String CAR_CARRIER = "CAR_CARRIER";                                                                                 // Автовоз
     String PASSENGER = "PASSENGER";                                                                                     // Легковой транспорт
-    String COMPANY_CAR = "COMPANY_CAR";                                                                                 // Служебное авто
+    String COMPANY_CAR = "COMPANY_CAR";
 }

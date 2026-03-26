@@ -15,7 +15,6 @@
         <field name="report_start_date" />
         <field name="report_end_date"/>
         <field name="all_cars_total"/>
-        <field name="all_services_total"/>
         <field name="owner"/>
 
     </grid>
@@ -54,7 +53,6 @@
         <!-- Result -->
         <panel title="Result">
             <field name="all_cars_total" />
-            <field name="all_services_total" />
         </panel>
 
     </form>
@@ -64,14 +62,6 @@
         <call class="com.axelor.apps.svh.web.ReportsController" method="getTotalCars"/>
     </action-method>
 
-    <action-method name="reports.getTotalServices">
-        <call class="com.axelor.apps.svh.web.ReportsController" method="getTotalServices"/>
-    </action-method>
-
-    <action-group name="reports.getAllTotal">
-        <action name="reports.getTotalCars"/>
-        <action name="reports.getTotalServices" />
-    </action-group>
 
     <action-method name="reports.exportRegistrationsByDate">
         <call class="com.axelor.apps.svh.web.ReportsController" method="exportRegistrations"/>

@@ -48,31 +48,6 @@ public class ReportsController {
     }
 
 
-    public void getTotalServices(ActionRequest request, ActionResponse response) {
-      try {
-          String fromStr = request.getContext().get("report_start_date") != null ?
-                  request.getContext().get("report_start_date").toString() : null;
-
-          String toStr = request.getContext().get("report_end_date") != null ?
-                  request.getContext().get("report_end_date").toString() : null;
-
-
-          if(fromStr == null || toStr == null) {
-              response.setError("Report start date и Report end date должны быть указаны");
-              return;
-          }
-
-
-          LocalDate from = parseDate(fromStr);
-          LocalDate to = parseDate(toStr);
-
-          BigDecimal totalServices = registrationService.getAllTotalOfServices(from, to);
-          response.setValue("all_services_total", totalServices);
-          System.out.println("all services total" + totalServices);
-      } catch (Exception e) {
-          response.setError("Ошибка при расчете totalServices: " + e.getMessage());
-      }
-    }
 
     private static final DateTimeFormatter FILE_DATE_FORMAT =
             DateTimeFormatter.ofPattern("yyyy-MM-dd");

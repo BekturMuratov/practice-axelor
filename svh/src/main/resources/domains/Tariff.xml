@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <domain-models xmlns="http://axelor.com/xml/ns/domain-models"
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-               xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+               xsi:schemaLocation="http://axelor.com/xml/ns/domain-models
+               http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
 
     <module name="SVH" package="com.axelor.apps.svh.db"/>
 
     <entity name="Tariff">
-        <string name="name" title="name"/>
-        <datetime name="startDateTime" title="startDateTime"/>
-        <datetime name="endDateTime" title="endDateTime"/>
-        <decimal name="price_per_day" title="price_per_day"/>
-        <string name="transport_type" selection="svh.registration.transport_types_selections"/>
-        <decimal name="min_weight" title="min_weight"/>
-        <decimal name="max_weight" title="max_weight"/>
-    </entity>
+        <string name="name" title="name"/>                                                                              <!-- Названия тарифа -->
+        <datetime name="startDateTime" title="start date time"/>                                                        <!-- Начальная дата действия тарифа -->
+        <datetime name="endDateTime" title="end date time"/>                                                            <!-- Конечная дата действия тарифа -->
+        <string name="tariffType" title="tariff type"  selection="svh.registration.transport_types_selections"/>         <!--Тип ввоза -->
+        <string name="timeCalculationType" title="time сalculation type"
+                selection="svh.tariff.calculation_type.selects"/>                                                        <!--Тип подсчета по времени -->
+        <integer name="baseDays" title="baseDays"/>                                                                      <!-- Кол-во дней с базовой ценой  -->
+        <decimal name="maxWeight" title="maxWeight"/>                                                                    <!-- Макс.кг для товара X кг -->
+        <decimal name="priceUpToWeight"  title="Price up to weight"/>                                                    <!--Хранение груза от 1 кг до x кг (включительно) -->
+        <decimal name="priceUpToWeightAfter"  title="price up to weight after"/>                                         <!--Хранение груза от 1 кг до x кг после изменения цен-->
+        <decimal name="priceAboveWeight"  title="price above weight"/>                                                   <!--Хранение груза свыше x кг  -->
+        <decimal name="priceAboveWeightAfter"  title="price above weight after"/>                                        <!--Хранение груза свыше x кг после изменения цен -->
+        <decimal name="dailyPrice" title="daily price"/>                                                                 <!--Стоимость хранения за день -->
+        <decimal name="priceAfterChange"  title="price after change"/>                                                   <!--Стоимость после дня изменения тарифа -->
 
+    </entity>
 
 </domain-models>

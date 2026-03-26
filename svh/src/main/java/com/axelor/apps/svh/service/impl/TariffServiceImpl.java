@@ -5,107 +5,127 @@ import com.axelor.apps.svh.db.Tariff;
 import com.axelor.apps.svh.db.repo.RegistrationRepository;
 import com.axelor.apps.svh.db.repo.TariffRepository;
 import com.axelor.apps.svh.service.TariffService;
-import com.axelor.apps.svh.utils.TransportTypes;
+
 import com.google.inject.Inject;
-import com.google.inject.persist.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
+
+import static com.axelor.apps.svh.utils.StatusConstants.COMPANY_CAR;
+import static com.axelor.apps.svh.utils.StatusConstants.TRUCK;
 
 public class TariffServiceImpl implements TariffService {
 
     private static final Logger logger = LoggerFactory.getLogger(TariffServiceImpl.class);
 
     @Inject
-    private RegistrationRepository registrationRepository;
+    RegistrationRepository registrationRepository;
 
     @Inject
-    private TariffRepository tariffRepository;
+    TariffRepository tariffRepository;
 
     @Override
-    public BigDecimal calculateTariff(Long registrationId) {
-
-        if (registrationId == null) {
-            throw new IllegalArgumentException("registrationId не может быть null");
+    public BigDecimal calculateTariff(Tariff tariff, int days, BigDecimal weight, String transportType) {
+        if(tariff == null) {
+            return  BigDecimal.ZERO;
         }
 
-        Registration registration = registrationRepository.find(registrationId);
-        if (registration == null) {
-            throw new IllegalArgumentException("Registration не найден");
-        }
+        int baseDays = tariff.getBaseDays();
 
-        String transportType = registration.getTransport_type();
-        if (transportType == null || transportType.isBlank()) {
-            throw new IllegalArgumentException("Transport type не заполнен");
-        }
-
-        // --- ДАТЫ ---
-        LocalDate createdDate = registration.getCreatedOn().toLocalDate();
-        LocalDate releasedDate = registration.getReleasedOn() != null
-                ? registration.getReleasedOn().toLocalDate()
-                : LocalDate.now();
-
-        long days = ChronoUnit.DAYS.between(createdDate, releasedDate) + 1;
-        if (days <= 0) {
-            throw new IllegalArgumentException("Некорректный диапазон дат");
-        }
-
-        logger.debug("Registration ID: {}", registrationId);
-        logger.debug("Transport type: {}", transportType);
-        logger.debug("Created: {}, Released: {}, Days: {}", createdDate, releasedDate, days);
-
-        // --- СЛУЖЕБНОЕ АВТО ---
-        if (TransportTypes.COMPANY_CAR.equals(transportType)) {
+        if(COMPANY_CAR.equals(transportType)) {
             return BigDecimal.ZERO;
         }
 
-        // --- ТАРИФЫ ПО ТИПУ ---
-        List<Tariff> tariffs = tariffRepository.all()
-                .filter("self.name = ?", transportType)
-                .fetch();
+        if(!TRUCK.equals(transportType)) {
+            BigDecimal dailyPrice = tariff.getDailyPrice();
+            BigDecimal afterPrice = tariff.getPriceAfterChange();
 
-        if (tariffs.isEmpty()) {
-            throw new IllegalStateException("Нет тарифов для типа: " + transportType);
-        }
-
-        // --- ТАРИФ ПО ДАТЕ ---
-        Tariff tariff = tariffs.stream()
-                .filter(t -> t.getStartDateTime() != null && t.getEndDateTime() != null)
-                .filter(t -> {
-                    LocalDate start = t.getStartDateTime().toLocalDate();
-                    LocalDate end = t.getEndDateTime().toLocalDate();
-                    return !createdDate.isBefore(start) && !createdDate.isAfter(end);
-                })
-                .findFirst()
-                .orElseThrow(() ->
-                        new IllegalStateException("Нет действующего тарифа на дату: " + createdDate)
-                );
-
-        logger.debug("Selected tariff: {}", tariff);
-
-        BigDecimal total = tariff.getPrice_per_day()
-                .multiply(BigDecimal.valueOf(days));
-
-        // --- ВЕС ТОЛЬКО ДЛЯ FREIGHT ---
-        if (TransportTypes.FREIGHT.equals(transportType)) {
-            BigDecimal weight = registration.getWeight();
-            if (weight == null) {
-                throw new IllegalStateException("Вес обязателен для FREIGHT");
+            if (days <= baseDays) {
+                return dailyPrice.multiply(BigDecimal.valueOf(days));
             }
 
-            if (tariff.getMin_weight() != null && weight.compareTo(tariff.getMin_weight()) < 0 ||
-                    tariff.getMax_weight() != null && weight.compareTo(tariff.getMax_weight()) > 0) {
-                throw new IllegalStateException("Вес вне диапазона тарифа: " + weight);
-            }
 
-            total = total.multiply(weight);
+            int extraDays = days - baseDays;
+
+            return dailyPrice.multiply(BigDecimal.valueOf(baseDays))
+                    .add(afterPrice.multiply(BigDecimal.valueOf(extraDays)));
         }
 
-        logger.debug("Total amount: {}", total);
-        return total;
+        BigDecimal threshold = tariff.getMaxWeight();
+
+        BigDecimal baseRate;
+        BigDecimal afterRate;
+
+        BigDecimal weightBD = weight;
+
+        if (weightBD.compareTo(threshold) < 0) {
+            baseRate = tariff.getPriceUpToWeight();
+            afterRate = tariff.getPriceUpToWeightAfter();
+        } else {
+            baseRate = tariff.getPriceAboveWeight();
+            afterRate = tariff.getPriceAboveWeightAfter();
+        }
+
+        BigDecimal daysBD = BigDecimal.valueOf(days);
+        BigDecimal baseDaysBD = BigDecimal.valueOf(baseDays);
+
+        if (days <= baseDays) {
+            return baseRate
+                    .multiply(weightBD)
+                    .multiply(daysBD);
+        }
+
+        int extraDays = days - baseDays;
+        BigDecimal extraDaysBD = BigDecimal.valueOf(extraDays);
+
+        return baseRate.multiply(weightBD).multiply(baseDaysBD)
+                .add(afterRate.multiply(weightBD).multiply(extraDaysBD));
+    }
+
+    @Override
+    public int calculateStorageDays(LocalDateTime createdOn, LocalDateTime releasedOn) {
+
+        if (createdOn == null) {
+            return 0;
+        }
+
+        LocalDateTime endDate = releasedOn != null ? releasedOn : LocalDateTime.now();
+
+        long days = ChronoUnit.DAYS.between(createdOn, endDate);
+
+        if (days <= 0) {
+            return 1;
+        }
+
+        return (int) days;
+    }
+
+    @Override
+    public BigDecimal calculateTariffByRegistration(Long registrationId) {
+        Registration registration = registrationRepository.find(registrationId);
+
+        String transportType = registration.getTransport_type();
+        Tariff tariff = tariffRepository
+                .all()
+                .filter("self.tariffType =?1", transportType)
+                .fetchOne();
+
+        if(registration == null) {
+            return BigDecimal.ZERO;
+        }
+        BigDecimal weight = registration.getWeight();
+
+        if(weight == null) {
+            return BigDecimal.ZERO;
+        }
+
+        int days = calculateStorageDays(
+                registration.getCreatedOn(),
+                registration.getReleasedOn()
+        );
+
+        return calculateTariff(tariff, days, weight, transportType);
     }
 }

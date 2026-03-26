@@ -8,7 +8,7 @@
     </selection>
 
     <selection name="svh.registration.transport_types_selections">
-        <option value="FREIGHT" color="black">FREIGHT</option>
+        <option value="TRUCK" color="black">TRUCK</option>
         <option value="SPECIAL" color="blue">SPECIAL</option>
         <option value="CAR_CARRIER" color="green">CAR_CARRIER</option>
         <option value="PASSENGER" color="purple">PASSENGER</option>
@@ -18,5 +18,9 @@
     <selection name="svh.tariffs.tariff_types_selections">
         <option value="car">Car</option>
         <option value="goods">Goods</option>
+    </selection>
+
+    <selection name="svh.tariff.calculation_type.selects">
+        <option value="perday" color="green">Perday</option>
     </selection>
 </object-views>

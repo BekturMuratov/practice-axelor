@@ -14,7 +14,6 @@
         <datetime name="report_start_date"/>
         <datetime name="report_end_date"/>
         <decimal name="all_cars_total"/>
-        <decimal name="all_services_total"/>
     </entity>
 
 </domain-models>

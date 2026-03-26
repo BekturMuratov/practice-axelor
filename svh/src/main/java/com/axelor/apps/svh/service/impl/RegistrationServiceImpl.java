@@ -1,7 +1,6 @@
 package com.axelor.apps.svh.service.impl;
 
 import com.axelor.apps.svh.db.Registration;
-import com.axelor.apps.svh.db.Services;
 import com.axelor.apps.svh.db.repo.RegistrationRepository;
 import com.axelor.apps.svh.service.RegistrationService;
 import com.google.inject.Inject;
@@ -20,54 +19,26 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import static com.axelor.apps.svh.utils.StatusConstants.*;
+
 public class RegistrationServiceImpl implements RegistrationService {
 
     @Inject
     RegistrationRepository registrationRepository;
 
-    @Override
-    public BigDecimal getTotalBetween(LocalDate from, LocalDate to) {
-        return registrationRepository.all().filter("self.createdOn >= ? AND self.createdOn < ?",
-                        from.atStartOfDay(),
-                        to.plusDays(1).atStartOfDay()).fetchStream()
-                .map(Registration::getCalculated_amount)
-                .filter(v -> v != null)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
 
-    @Override
-    public BigDecimal calculateTotalForRegistration(Registration registration) {
-
-        if(registration == null) {
-            throw new IllegalArgumentException("Registration = null");
-        }
-
-        if(registration.getReleased() != true) {
-            throw new RuntimeException("This registration is released");
-        }
-
-        BigDecimal caclulatedAmount = registration.getCalculated_amount();
-
-        if(caclulatedAmount == null) {
-            throw new IllegalArgumentException("calculated amount не рассчитан");
-        }
-
-        BigDecimal servicesAmount = BigDecimal.ZERO;
-
-        if(registration.getServices() != null) {
-            servicesAmount = registration.getServices().stream()
-                    .map(Services::getPrice_for_service)
-                    .filter(Objects::nonNull)
-                    .reduce(BigDecimal.ZERO, BigDecimal::add);
-        }
-
-        return caclulatedAmount.add(servicesAmount);
-    }
 
     @Override
     public BigDecimal getAllTotalOfCars(LocalDate from, LocalDate to) {
+
+        Registration registration = new Registration();
+
         if(from == null || to == null) {
             throw new IllegalArgumentException("Date range cannot be null");
+        }
+
+        if (Boolean.TRUE.equals(registration.getReleased())) {
+            throw new RuntimeException("Registration already released");
         }
 
         return registrationRepository.all()
@@ -81,25 +52,6 @@ public class RegistrationServiceImpl implements RegistrationService {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    @Override
-    public BigDecimal getAllTotalOfServices(LocalDate from, LocalDate to) {
-        if(from == null || to == null) {
-            throw new IllegalArgumentException("Date range cannot be null");
-        }
-
-       return registrationRepository.all()
-               .filter("self.createdOn >= ? AND self.createdOn < ?",
-                       from.atStartOfDay(),
-                       to.plusDays(1).atStartOfDay())
-               .fetch()
-               .stream()
-               .filter(r -> r.getServices() != null)
-               .flatMap(r -> r.getServices().stream())
-               .map(s -> s.getPrice_for_service())
-               .filter(a -> a != null && a.compareTo(BigDecimal.ZERO) > 0)
-               .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
     private static final DateTimeFormatter DATE_FORMAT =
             DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -109,8 +61,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         EntityManager em = com.axelor.db.JPA.em();
 
         List<Registration> registrations = em.createQuery(
-                        "SELECT DISTINCT r FROM Registration r " +
-                                "LEFT JOIN FETCH r.services s " +
+                        "SELECT r FROM Registration r " +
                                 "WHERE r.createdOn >= :from AND r.createdOn < :to " +
                                 "ORDER BY r.createdOn ASC", Registration.class)
                 .setParameter("from", from.atStartOfDay())
@@ -122,10 +73,13 @@ public class RegistrationServiceImpl implements RegistrationService {
 
         // ===== HEADER =====
         Row header = sheet.createRow(0);
+
         String[] columns = {
-                "Дата регистрации", "Тип АТС", "Гос Номер", "VIN код",
-                "Стоимость за хранение АТС", "Наименование услуги", "Стоимость за услугу",
-                "Всего за услугу", "Итого"
+                "Дата регистрации",
+                "Тип АТС",
+                "Гос номер",
+                "VIN код",
+                "Стоимость хранения"
         };
 
         for (int i = 0; i < columns.length; i++) {
@@ -137,44 +91,29 @@ public class RegistrationServiceImpl implements RegistrationService {
         // ===== DATA =====
         for (Registration reg : registrations) {
 
-            // Нет услуг
-            if (reg.getServices() == null || reg.getServices().isEmpty()) {
-                Row row = sheet.createRow(rowIdx++);
+            Row row = sheet.createRow(rowIdx++);
 
-                row.createCell(0).setCellValue(reg.getCreatedOn() != null ? reg.getCreatedOn().format(DATE_FORMAT) : "");
-                row.createCell(1).setCellValue(transportTypeRu(reg.getTransport_type()) != null ? transportTypeRu(reg.getTransport_type()) : "");
-                row.createCell(2).setCellValue(reg.getPlate_no() != null ? reg.getPlate_no() : "");
-                row.createCell(3).setCellValue(reg.getVin_code() != null ? reg.getVin_code() : "");
-                row.createCell(4).setCellValue(reg.getCalculated_amount() != null ? reg.getCalculated_amount().doubleValue() : 0);
+            row.createCell(0).setCellValue(
+                    reg.getCreatedOn() != null ? reg.getCreatedOn().format(DATE_FORMAT) : ""
+            );
 
-                row.createCell(5).setCellValue("");
-                row.createCell(6).setCellValue(0);
-                row.createCell(7).setCellValue(0);
-                row.createCell(8).setCellValue(
-                        reg.getCalculated_amount() != null ? reg.getCalculated_amount().doubleValue() : 0
-                );
-                continue;
-            }
+            row.createCell(1).setCellValue(
+                    transportTypeRu(reg.getTransport_type()) != null ?
+                            transportTypeRu(reg.getTransport_type()) : ""
+            );
 
-            // Есть услуги
-            for (Services service : reg.getServices()) {
-                Row row = sheet.createRow(rowIdx++);
+            row.createCell(2).setCellValue(
+                    reg.getPlate_no() != null ? reg.getPlate_no() : ""
+            );
 
-                row.createCell(0).setCellValue(reg.getCreatedOn() != null ? reg.getCreatedOn().toString() : "");
-                row.createCell(1).setCellValue(transportTypeRu(reg.getTransport_type()) != null ? transportTypeRu(reg.getTransport_type()) : "");
-                row.createCell(2).setCellValue(reg.getPlate_no() != null ? reg.getPlate_no() : "");
-                row.createCell(3).setCellValue(reg.getVin_code() != null ? reg.getVin_code() : "");
-                row.createCell(4).setCellValue(reg.getCalculated_amount() != null ? reg.getCalculated_amount().doubleValue() : 0);
+            row.createCell(3).setCellValue(
+                    reg.getVin_code() != null ? reg.getVin_code() : ""
+            );
 
-                row.createCell(5).setCellValue(service.getName_of_service() != null ? service.getName_of_service() : "");
-                row.createCell(6).setCellValue(service.getPrice_for_service() != null ? service.getPrice_for_service().doubleValue() : 0);
-                row.createCell(7).setCellValue(service.getAmount() != null ? service.getAmount().doubleValue() : 0);
-
-                BigDecimal total = (reg.getCalculated_amount() != null ? reg.getCalculated_amount() : BigDecimal.ZERO)
-                        .add(service.getPrice_for_service() != null ? service.getPrice_for_service() : BigDecimal.ZERO);
-
-                row.createCell(8).setCellValue(total.doubleValue());
-            }
+            row.createCell(4).setCellValue(
+                    reg.getCalculated_amount() != null ?
+                            reg.getCalculated_amount().doubleValue() : 0
+            );
         }
 
         // ===== AUTOSIZE =====
@@ -193,18 +132,18 @@ public class RegistrationServiceImpl implements RegistrationService {
         }
 
         switch (type) {
-            case "PASSENGER":
+            case PASSENGER:
                 return "Легковой автомобиль";
-            case "SPECIAL":
+            case SPECIAL:
                 return "Спецтехника";
-            case "CAR_CARRIER":
+            case CAR_CARRIER:
                 return "Автовоз";
-            case "FREIGHT":
+            case TRUCK:
                 return "Грузовой АТС";
-            case "COMPANY_CAR":
+            case COMPANY_CAR:
                 return "Служебное авто";
             default:
-                return type; // если вдруг прилетит что-то неизвестное
+                return type;
         }
     }
 

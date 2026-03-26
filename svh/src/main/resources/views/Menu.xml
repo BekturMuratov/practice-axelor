@@ -19,8 +19,6 @@
     <menuitem name="all-countries-list" title="All Countries"
               parent="references-list"  action="action-all-countries" />
 
-    <menuitem name="services-list" title="Services" parent="references-list" action="action-services" />
-
     <action-view name="action-tariff-list" title="Tariffs"
                  model="com.axelor.apps.svh.db.Tariff">
         <view type="grid" name="tariff-grid"/>
@@ -43,10 +41,7 @@
     </action-view>
 
 
-    <action-view name="action-services" title="Services" model="com.axelor.apps.svh.db.Services">
-        <view type="grid" name="services-grid" />
-        <view type="form" name="services-form" />
-    </action-view>
+
 
 
     <action-view name="action-reports-list" title="Reports" model="com.axelor.apps.svh.db.Reports">
