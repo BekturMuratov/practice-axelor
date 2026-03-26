@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+    <module name="seo"  package="com.axelor.apps.seo.db"/>
+
+    <entity name="EventTracker">
+        <string name="typeOfEvent" title="Type of event"/>                                                              <!-- Тип действия-->
+        <string name="entity" title="Entity"/>                                                                          <!-- Сущность взаимодействия-->
+        <string name="savedData" title="Saved data" max="10000"/>                                                       <!-- Сохраненная информация-->
+        <string name="numberOfRegistration" title="UID"/>                                                               <!-- Номер регистрации-->
+        <many-to-one name="userName" ref="com.axelor.auth.db.User" title="User name"/>                                  <!-- Пользователь-->
+        <many-to-one name="userGroup" ref="com.axelor.auth.db.Group" title="User group"/>                               <!-- Группа пользователя-->
+        <datetime name="eventTime" title="Event time"/>                                                                 <!-- Время события -->
+        <many-to-one name="ccp" title="CCP" ref="com.axelor.apps.seo.db.CustomsCheckpoint"/>                            <!-- ПП -->
+        <string name="clientIp" title="Client IP"/>                                                                     <!-- IP-адрес клиента-->
+        <string name="vehiclePicEntry" title="Vehicle pic uri entry"/>                                                  <!-- Фото въезда-->
+        <string name="vehiclePicExit" title="Vehicle pic uri exit"/>                                                    <!-- Фото выезда-->
+    </entity>
+</domain-models>

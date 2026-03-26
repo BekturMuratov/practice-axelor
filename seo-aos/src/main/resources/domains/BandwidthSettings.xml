@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+    <module name="seo" package="com.axelor.apps.seo.db"/>
+
+    <entity name="BandwidthSettings">
+        <many-to-one name="ccp" title="CCP" ref="com.axelor.apps.seo.db.CustomsCheckpoint"/>                            <!-- КПП-->
+        <datetime name="settingsStartAction" title="Start of the setting action"/>                                      <!-- Начало действия настройки-->
+        <datetime name="settingsEndAction" title="End of the setting action"/>                                          <!-- Окончание действия настройки-->
+        <integer name="maxVehiclesPerHours" title="Maximum Vehicles per hour"/>                                         <!-- Максимум АТС в час-->
+        <decimal name="percentBooking" title="Percent booking"/>                                                        <!-- Процент брони-->
+        <integer name="bookingSlots" title="Booking slots"/>                                                            <!-- Количество слотов для брони-->
+        <decimal name="percentLiveQueue" title="Percent live queue"/>                                                   <!-- Процент живой очереди-->
+        <integer name="liveSlots" title="Live slots"/>                                                                  <!-- Количество слотов для живой очереди-->
+        <integer name="reserve" title="Reserve"/>                                                                       <!-- Резерв-->
+        <string name="hoursOfInactivity" title="Hours of inactivity" selection="seo.booking.slots.select"/>             <!-- Часы неактивности-->
+
+        <track>
+            <field name="settingsStartAction"/>
+            <field name="settingsEndAction"/>
+            <field name="maxVehiclesPerHours"/>
+            <field name="percentBooking"/>
+            <field name="percentLiveQueue"/>
+            <field name="reserve"/>
+            <field name="hoursOfInactivity"/>
+        </track>
+    </entity>
+</domain-models>

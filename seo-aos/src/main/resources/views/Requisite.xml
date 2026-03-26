@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+    <grid title="Requisite" name="seo.requisite-grid" model="com.axelor.apps.seo.db.Requisite"
+          canEdit="false" canNew="false" canDelete="false" canArchive="false" edit-icon="false">
+        <field name="requisiteNumber"/>
+        <field name="requisiteType" widget="singleSelect"/>
+        <field name="registration.uId"/>
+        <field name="booking.uIdBooking"/>
+    </grid>
+
+    <form title="Requisite" name="seo.requisite-form" model="com.axelor.apps.seo.db.Requisite"
+          canAttach="false" canEdit="false" canNew="false" canDelete="false" canArchive="false">
+        <panel>
+            <field name="requisiteNumber" colSpan="3"/>
+            <field name="requisiteType" colSpan="3" widget="singleSelect"/>
+            <field name="registration" readonly="true" target-name="uId" colSpan="3"/>
+            <field name="booking" readonly="true" target-name="uIdBooking" colSpan="3"/>
+        </panel>
+    </form>
+</object-views>

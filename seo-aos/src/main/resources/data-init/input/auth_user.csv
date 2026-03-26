@@ -1,0 +1,7 @@
+"importId";"code";"name";"password";"group.code";"language";"roles.name";"partner.importId";"blocked";"stepStatusSelect";"email";theme;"homeAction";"ccp.specialIdentifier"
+"1";"admin";"Admin";"Admin2024";"admins";"ru";;;"false";"5";;;;0001
+"2";"operator";"Operator";"operator";"OP";"ru";;;"false";"5";;;;0001
+"3";"nopermUser";"User Без пермишинов";"noperm123";"NOP";"ru";;;"false";"5";;;;
+"4";"cameraUser";"Camera User";"cameraUser123";"UCA";"ru";;;"false";"5";;;;
+"5";"admingti";"Admin GTI";"admingti";"AD";"ru";;;"false";"5";;;;0001
+"6";"super";"Super Admin";"super";"SU";"ru";;;"false";"5";;;;0001

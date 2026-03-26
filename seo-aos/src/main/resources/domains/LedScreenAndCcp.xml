@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+    <module name="seo" package="com.axelor.apps.seo.db"/>
+
+    <entity name="LedScreenAndCcp">
+        <integer name="ledId" title="Led screen id"/>                                                                   <!-- ID лед экрана-->
+        <many-to-one name="ccp" title="CCP" ref="com.axelor.apps.seo.db.CustomsCheckpoint"/>                            <!-- КПП-->
+        <boolean name="isActive" title="Is active"/>                                                                    <!-- Активировать -->
+        <string name="locationType" title="Location type" selection="seo.led.screen.type.select"/>                      <!-- Тип расположения-->
+
+        <track>
+            <field name="ledId"/>
+            <field name="isActive"/>
+            <field name="locationType"/>
+        </track>
+    </entity>
+</domain-models>

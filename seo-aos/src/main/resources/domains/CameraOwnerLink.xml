@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+    <module name="seo" package="com.axelor.apps.seo.db" />
+
+    <entity name="CameraOwnerLink">
+        <string name="cameraCode" title="Camera index code"/>                                                           <!-- Номер камеры -->
+        <many-to-one name="ccp" title="CCP" ref="com.axelor.apps.seo.db.CustomsCheckpoint"/>                            <!-- ПП-->
+        <boolean name="createRegistration" title="Create registration"/>                                                <!-- Создать регистрацию-->
+        <string name="typeOfCamera" title="Type of camera" selection="seo.type.of.camera.select"/>                      <!-- Тип въезда-->
+        <boolean name="useCurrentTime" title="Use current time"/>                                                       <!-- Использовать текущее время-->
+        <boolean name="exitControl" title="Exit control"/>                                                              <!-- Контроль выезда-->
+
+        <track>
+            <field name="cameraCode"/>
+            <field name="ccp"/>
+            <field name="createRegistration"/>
+            <field name="typeOfCamera"/>
+            <field name="useCurrentTime"/>
+            <field name="exitControl"/>
+        </track>
+    </entity>
+</domain-models>

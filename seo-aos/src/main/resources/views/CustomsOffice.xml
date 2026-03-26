@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+    <grid title="Customs office" name="seo.customs-office-grid" model="com.axelor.apps.seo.db.CustomsOffice"
+          canEdit="false" canNew="false" canDelete="false" canArchive="false" edit-icon="false">
+        <field name="code"/>
+        <field name="name"/>
+        <field name="fullName"/>
+    </grid>
+
+    <form title="Customs office" name="seo.customs-office-form" model="com.axelor.apps.seo.db.CustomsOffice"
+          canAttach="false" canEdit="false" canNew="false" canDelete="false" canArchive="false">
+        <panel name="mainPanel">
+            <field name="code"/>
+            <field name="name"/>
+            <field name="fullName" colSpan="12"/>
+        </panel>
+    </form>
+</object-views>

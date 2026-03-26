@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+    <form title="Transactions report" name="seo.transactions.report-form" model="com.axelor.utils.db.Wizard"
+          canEdit="true" canSave="false" canNew="false" canArchive="false" canAttach="false"
+          width="large" canDelete="false" onNew="seo.report.transactions.on-new.load.action-group" onLoad="seo.report.transactions.on-new.load.action-group">
+
+        <!--Поисковая панель-->
+        <panel>
+            <field name="fromDateLocal" title="From Date" type="date" x-required="true" colSpan="4" onChange="seo.action-dashboard-report-transactions-refresh-action-group"/>
+            <field name="toDateLocal" title="To Date" type="date" x-required="true" colSpan="4" onChange="seo.action-dashboard-report-transactions-refresh-action-group"/>
+            <field name="$amountDate" title="Amount data" type="integer" colSpan="4" min="20" max="100" onChange="action-dashboard-transaction-report-refresh, set.seo.report.transactions.pages"/>
+        </panel>
+
+        <!--Выбор нужных СВХ-->
+        <panel name="searchForAdmins" sidebar="true" readonly="true">
+            <field name="customsCheckpoint" required="true" type="many-to-many" title="CCP" target="com.axelor.apps.seo.db.CustomsCheckpoint"
+                   target-name="ccpName" canView="false" canNew="false" canEdit="true"
+                   grid-view="seo.custom-checkpoint-for-views-grid" colSpan="12" onChange="seo.action-dashboard-report-transactions-refresh-action-group"/>
+        </panel>
+
+        <!--Примечание-->
+        <panel sidebar="true" title="Note">
+            <static>
+                <![CDATA[
+              The maximum number of entries is 100.
+  ]]>
+            </static>
+            <static>
+                <![CDATA[
+              The minimum number of entries is 20.
+  ]]>
+            </static>
+            <static>
+                <![CDATA[
+              When going beyond these limits, the default number of entries will be shown - 40.
+  ]]>
+            </static>
+            <static>
+                <![CDATA[
+              When changing the page and the number of entries, click on an empty part of the screen so that the changes are displayed on the report.
+  ]]>
+            </static>
+            <static>
+                <![CDATA[
+              If no GTI object is specified, then your GTI object will be taken by default.
+  ]]>
+            </static>
+        </panel>
+
+        <!--Панель денежных сум-->
+        <panel title="Money panel" readonly="true" itemSpan="3">
+            <field name="$totalSumsOkTransactions" type="decimal" title="Total sum for ok transactions" x-scale="3"/>
+        </panel>
+
+        <!--Панель транзакций 250 статус-->
+        <panel title="Transactions">
+            <field name="$transactionsOkPage" min="1" type="integer" title="Page" colSpan="3" onChange="action-dashboard-transaction-report-refresh"/>
+            <field name="$transactionOkPages" min="1" type="integer" readonly="true" title="Amount pages" colSpan="3"/>
+            <field name="$transactionOkAmount" min="1" type="integer" readonly="true" title="Amount" colSpan="3"/>
+            <button name="exportToCsv" title="Export" onClick="com.axelor.apps.seo.web.ReportController:exportTransactionsOk" colSpan="3" icon="fa-print" css="btn-success"/>
+            <panel-dashlet name="dashlet.custom.transaction.ok"
+                           action="dashlet.custom.custom.transaction.ok.action.view" height="500" colSpan="12" css="report-box dashlet-no-dropdown"
+            />
+        </panel>
+    </form>
+
+    <!--Custom таблицы-->
+    <custom name="custom.transaction.ok" title=""  css="report-box dashlet-no-dropdown">
+        <field name="payment_date" title="Payment Date" type="date"/>
+        <field name="operation_type" title="Operation Type" type="string" selection="seo.payment.operation.type.select"/>
+        <field name="amount" title="Transaction amount" type="decimal" x-scale="3"/>
+        <field name="requisite" title="Requisite" type="string"/>
+        <field name="ccp" title="CCP" type="string"/>
+        <field name="status" title="Status" type="string"/>
+        <dataset type="rpc">
+            com.axelor.apps.seo.web.ReportController:getTransactionsOk
+        </dataset>
+        <template>
+            <![CDATA[
+            <style>
+                .table {
+                    table-layout: fixed;
+                width: 100%;
+                overflow-x: auto;
+                min-width: 1000px;
+            }
+                .table thead th {
+                    vertical-align: middle;
+                width: 150px;
+                position: relative;
+            }
+                .table thead th .slick-sort-indicator {
+                visibility: hidden;
+                position: absolute;
+            }
+                .table tbody tr {
+                height: auto;
+            }
+                .table tbody tr td {
+                height: auto;
+                white-space: normal;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                word-break: normal;
+                width: 150px;
+            }
+            </style>
+            <div style="max-height: 450px; overflow-y: auto; max-width: 100%; white-space: wrap;">
+                <report-table
+                        data='data'
+                        columns='payment_date, operation_type, amount, requisite, ccp, status'
+                />
+            </div>
+            ]]>
+        </template>
+    </custom>
+
+    <!-- Действия при появлении таблицы-->
+    <action-view name="dashlet.custom.custom.transaction.ok.action.view" title="">
+        <view type="custom" name="custom.transaction.ok"/>
+        <context name="fromDate" expr="eval: fromDateLocal != null? fromDateLocal :  __date__"/>
+        <context name="toDate" expr="eval: toDateLocal != null? toDateLocal : __date__"/>
+        <context name="ccps" expr="eval: customsCheckpoint != null ? customsCheckpoint : []"/>
+        <context name="page" expr="eval: transactionsOkPage != null? transactionsOkPage : 1"/>
+        <context name="pageSize" expr="eval: amountDate != null? amountDate : 40"/>
+    </action-view>
+
+    <!--Группа действий при появлении отчета-->
+    <action-group name="seo.report.transactions.on-new.load.action-group">
+        <action name="set.dates.report.transactions.action"/>
+        <action name="set.seo.action"/>
+        <action name="set.seo.report.transactions.pages"/>
+        <action name="set.seo.total.sum.transactions"/>
+    </action-group>
+
+    <!--Метод 1 с группы создания отчета задаем значения по умолчанию -->
+    <action-attrs name="set.dates.report.transactions.action">
+        <attribute for="fromDateLocal" name="value" expr="eval: __date__"/>
+        <attribute for="toDateLocal" name="value" expr="eval: __date__"/>
+        <attribute for="$transactionsOkPage" name="value" expr="eval: 1"/>
+        <attribute for="$amountDate" name="value" expr="eval: 40"/>
+        <attribute for="searchForAdmins" name="readonly" expr="false" if="__user__.group.code == 'AD' || __user__.group.code == 'SU' || __user__.group.code == 'admins' || __user__.group.code == 'BUHGPTI'"/>
+    </action-attrs>
+
+    <!--Метод 2 с группы создания отчета задаем свх с пользователя -->
+    <action-method name="set.seo.action">
+        <call class="com.axelor.apps.seo.web.ReportController" method="getUserCcp"/>
+    </action-method>
+
+    <!--Метод 3 с группы создания отчета вычисляем суммы -->
+    <action-method name="set.seo.total.sum.transactions">
+        <call class="com.axelor.apps.seo.web.ReportController" method="calculateTotalSumTransactions"/>
+    </action-method>
+
+    <!--Метод 4 с группы создания отчета задаем значения всем страницам -->
+    <action-method name="set.seo.report.transactions.pages">
+        <call class="com.axelor.apps.seo.web.ReportController" method="getPagesInfoTransactions"/>
+    </action-method>
+
+    <!--Группа методов при изменении данных-->
+    <action-group name="seo.action-dashboard-report-transactions-refresh-action-group">
+        <action name="set.seo.report.transactions.pages"/>
+        <action name="set.seo.total.sum.transactions"/>
+        <action name="action-dashboard-transaction-report-refresh"/>
+    </action-group>
+
+    <!--Обновление таблиц-->
+    <action-attrs name="action-dashboard-transaction-report-refresh">
+        <attribute name="refresh" expr="eval: true" for="dashlet.custom.transaction.ok" />
+    </action-attrs>
+
+</object-views>

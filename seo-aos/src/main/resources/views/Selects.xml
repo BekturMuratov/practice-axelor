@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+    <!-- Author:  Taalai-->
+    <!-- date: 25.09.2025 -->
+
+    <!-- Для добавления Русского языка -->
+    <selection name="select.language" id="select.language.ru" >
+        <option value="ru">Russian</option>                                                                             <!-- Русский -->
+    </selection>
+
+    <!-- Тип АТС -->
+    <selection name="seo.registration.transport.type.select">
+        <option value="commercialVehicle" color="orange">Commercial vehicle</option>                                    <!-- Грузовой транспорт -->
+        <option value="emptyCommercialVehicle" color="yellow">Empty commercial vehicle</option>                         <!-- Пустой грузовой транспорт -->
+        <option value="officialCar" color="red">Official Car</option>                                                   <!-- Служебное авто -->
+        <option value="pending" color="lime">Pending</option>                                                           <!-- В ожидании-->
+    </selection>
+
+    <!--Статус регистрации-->
+    <selection name="seo.registration.status.select">
+        <option value="pending" color="lime">Pending</option>                                                           <!-- В ожидании-->
+        <option value="formulation" color="orange">Formulation</option>                                                 <!-- Оформление-->
+        <option value="arrived" color="green">Arrived</option>                                                          <!-- Прибыл-->
+        <option value="called" color="blue">Called</option>                                                             <!-- Вызван-->
+        <option value="departed" color="cyan">Departed</option>                                                         <!-- Выехал-->
+        <option value="officialCar" color="red">Official Car</option>                                                   <!-- Служебное АТС-->
+    </selection>
+
+    <!--Категория регистрации-->
+    <selection name="seo.registration.category.select">
+        <option value="regular">Regular</option>                                                                        <!-- Обычная-->
+        <option value="priority">Priority</option>                                                                      <!-- Приоритетная-->
+    </selection>
+
+    <!--Статус оплаты-->
+    <selection name="seo.service.status.paid.select">
+        <option value="yes" color="green">Yes</option>                                                                  <!-- Оплачено-->
+        <option value="no" color="red">No</option>                                                                      <!-- Не оплачено-->
+    </selection>
+
+    <!--Тип очереди-->
+    <selection name="seo.registration.queue.type.select">
+        <option value="timedQueue" color="green">Timed queue</option>                                                   <!-- По времени-->
+        <option value="liveQueue" color="red">Live queue</option>                                                       <!-- Живая очередь-->
+    </selection>
+
+    <!--Тип сортировки-->
+    <selection name="seo.registration.sort.type.select">
+        <option value="1. emergency" color="orange">Emergency</option>                                                  <!-- Экстренные-->
+        <option value="2. priority" color="blue">Priority</option>                                                      <!-- Приоритет-->
+        <option value="3. timedQueue" color="green">Timed queue</option>                                                <!-- По времени-->
+        <option value="4. liveQueue" color="red">Live queue</option>                                                    <!-- Живая очередь-->
+    </selection>
+
+    <!--Тип декларации-->
+    <selection name="seo.registration.declaration.type.select">
+        <option value="declarationOfGoods" color="green">Declaration of goods</option>                                  <!-- Декларация на товары-->
+        <option value="transitDeclaration" color="blue">Transit declaration</option>                                    <!-- Транзитная декларация-->
+        <option value="empty" color="yellow">Empty</option>                                                             <!-- Порожний/пустой-->
+    </selection>
+
+    <!--Имеется онлайн платежи-->
+    <selection name="seo.customs.online.payments.select">
+        <option value="yes" color="green">Yes</option>                                                                  <!-- Оплачено-->
+        <option value="no" color="red">No</option>                                                                      <!-- Не оплачено-->
+    </selection>
+
+    <!--Тип груза-->
+    <selection name="seo.registration.type.of.cargo.select">
+        <option value="normal" color="green">Normal</option>                                                            <!-- Обычный-->
+        <option value="priority" color="red">Priority</option>                                                          <!-- Приоритет-->
+    </selection>
+
+
+    <!--Слоты бронирования-->
+    <selection name="seo.booking.slots.select">
+        <option value="0">00:00-01:00</option>
+        <option value="1">01:00-02:00</option>
+        <option value="2">02:00-03:00</option>
+        <option value="3">03:00-04:00</option>
+        <option value="4">04:00-05:00</option>
+        <option value="5">05:00-06:00</option>
+        <option value="6">06:00-07:00</option>
+        <option value="7">07:00-08:00</option>
+        <option value="8">08:00-09:00</option>
+        <option value="9">09:00-10:00</option>
+        <option value="10">10:00-11:00</option>
+        <option value="11">11:00-12:00</option>
+        <option value="12">12:00-13:00</option>
+        <option value="13">13:00-14:00</option>
+        <option value="14">14:00-15:00</option>
+        <option value="15">15:00-16:00</option>
+        <option value="16">16:00-17:00</option>
+        <option value="17">17:00-18:00</option>
+        <option value="18">18:00-19:00</option>
+        <option value="19">19:00-20:00</option>
+        <option value="20">20:00-21:00</option>
+        <option value="21">21:00-22:00</option>
+        <option value="22">22:00-23:00</option>
+        <option value="23">23:00-24:00</option>
+    </selection>
+
+    <!--Статусы слотов-->
+    <selection name="seo.booking.slots.status.select">
+        <option value="free" color="green">FREE</option>                                                                <!-- Свободен -->
+        <option value="booked" color="blue">BOOKED</option>                                                             <!-- Забронирован -->
+        <option value="closed" color="red">CLOSED</option>                                                              <!-- Закрыт -->
+    </selection>
+
+    <!--Статус бронирования-->
+    <selection name="seo.booking.status.select">
+        <option value="advanceBooking" color="blue">Advance booking</option>                                            <!-- Предварительное бронирование -->
+        <option value="booked" color="green">Booked</option>                                                            <!-- Забронирован -->
+        <option value="cancelled" color="red">Cancelled</option>                                                        <!-- Отменен -->
+    </selection>
+
+    <!--Реквизит-->
+    <selection name="seo.requisite.type.select">
+        <option value="booking" color="blue">BOOKING</option>                                                           <!-- Бронирование -->
+        <option value="registration" color="green">REGISTRATION</option>                                                <!-- Регистрация -->
+    </selection>
+
+    <!--Принадлежность к таможне-->
+    <selection name="seo.customs.select">
+        <option value="northeast" color="green">Northeast</option>                                                      <!-- Северо-восточная-->
+        <option value="southwestern" color="red">Southwestern</option>                                                  <!-- Юго-западная-->
+        <option value="manas" color="blue">Manas</option>                                                               <!-- Манас-->
+        <option value="northern" color="brown">Northern</option>                                                        <!-- Северная-->
+    </selection>
+
+    <!--Статус авторизации-->
+    <selection name="seo.auth.authorization.select">
+        <option value="success" color="green">SUCCESS</option>                                                          <!-- Успешно -->
+        <option value="failure" color="red">FAILURE</option>                                                            <!-- Отказано -->
+    </selection>
+
+    <!--Статус операций-->
+    <selection name="seo.api.request.log.status.select">
+        <option value="request">Request</option>                                                                        <!-- Запрос -->
+        <option value="response">Response</option>                                                                      <!-- Ответ -->
+    </selection>
+
+    <!--Типы операций-->
+    <selection name="seo.api.request.type.of.operation.select">
+        <option value="checkPayment">Check payment</option>                                                             <!-- Проверка платежа -->
+        <option value="executePayment">Execute payment</option>                                                         <!-- Проведение платежа -->
+        <option value="cancelPayment">Cancel payment</option>                                                           <!-- Отмена платежа -->
+    </selection>
+
+    <!--Статусы информации отмены-->
+    <selection name="seo.api.cancel.information.select">
+        <option value="yes" color="red">Yes</option>                                                                    <!-- Отменен -->
+        <option value="no" color="green">No</option>                                                                    <!-- Не отменен -->
+    </selection>
+
+
+    <!--Настройки jobs-->
+    <selection name="meta.schedule.job.select" id="seo.meta.schedule.job.select">
+        <option value="com.axelor.apps.seo.job.RabbitMqJob">com.axelor.apps.seo.job.RabbitMqJob</option>
+        <option value="com.axelor.apps.seo.job.SseJob">com.axelor.apps.seo.job.SseJob</option>
+        <option value="com.axelor.apps.seo.job.RefreshQueueStatusesJob">com.axelor.apps.seo.job.RefreshQueueStatusesJob</option>
+        <option value="com.axelor.apps.seo.job.RabbitMqPaymentJob">com.axelor.apps.seo.job.RabbitMqPaymentJob</option>
+    </selection>
+
+    <selection name="seo.camera.directions.select">
+        <option value="0">Other directions</option>                                                                     <!-- Другие направления-->
+        <option value="1">Downward (from far to near for the camera)</option>                                           <!-- Заезжает на ПП-->
+        <option value="2">Upward (from near to far for the camera)</option>                                             <!-- Выезжает из ПП-->
+    </selection>
+
+    <selection name="seo.type.of.camera.select">
+        <option value="1" color="green">Entry</option>                                                                  <!-- Въезд -->
+        <option value="2" color="blue">Exit</option>                                                                    <!-- Выезд -->
+        <option value="0" color="red">Other directions</option>                                                         <!-- Другие направления-->
+    </selection>
+
+    <selection name="seo.camera.types.select">
+        <option value="0">Others</option>                                                                               <!-- Другие-->
+        <option value="1">Bus</option>                                                                                  <!-- Автобус-->
+        <option value="2">Truck</option>                                                                                <!-- Грузовик-->
+        <option value="3">Salon Car</option>                                                                            <!-- Легковой автомобиль-->
+        <option value="4">Minivan</option>                                                                              <!-- Минивэн-->
+        <option value="5">Light Truck</option>                                                                          <!-- Лёгкий грузовик-->
+        <option value="6">Pedestrian</option>                                                                           <!-- Пешеход-->
+        <option value="7">Two Wheeler</option>                                                                          <!-- Двухколёсное транспортное средство-->
+        <option value="8">Tricycle</option>                                                                             <!-- Трицикл-->
+        <option value="9">SUV/MPV</option>                                                                              <!-- Внедорожник / Минивэн-->
+        <option value="10">Middle-Sized Bus</option>                                                                    <!-- Автобус среднего размера-->
+        <option value="11">Motor Vehicle</option>                                                                       <!-- Моторизованное транспортное средство-->
+        <option value="12">Non-Motor Vehicle</option>                                                                   <!-- Немоторизованное транспортное средство-->
+        <option value="13">Compact Car</option>                                                                         <!-- Компактный автомобиль-->
+        <option value="14">Sub-Compact Car</option>                                                                     <!-- Субкомпактный автомобиль-->
+        <option value="15">Pick-up Truck</option>                                                                       <!-- Пикап-->
+        <option value="16">Container Truck</option>                                                                     <!-- Контейнеровоз-->
+        <option value="17">Minitruck Dropside Trailer</option>                                                          <!-- Мини-грузовик с откидными бортами-->
+        <option value="18">Slag Truck</option>                                                                          <!-- Шлаковоз-->
+        <option value="19">Crane Engineering Vehicle</option>                                                           <!-- Кран (инженерная техника)-->
+        <option value="20">Oil Tank Truck</option>                                                                      <!-- Цистерна для перевозки нефти-->
+        <option value="21">Concrete Mixer</option>                                                                      <!-- Бетономешалка-->
+        <option value="22">Flatbed Trailer</option>                                                                     <!-- Платформенный прицеп-->
+        <option value="23">Hatchback</option>                                                                           <!-- Хэтчбэк-->
+        <option value="24">Saloon</option>                                                                              <!-- Седан-->
+        <option value="25">Sports Sedan</option>                                                                        <!-- Спортивный седан-->
+        <option value="26">Minibus</option>                                                                             <!-- Маршрутка / Миниавтобус-->
+    </selection>
+
+    <selection name="seo.camera.color.select">
+        <option value="0">Other color</option>
+        <option value="1">White</option>
+        <option value="2">Silver</option>
+        <option value="3">Grey</option>
+        <option value="4">Black</option>
+        <option value="5">Red</option>
+        <option value="6">Dark blue</option>
+        <option value="7">Blue</option>
+        <option value="8">Yellow</option>
+        <option value="9">Green</option>
+        <option value="10">Brown</option>
+        <option value="11">Pink</option>
+        <option value="12">Purple</option>
+        <option value="13">Dark-Grey</option>
+        <option value="14">Cyan</option>
+    </selection>
+
+    <!--Интеграционные Api-->
+    <selection name="seo.integration.api.select">
+        <option value="itgTransit" color="blue">TRANSIT</option>                                                        <!-- Шлюз транзитная декларация-->
+        <option value="ccp" color="green">CCP</option>                                                                  <!-- ПП -->
+        <option value="enp" color="brown">ENP</option>                                                                  <!-- ЭНП -->
+        <option value="led" color="purple">LED</option>                                                                 <!-- ЛЕД -->
+        <option value="barrier" color="red">BARRIER</option>                                                            <!-- Шлагбаум -->
+    </selection>
+
+    <!--Тип лед экрана-->
+    <selection name="seo.led.screen.type.select">
+        <option value="entryPoint" color="green">Entry point</option>                                                   <!-- на въезде -->
+        <option value="informationPoint" color="orange">Information point</option>                                      <!-- информационный -->
+        <option value="exitPoint" color="blue">Exit point</option>                                                      <!-- на выезде -->
+    </selection>
+
+    <!--Расположения шлагбаума-->
+    <selection name="seo.barrier.direction.type.select">
+        <option value="entry" color="green">Entry</option>                                                              <!-- въезд -->
+        <option value="exit" color="blue">Exit</option>                                                                 <!-- выезд-->
+    </selection>
+
+    <!--Единицы времени жизни QR-кода-->
+    <selection name="seo.payment.qr.ttl.units.select">
+        <option value="0">Seconds</option>                                                                              <!-- Секунды-->
+        <option value="1">Minutes</option>                                                                              <!-- Минуты-->
+        <option value="2">Hours</option>                                                                                <!-- Часы-->
+        <option value="3">Days</option>                                                                                 <!-- Дни-->
+        <option value="4">Months</option>                                                                               <!-- Месяцы-->
+        <option value="5">Years</option>                                                                                <!-- Годы-->
+    </selection>
+
+    <!--Время жизни QR-кода-->
+    <selection name="seo.payment.qr.ttl.select">
+        <option value="0">0</option>                                                                                    <!-- 0-->
+        <option value="1">1</option>                                                                                    <!-- 1-->
+        <option value="2">2</option>                                                                                    <!-- 2-->
+        <option value="3">3</option>                                                                                    <!-- 3-->
+        <option value="4">4</option>                                                                                    <!-- 4-->
+        <option value="5">5</option>                                                                                    <!-- 5-->
+    </selection>
+
+    <!--Тип платежной операции-->
+    <selection name="seo.payment.operation.type.select">
+        <option value="qr_request" color="blue">Request to create a QR code</option>                                    <!-- Запрос на создание QR кода-->
+        <option value="bank_notification" color="green">Payment notification from the bank</option>                     <!-- Уведомление от банка об платеже-->
+    </selection>
+
+    <!--Статус оплаты-->
+    <selection name="seo.payment.status.select">
+        <option value="success">Success</option>                                                                        <!-- Успешно-->
+        <option value="error">Error</option>                                                                            <!-- Ошибка-->
+        <option value="processed">Processed</option>                                                                    <!-- Обработанный-->
+    </selection>
+</object-views>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+    <module name="seo"  package="com.axelor.apps.seo.db"/>
+
+    <entity name="LoginEventTracker">
+        <string name="status" title="Status authorization" selection="seo.auth.authorization.select"/>                  <!-- Статус авторизации-->
+        <string name="userCode" title="User code"/>                                                                     <!-- Логин пользователя-->
+        <datetime name="timestamp" title="Timestamp"/>                                                                  <!-- Время посещения-->
+        <string name="userAgent" title="User agent"/>                                                                   <!-- Данные о браузере-->
+        <string name="clientIp" title="Client IP"/>                                                                     <!-- IP-адрес клиента-->
+        <many-to-one name="userName" ref="com.axelor.auth.db.User" title="User name"/>                                  <!-- Пользователь-->
+        <many-to-one name="userGroup" ref="com.axelor.auth.db.Group" title="User group"/>                               <!-- Группа пользователя-->
+    </entity>
+</domain-models>

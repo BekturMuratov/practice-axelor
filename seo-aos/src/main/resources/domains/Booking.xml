@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+    <module name="seo" package="com.axelor.apps.seo.db"/>
+
+    <entity name="Booking">
+        <string name="uIdBooking" title="UID Booking"/>                                                                 <!-- Номер бронирования-->
+        <many-to-one name="ccp" title="CCP" ref="com.axelor.apps.seo.db.CustomsCheckpoint"/>                            <!-- КПП-->
+        <string name="queueType" title="Queue type" selection="seo.registration.queue.type.select"/>                    <!-- Тип очереди-->
+        <date name="bookingDate" title="Booking date"/>                                                                 <!-- Дата брони-->
+        <string name="bookingTime" title="Booking time" selection="seo.booking.slots.select"/>                          <!-- Время брони-->
+        <string name="fullNameDriver" title="Full name driver"/>                                                        <!-- ФИО водителя-->
+        <string name="phoneNumber" title="Phone number"/>                                                               <!-- Номер телефона-->
+        <string name="plateNo" title="PlateNO"/>                                                                        <!-- Гос.номер АТС-->
+        <string name="declarationType" title="Declaration type"
+                selection="seo.registration.declaration.type.select"/>                                                  <!-- Тип декларации-->
+        <string name="declarationNumber" title="Declaration number"/>                                                   <!-- Номер декларации-->
+        <string name="typeOfCargo" title="Type of cargo" selection="seo.registration.type.of.cargo.select"/>            <!-- Тип груза-->
+        <string name="isPaid" title="Is paid" selection="seo.service.status.paid.select" default="no"/>                 <!-- Оплачено-->
+        <string name="paymentNumber" title="Payment Number"/>                                                           <!-- № Платежа-->
+        <date name="paymentDate" title="Payment Date"/>                                                                 <!-- дата платежа-->
+        <string name="timeOfCancelBooking" title="Time of cancel booking"/>                                             <!-- Время отмены брони-->
+        <string name="codeWord" title="Code word"/>                                                                     <!-- Кодовое слово-->
+        <string name="bookingStatus" title="Booking status" selection="seo.booking.status.select"/>                     <!-- Статус бронирования-->
+        <string name="clientIp" title="Client IP"/>                                                                     <!-- IP-адрес клиента-->
+        <one-to-one name="requisite" title="Requisite" ref="com.axelor.apps.seo.db.Requisite" mappedBy="booking"/>      <!-- Реквизит-->
+        <one-to-one name="registration" ref="com.axelor.apps.seo.db.Registration" mappedBy="booking"/>                  <!-- Регистрация-->
+        <decimal name="onlinePayments" title="Online payments"/>                                                        <!-- Онлайн платежи-->
+
+        <track>
+            <field name="uIdBooking"/>
+            <field name="isPaid"/>
+            <field name="paymentNumber"/>
+            <field name="paymentDate"/>
+            <field name="bookingStatus"/>
+            <field name="bookingDate"/>
+            <field name="bookingTime"/>
+            <field name="fullNameDriver"/>
+            <field name="phoneNumber"/>
+            <field name="plateNo"/>
+            <field name="typeOfCargo"/>
+            <field name="declarationType"/>
+            <field name="declarationNumber"/>
+            <field name="onlinePayments"/>
+        </track>
+
+        <entity-listener class="com.axelor.apps.seo.events.listeners.BookingListener"/>
+    </entity>
+</domain-models>

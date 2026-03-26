@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+    <module name="base" package="com.axelor.apps.base.db"/>
+
+    <entity name="Country">
+        <string name="fullName" title="Country full name"/>                                                             <!-- Наименование страны - полное-->
+
+        <finder-method name="findByNumericCode" using="numericCode"/>                                                   <!-- Метод поиска "по коду"-->
+        <finder-method name="findByAlpha2Code" using="alpha2Code"/>                                                     <!-- Метод поиска "по 2-ух символьному коду"-->
+    </entity>
+</domain-models>

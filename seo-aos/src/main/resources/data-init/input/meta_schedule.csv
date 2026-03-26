@@ -1,0 +1,5 @@
+"importId";"active";"name";"job";"cron"
+"6";"false";"RabbitMq";"com.axelor.apps.seo.job.RabbitMqJob";"0 0/1 * * * ?"
+"7";"false";"Sse";"com.axelor.apps.seo.job.SseJob";"0 0/3 * * * ?"
+"8";"false";"RefreshStatus";"com.axelor.apps.seo.job.RefreshQueueStatusesJob";"0 0/5 * * * ?"
+"9";"false";"RabbitMqPaymentJob";"com.axelor.apps.seo.job.RabbitMqPaymentJob";"0 0/1 * * * ?"

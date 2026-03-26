@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+    <module name="seo" package="com.axelor.apps.seo.db"/>
+
+    <entity name="Letter">                                                                                              <!--Письма-->
+        <string name="fullNameSender" title="Full name sender"/>
+        <string name="email" title="Email"/>
+        <string name="messageContent" title="Message content" max="10000"/>
+    </entity>
+</domain-models>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+    <grid name="seo.camera-grid" title="Cameras" model="com.axelor.apps.seo.db.Camera"
+          canNew="false" canEdit="false" canDelete="false" canArchive="false" edit-icon="false">
+        <field name="crossRecordSyscode"/>
+        <field name="crossTime"/>
+        <field name="plateNo"/>
+        <field name="country"/>
+        <field name="vehicleDirectionType"/>
+        <field name="vehicleType"/>
+        <field name="vehicleColor"/>
+        <field name="cameraIndexCode"/>
+        <field name="createdOn"/>
+        <field name="ccp.ccpName"/>
+        <field name="infoVehicleDirectionType"/>
+        <field name="registration.uId"/>
+    </grid>
+
+    <form name="seo.camera-form" title="Camera" model="com.axelor.apps.seo.db.Camera" width="large"
+          canNew="false" canEdit="false" canDelete="false" canArchive="false" canAttach="false">
+        <panel name="mainPanel">
+            <field name="crossRecordSyscode"/>
+            <field name="crossTime"/>
+            <field name="plateNo"/>
+            <field name="point"/>
+            <field name="contact"/>
+            <field name="country"/>
+            <field name="vehicleDirectionType"/>
+            <field name="vehicleType"/>
+            <field name="vehicleColor"/>
+            <field name="cameraIndexCode"/>
+            <field name="createdOn"/>
+            <field name="ccp.ccpName"/>
+            <field name="infoVehicleDirectionType"/>
+            <field name="registration.uId"/>
+        </panel>
+        <panel name="mediaPanel" title="Media" colSpan="12">
+            <field name="vehiclePicUri" colSpan="12" canNew="false" canSelect="false" canEdit="false" canRemove="false"
+                   widget="VehicleImage"/>
+        </panel>
+    </form>
+
+    <cards title="Camera" name="seo.camera-cards" model="com.axelor.apps.seo.db.Camera" width="33%" canNew="false"
+           canEdit="false" canDelete="false">
+        <field name="vehiclePicUri"/>
+        <field name="crossRecordSyscode"/>
+        <field name="crossTime"/>
+        <field name="plateNo"/>
+        <field name="country"/>
+        <field name="vehicleDirectionType"/>
+        <field name="vehicleType"/>
+        <field name="vehicleColor"/>
+        <field name="cameraIndexCode"/>
+        <field name="createdOn"/>
+        <field name="ccp.ccpName"/>
+        <field name="infoVehicleDirectionType"/>
+        <field name="registration.uId"/>
+
+        <template><![CDATA[
+            <div style="width: 100%; display: flex; gap: 10px;">
+                <div style="width : 30%;">
+                    <div><span style="font-weight: bold;" x-translate>PlateNO</span>:<br/>{{plateNo}}</div>
+                    <div><span style="font-weight: bold;" x-translate>Country</span>:<br/>{{country}}</div>
+                    <div>
+                        <span style="font-weight: bold;" x-translate>Vehicle direction type</span>:<br/>
+                        <span  ng-show="record.vehicleDirectionType == 0" x-translate>Other directions</span>
+                        <span ng-show="record.vehicleDirectionType == 1" x-translate>Downward (from far to near for the camera)</span>
+                        <span ng-show="record.vehicleDirectionType == 2" x-translate>Upward (from near to far for the camera)</span>
+                    </div>
+
+                    <div><span style="font-weight: bold;" x-translate>Vehicle type</span>:<br/><span ng-show="vehicleType == 0" x-translate>Others</span>
+                        <span ng-show="vehicleType == 1" x-translate>Bus</span>
+                        <span ng-show="vehicleType == 2" x-translate>Truck</span>
+                        <span ng-show="vehicleType == 3" x-translate>Salon Car</span>
+                        <span ng-show="vehicleType == 4" x-translate>Minivan</span>
+                        <span ng-show="vehicleType == 5" x-translate>Light Truck</span>
+                        <span ng-show="vehicleType == 6" x-translate>Pedestrian</span>
+                        <span ng-show="vehicleType == 7" x-translate>Two Wheeler</span>
+                        <span ng-show="vehicleType == 8" x-translate>Tricycle</span>
+                        <span ng-show="vehicleType == 9" x-translate>SUV/MPV</span>
+                        <span ng-show="vehicleType == 10" x-translate>Middle-Sized Bus</span>
+                        <span ng-show="vehicleType == 11" x-translate>Motor Vehicle</span>
+                        <span ng-show="vehicleType == 12" x-translate>Non-Motor Vehicle</span>
+                        <span ng-show="vehicleType == 13" x-translate>Compact Car</span>
+                        <span ng-show="vehicleType == 14" x-translate>Sub-Compact Car</span>
+                        <span ng-show="vehicleType == 15" x-translate>Pick-up Truck</span>
+                        <span ng-show="vehicleType == 16" x-translate>Container Truck</span>
+                        <span ng-show="vehicleType == 17" x-translate>Minitruck Dropside Trailer</span>
+                        <span ng-show="vehicleType == 18" x-translate>Slag Truck</span>
+                        <span ng-show="vehicleType == 19" x-translate>Crane Engineering Vehicle</span>
+                        <span ng-show="vehicleType == 20" x-translate>Oil Tank Truck</span>
+                        <span ng-show="vehicleType == 21" x-translate>Concrete Mixer</span>
+                        <span ng-show="vehicleType == 22" x-translate>Flatbed Trailer</span>
+                        <span ng-show="vehicleType == 23" x-translate>Hatchback</span>
+                        <span ng-show="vehicleType == 24" x-translate>Saloon</span>
+                        <span ng-show="vehicleType == 25" x-translate>Sports Sedan</span>
+                        <span ng-show="vehicleType == 26" x-translate>Minibus</span></div>
+                    <div><span style="font-weight: bold;" x-translate>Vehicle color</span>:<br/><span ng-show="vehicleColor == 0" x-translate>Other color</span>
+                        <span ng-show="vehicleColor == 1" x-translate>White</span>
+                        <span ng-show="vehicleColor == 2" x-translate>Silver</span>
+                        <span ng-show="vehicleColor == 3" x-translate>Grey</span>
+                        <span ng-show="vehicleColor == 4" x-translate>Black</span>
+                        <span ng-show="vehicleColor == 5" x-translate>Red</span>
+                        <span ng-show="vehicleColor == 6" x-translate>Dark blue</span>
+                        <span ng-show="vehicleColor == 7" x-translate>Blue</span>
+                        <span ng-show="vehicleColor == 8" x-translate>Yellow</span>
+                        <span ng-show="vehicleColor == 9" x-translate>Green</span>
+                        <span ng-show="vehicleColor == 10" x-translate>Brown</span>
+                        <span ng-show="vehicleColor == 11" x-translate>Pink</span>
+                        <span ng-show="vehicleColor == 12" x-translate>Purple</span>
+                        <span ng-show="vehicleColor == 13" x-translate>Dark-Grey</span>
+                        <span ng-show="vehicleColor == 14" x-translate>Cyan</span></div>
+                    <div><span style="font-weight: bold;" x-translate>Camera index code</span>:<br/>{{cameraIndexCode}}</div>
+                    <div><span style="font-weight: bold;" x-translate>UID</span>:<br/>{{registration.uId}}</div>
+                    <div style="font-size: 11px; color: #bbb;"><span x-translate>Cross time</span>:<br/>{{$fmt('crossTime')}}</div>
+                </div>
+                <img ng-src="{{vehiclePicUri}}"
+                     alt="Vehicle"
+                     style="width: 70%; border-radius: 0%; height: 100%" />  </div>
+            ]]></template>
+    </cards>
+
+
+</object-views>

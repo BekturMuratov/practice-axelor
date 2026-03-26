@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+    <grid name="seo.bandwidth-settings-grid" title="Bandwidth settings" model="com.axelor.apps.seo.db.BandwidthSettings"
+          canNew="true" canEdit="false" canDelete="false" canArchive="false" edit-icon="false">
+        <field name="ccp.ccpName"/>
+        <field name="settingsStartAction"/>
+        <field name="settingsEndAction"/>
+        <field name="maxVehiclesPerHours"/>
+        <field name="percentBooking"/>
+        <field name="bookingSlots"/>
+        <field name="percentLiveQueue"/>
+        <field name="liveSlots"/>
+        <field name="reserve"/>
+        <field name="hoursOfInactivity" widget="MultiSelect"/>
+    </grid>
+
+    <form name="seo.bandwidth-settings-form" title="Bandwidth settings" model="com.axelor.apps.seo.db.BandwidthSettings"
+          width="large" onLoad="seo.bandwidth-settings.on-load" canDelete="false" canArchive="false" canAttach="false">
+        <panel name="mainInformation" title="Main information">
+            <field name="ccp" target-name="ccpName" colSpan="6"/>
+            <field name="archived" colSpan="6"/>
+            <field name="settingsStartAction" colSpan="6"/>
+            <field name="settingsEndAction" colSpan="6"/>
+        </panel>
+
+        <panel name="additionalInformation" title="Additional information">
+            <field name="maxVehiclesPerHours" colSpan="4" onChange="seo.bandwidth-settings.set.live.queue.percentage.on-change"/>
+            <field name="percentBooking" colSpan="4" onChange="seo.bandwidth-settings.set.live.queue.percentage.on-change"/>
+            <field name="percentLiveQueue" colSpan="4" readonly="true"/>
+            <field name="reserve" colSpan="4" onChange="seo.bandwidth-settings.set.live.queue.percentage.on-change"/>
+            <field name="bookingSlots" colSpan="4" readonly="true"/>
+            <field name="liveSlots" colSpan="4" readonly="true"/>
+            <field name="hoursOfInactivity" colSpan="4" widget="MultiSelect"/>
+        </panel>
+        <panel-mail>
+            <mail-messages/>
+        </panel-mail>
+    </form>
+
+    <!--2. On-load (Admins)-->
+    <action-attrs name="seo.bandwidth-settings.on-load" model="com.axelor.apps.seo.db.BandwidthSettings">
+        <attribute for="ccp" name="readonly" expr="true" if="__user__.group.name != 'Admins'"/>
+        <attribute for="settingsStartAction" name="readonly" expr="true" if="__user__.group.name != 'Admins'"/>
+        <attribute for="settingsEndAction" name="readonly" expr="true" if="__user__.group.name != 'Admins'"/>
+        <attribute for="maxVehiclesPerHours" name="readonly" expr="true" if="__user__.group.name != 'Admins'"/>
+        <attribute for="percentBooking" name="readonly" expr="true" if="__user__.group.name != 'Admins'"/>
+        <attribute for="percentLiveQueue" name="readonly" expr="true" if="__user__.group.name != 'Admins'"/>
+        <attribute for="reserve" name="readonly" expr="true" if="__user__.group.name != 'Admins'"/>
+        <attribute for="hoursOfInactivity" name="readonly" expr="true" if="__user__.group.name != 'Admins'"/>
+    </action-attrs>
+
+    <!--On-change Action-group -->
+    <!--<action-group name="seo.bandwidth-settings.on-load.action-group">
+        <action name="seo.bandwidth-settings.set.live.queue.percentage.on-change"/>
+    </action-group>-->
+
+    <!--1. On-change Action-group -->
+    <action-method name="seo.bandwidth-settings.set.live.queue.percentage.on-change">
+        <call class="com.axelor.apps.seo.web.BandwidthSettingsController" method="setLiveQueuePercentage"/>
+    </action-method>
+</object-views>

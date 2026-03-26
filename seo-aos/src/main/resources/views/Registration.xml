@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+    <grid name="seo.registration-grid" title="Registration card ATS" model="com.axelor.apps.seo.db.Registration">
+        <field name="uId"/>
+        <field name="createdOn" title="Check-in date"/>
+        <field name="registrationStatus" widget="singleSelect"/>
+        <field name="plateNo"/>
+        <field name="plateNoCameraEntry"/>
+        <field name="crossTimeEntry"/>
+        <field name="typeOfCargo" widget="singleSelect"/>
+        <field name="isPaid" widget="singleSelect"/>
+        <field name="fullNameDriver"/>
+        <field name="requisite.requisiteNumber"/>
+        <field name="ccp.ccpName"/>
+    </grid>
+
+    <form name="seo.registration-form" title="Registration card ATS" model="com.axelor.apps.seo.db.Registration"
+          width="large" canAttach="false" canCopy="false" onNew="seo.registration.on-new.action-group"
+          onLoad="seo.registration.on-load.action-group" onSave="seo.registration.on-save.action-group">
+        <toolbar>
+            <button name="checkBooking" title="Check booking" css="btn-success" icon="fa-check-square-o"
+                    onClick="com.axelor.apps.seo.web.RegisterController:checkPlateAndFindBookingManual" showIf="booking == null"/>
+            <button name="deleteRecord" title="Delete record" onClick="seo.registration.on-delete.action-group,close"
+                    hidden="true"/>
+
+        </toolbar>
+        <panel name="registrationPanel" title="Registration">
+            <field name="uId" readonly="true" colSpan="3"/>
+            <field name="registrationStatus" widget="singleSelect" colSpan="3" readonly="false"/>
+            <field name="isPaid" widget="singleSelect" colSpan="2" readonly="false"
+                   onChange="seo.registration.set.registration.status.on-change"/>
+            <field name="paymentNumber" colSpan="2" readonly="false" requiredIf="isPaid == 'yes'"/>
+            <field name="paymentDate" colSpan="2" readonly="false" requiredIf="isPaid == 'yes'"/>
+        </panel>
+
+        <panel name="mainInformation" title="Main information">
+            <field name="queueType" widget="singleSelect" readonly="false" colSpan="4"/>
+            <field name="bookingDate" readonly="true" colSpan="4"/>
+            <field name="bookingTime" readonly="true" colSpan="4" widget="singleSelect"/>
+            <field name="declarationType" widget="singleSelect" readonly="false" colSpan="4" requiredIf="isPaid == 'yes'"/>
+            <field name="declarationNumber" readonly="false" colSpan="4" onChange="seo.registration.get.declaration.on-change" requiredIf="declarationType != 'empty' &amp;&amp; isPaid == 'yes'"/>
+            <field name="typeOfCargo" widget="singleSelect" colSpan="4" readonly="true"/>
+        </panel>
+
+        <panel name="transportAndDriver" title="Transport and driver">
+            <field name="plateNo" colSpan="4" placeholder="08KG538AAA" readonly="false"
+                   onChange="com.axelor.apps.seo.web.RegisterController:validationOnRegistration"/>
+            <field name="plateNoTrailer" colSpan="4" placeholder="084ST" readonly="false"
+                   onChange="com.axelor.apps.seo.web.RegisterController:validationOnRegistration"/>
+            <field name="country" colSpan="4" grid-view="seo.country-for.registration-grid" x-order="id" readonly="false" requiredIf="isPaid == 'yes'"/>
+            <field name="fullNameDriver" colSpan="4" placeholder="FIO" readonly="false"
+                   onChange="com.axelor.apps.seo.web.RegisterController:validationOnRegistration" requiredIf="isPaid == 'yes'"/>
+            <field name="phoneNumber" colSpan="4" placeholder="+996" readonly="false" requiredIf="isPaid == 'yes'"/>
+        </panel>
+
+        <panel name="booking" title="Booking">
+            <field name="booking.uIdBooking" colSpan="4"/>
+            <field name="booking.bookingStatus" colSpan="4"/>
+            <button name="deleteBooking" title="Delete booking" css="btn-danger" icon="fa-times-circle" prompt="Are you sure to delete these record?"
+                    onClick="action-delete-booking-in-registration" colSpan="4" hidden="true"/>
+        </panel>
+
+        <panel name="entryControl" title="Entry control">
+            <field name="plateNoCameraEntry" colSpan="4" readonly="false"/>
+            <field name="crossTimeEntry" colSpan="4" readonly="true"/>
+            <field name="vehiclePicEntry" colSpan="4" canNew="false" canSelect="false" canEdit="false" canRemove="false" widget="VehicleImage" readonly="true"/>
+        </panel>
+
+        <panel name="exitControl" title="Exit control">
+            <field name="plateNoCameraExit" colSpan="4" readonly="false"/>
+            <field name="crossTimeExit" colSpan="4" readonly="true"/>
+            <field name="vehiclePicExit" colSpan="4" canNew="false" canSelect="false" canEdit="false" canRemove="false" widget="VehicleImage" readonly="true"/>
+        </panel>
+
+        <panel name="sidebar" sidebar="true" showTitle="false">
+            <field name="ccp" target-name="ccpName"/>
+            <field name="createdBy" readonly="true"/>
+            <field name="createdOn" readonly="true"/>
+            <field name="requisite" target-name="requisiteNumber" readonly="true" title="Requisite number"/>
+            <field name="dateTimeCall" readonly="true"/>
+            <field name="sortingType" widget="singleSelect" readonly="true"/>
+            <field name="onlinePayments" hidden="false" readonly="true"/>
+            <button name="detailing" title="Detailing" hidden="false" onClick="seo.transactions.registration.report.action-view" icon="fa-bar-chart" css="btn-info" />
+        </panel>
+        <panel name="sidebar-open-entry" sidebar="true" showTitle="false" hidden="true">
+            <button name="openEntryBarrier" title="Open Entry Barrier" css="btn-success" onClick="action-open-entry-barrier, save"/>
+            <field name="entryGateOpenedAt" readonly="true"/>
+        </panel>
+
+        <panel name="sidebar-open-exit" sidebar="true" showTitle="false" hidden="true">
+            <button name="openExitBarrier" title="Open Exit Barrier" css="btn-danger" onClick="action-open-exit-barrier, save"/>
+            <field name="exitGateOpenedAt" readonly="true"/>
+        </panel>
+
+        <panel name="sidebar-call-checkout" sidebar="true" showTitle="false" hidden="true">
+            <button name="callVehicleToCheckout" title="Call vehicle to checkout" onClick="action-call-vehicle-to-checkout, save"/>
+        </panel>
+
+        <panel name="sidebar-generate-qr" sidebar="true" showTitle="false" hidden="true">
+            <button name="generateQr" title="Generate qr" css="btn-success" onClick="action-generate-qr"/>
+        </panel>
+        <panel-mail>
+            <mail-messages/>
+        </panel-mail>
+    </form>
+
+
+    <!--On-new Action-group (Registration)-->
+    <action-group name="seo.registration.on-new.action-group">
+        <action name="seo.registration.on-new.set.attrs"/>
+    </action-group>
+
+    <!--1. On-new Action-group-->
+    <action-attrs name="seo.registration.on-new.set.attrs">
+        <attribute for="ccp" name="value" expr="eval: __user__.ccp"/>
+        <attribute for="ccp" name="readonly" expr="true"/>
+        <attribute for="queueType" name="value" expr="eval: 'liveQueue'"/>
+        <attribute for="typeOfCargo" name="value" expr="eval: 'normal'"/>
+        <attribute for="registrationStatus" name="readonly" expr="true" if="__user__.group.name != 'Admin GPTI' &amp;&amp;  __user__.group.name != 'Super Admin' &amp;&amp; __user__.group.name != 'Admins'"/>
+        <attribute for="registrationStatus" name="value" expr="eval: 'pending'"/>
+        <attribute for="crossTimeEntry" name="value" expr="eval: __time__" if="crossTimeEntry == null"/>
+    </action-attrs>
+
+    <!--1. On-load Action-group (Departed)-->
+    <action-attrs name="seo.registration.on-load-departed" model="com.axelor.apps.seo.db.Registration">
+        <attribute for="isPaid" name="readonly" expr="true" if="__user__.group.name != 'Admin GPTI' &amp;&amp;
+        __user__.group.name != 'Super Admin' &amp;&amp; __user__.group.name != 'Admins' &amp;&amp; registrationStatus == 'departed'"/>
+        <attribute for="paymentNumber" name="readonly" expr="true" if="__user__.group.name != 'Admin GPTI' &amp;&amp;
+        __user__.group.name != 'Super Admin' &amp;&amp; __user__.group.name != 'Admins' &amp;&amp; registrationStatus == 'departed'"/>
+        <attribute for="paymentDate" name="readonly" expr="true" if="__user__.group.name != 'Admin GPTI' &amp;&amp;
+        __user__.group.name != 'Super Admin' &amp;&amp; __user__.group.name != 'Admins' &amp;&amp; registrationStatus == 'departed'"/>
+        <attribute for="declarationType" name="readonly" expr="true" if="__user__.group.name != 'Admin GPTI' &amp;&amp;
+        __user__.group.name != 'Super Admin' &amp;&amp; __user__.group.name != 'Admins' &amp;&amp; registrationStatus == 'departed'"/>
+        <attribute for="declarationNumber" name="readonly" expr="true" if="__user__.group.name != 'Admin GPTI' &amp;&amp;
+        __user__.group.name != 'Super Admin' &amp;&amp; __user__.group.name != 'Admins' &amp;&amp; registrationStatus == 'departed'"/>
+        <attribute for="country" name="readonly" expr="true" if="__user__.group.name != 'Admin GPTI' &amp;&amp;
+        __user__.group.name != 'Super Admin' &amp;&amp; __user__.group.name != 'Admins' &amp;&amp; registrationStatus == 'departed'"/>
+        <attribute for="fullNameDriver" name="readonly" expr="true" if="__user__.group.name != 'Admin GPTI' &amp;&amp;
+        __user__.group.name != 'Super Admin' &amp;&amp; __user__.group.name != 'Admins' &amp;&amp; registrationStatus == 'departed'"/>
+        <attribute for="phoneNumber" name="readonly" expr="true" if="__user__.group.name != 'Admin GPTI' &amp;&amp;
+        __user__.group.name != 'Super Admin' &amp;&amp; __user__.group.name != 'Admins' &amp;&amp; registrationStatus == 'departed'"/>
+        <attribute for="plateNo" name="readonly" expr="true" if="__user__.group.name != 'Admin GPTI' &amp;&amp;
+        __user__.group.name != 'Super Admin' &amp;&amp; __user__.group.name != 'Admins' &amp;&amp; registrationStatus == 'departed'"/>
+        <attribute for="plateNoTrailer" name="readonly" expr="true" if="__user__.group.name != 'Admin GPTI' &amp;&amp;
+        __user__.group.name != 'Super Admin' &amp;&amp; __user__.group.name != 'Admins' &amp;&amp; registrationStatus == 'departed'"/>
+        <attribute for="typeOfCargo" name="readonly" expr="true" if="__user__.group.name != 'Admin GPTI' &amp;&amp;
+        __user__.group.name != 'Super Admin' &amp;&amp; __user__.group.name != 'Admins' &amp;&amp; registrationStatus == 'departed'"/>
+    </action-attrs>
+
+    <!--2. On-load Action-group-->
+    <action-attrs name="seo.registration.on-load.set.attrs">
+        <attribute for="sidebar-open-entry" name="hidden" expr="false" if="__user__.group.name in ['Admin GPTI', 'Super Admin', 'Admins'] ||
+        (__user__.group.name == 'Operator' &amp;&amp; registrationStatus in ['formulation', 'arrived', 'officialCar'])"/>
+        <attribute for="sidebar-open-exit" name="hidden" expr="false" if="__user__.group.name in ['Admin GPTI', 'Super Admin', 'Admins'] ||
+        (__user__.group.name == 'Operator' &amp;&amp; registrationStatus == 'called')"/>
+        <attribute for="sidebar-call-checkout" name="hidden" expr="false" if="__user__.group.name in ['Admin GPTI', 'Super Admin', 'Admins'] ||
+        (__user__.group.name == 'Operator' &amp;&amp; registrationStatus in ['formulation', 'arrived'])"/>
+        <attribute for="sidebar-generate-qr" name="hidden" expr="false" if="__user__.group.name in ['Admin GPTI', 'Super Admin', 'Admins'] ||
+        (__user__.group.name == 'Operator' &amp;&amp; isPaid != 'yes' &amp;&amp; registrationStatus in ['pending','officialCar'])"/>
+        <attribute for="deleteBooking" name="hidden" expr="false" if="__user__.group.name in ['Admin GPTI', 'Super Admin', 'Admins'] &amp;&amp; booking != null"/>
+        <attribute for="crossTimeEntry" name="value" expr="eval: createdOn" if="crossTimeEntry == null"/>
+        <attribute for="ccp" name="readonly" expr="true"/>
+        <attribute for="queueType" name="readonly" expr="true" if="__user__.group.name != 'Admin GPTI' &amp;&amp;  __user__.group.name != 'Super Admin' &amp;&amp; __user__.group.name != 'Admins'"/>
+        <attribute for="queueType" name="readonly" expr="true" if="__user__.group.name != 'Admin GPTI' &amp;&amp;  __user__.group.name != 'Super Admin' &amp;&amp; __user__.group.name != 'Admins'"/>
+        <attribute for="registrationStatus" name="readonly" expr="true" if="__user__.group.name != 'Admin GPTI' &amp;&amp;  __user__.group.name != 'Super Admin' &amp;&amp; __user__.group.name != 'Admins'"/>
+    </action-attrs>
+
+    <!--3. On-load Action-group (move PlateNoCamera)-->
+    <action-method name="seo.movePlateNoCamera.on-load">
+        <call class="com.axelor.apps.seo.web.RegisterController" method="movePlateNoCameraToPlateNo"/>
+    </action-method>
+
+    <!--4. On-load Action-group-->
+    <action-attrs name="action-attrs.show-button-if-admin-record-remove.on-load">
+        <attribute for="deleteRecord" name="hidden" expr="false" if="(__user__.group.name == 'Super Admin' ||
+        __user__.group.name == 'Admins') &amp;&amp; registrationStatus == 'pending'"/>
+    </action-attrs>
+
+    <!--On-load Action-group (Registration)-->
+    <action-group name="seo.registration.on-load.action-group">
+        <action name="seo.registration.on-load-departed"/>
+        <action name="seo.registration.on-load.set.attrs"/>
+        <action name="seo.movePlateNoCamera.on-load"/>
+        <action name="action-attrs.show-button-if-admin-record-remove.on-load"/>
+    </action-group>
+
+    <!--On-save Action-group (Registration)-->
+    <action-group name="seo.registration.on-save.action-group">
+        <action name="seo.registration.on-save.check.plate.and.find.booking"/>
+    </action-group>
+
+    <!--1. On-save Action-group-->
+    <action-method name="seo.registration.on-save.check.plate.and.find.booking">
+        <call class="com.axelor.apps.seo.web.RegisterController" method="checkPlateAndFindBookingOnArrival"/>
+    </action-method>
+
+    <!--Button "Open exit barrier"-->
+    <action-method name="action-open-exit-barrier">
+        <call class="com.axelor.apps.seo.web.RegisterController" method="openExitBarrier"/>
+    </action-method>
+
+    <!--Button "Open entry barrier"-->
+    <action-method name="action-open-entry-barrier">
+        <call class="com.axelor.apps.seo.web.RegisterController" method="openEntryBarrier"/>
+    </action-method>
+
+    <!--Button "Call vehicle to checkout"-->
+    <action-method name="action-call-vehicle-to-checkout">
+        <call class="com.axelor.apps.seo.web.RegisterController" method="callVehicleToCheckout"/>
+    </action-method>
+
+    <!--Button "Generate qr"-->
+    <action-method name="action-generate-qr">
+        <call class="com.axelor.apps.seo.web.RegisterController" method="generateQr"/>
+    </action-method>
+
+    <!--Button "Delete booking"-->
+    <action-method name="action-delete-booking-in-registration">
+        <call class="com.axelor.apps.seo.web.RegisterController" method="deleteBookingInRegistration"/>
+    </action-method>
+
+    <!--1. On-change (get Declaration)-->
+    <action-method name="seo.registration.get.declaration.on-change">
+        <call class="com.axelor.apps.seo.web.RegisterController" method="getTDAndDTFromSmartSystem"/>
+    </action-method>
+
+    <!--1. On-change (set registration status)-->
+    <action-method name="seo.registration.set.registration.status.on-change">
+        <call class="com.axelor.apps.seo.web.RegisterController" method="setRegistrationStatusArrived"/>
+    </action-method>
+
+    <action-group name="seo.registration.on-delete.action-group">
+        <action name="seo.deleteRecord.action-method"/>
+        <action name="seo.registration.action-view"/>
+    </action-group>
+
+    <action-method name="seo.deleteRecord.action-method">
+        <call class="com.axelor.apps.seo.web.RegisterController" method="deleteRecord"/>
+    </action-method>
+</object-views>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+    <chart name="chart.seo.registration.statuses" title="Registration statuses">
+        <dataset type="sql">
+            <![CDATA[
+            SELECT 'Количество регистраций' AS registration_status, COUNT(*) AS amount
+                FROM seo_registration reg
+            WHERE (archived IS NULL OR archived = false)
+                AND DATE(reg.created_on) BETWEEN DATE(:fromDate) AND DATE(:toDate)
+                AND ((reg.ccp = :ccp) OR (:fullInfo = true))
+            UNION ALL
+            SELECT
+                CASE
+                    WHEN reg.registration_status = 'pending' THEN 'В ожидании'
+                    WHEN reg.registration_status = 'formulation' THEN 'Оформление'
+                    WHEN reg.registration_status = 'arrived' THEN 'Прибыл'
+                    WHEN reg.registration_status = 'called' THEN 'Вызван'
+                    WHEN reg.registration_status = 'departed' THEN 'Выехал'
+                    WHEN reg.registration_status = 'officialCar' THEN 'Служебное АТС'
+                END AS registration_status,
+                COUNT(*) AS amount
+                FROM seo_registration reg
+            WHERE (archived IS NULL OR archived = false)
+                AND DATE(reg.created_on) BETWEEN DATE(:fromDate) AND DATE(:toDate)
+                AND ((reg.ccp = :ccp) OR (:fullInfo = true))
+            GROUP BY registration_status
+            ]]>
+        </dataset>
+        <category key="registration_status" type="text" />
+        <series key="amount" type="bar" title="Amount"/>
+    </chart>
+
+    <chart name="chart.seo.registration.queue.type" title="Registration queue type">
+        <dataset type="sql">
+            <![CDATA[
+            SELECT 'Всего' AS queue_type, COUNT(*) AS amount
+                FROM seo_registration reg
+            WHERE (archived IS NULL OR archived = false)
+                AND DATE(reg.created_on) BETWEEN DATE(:fromDate) AND DATE(:toDate)
+                AND ((reg.ccp = :ccp) OR (:fullInfo = true))
+            UNION ALL
+            SELECT
+                CASE
+                    WHEN reg.queue_type = 'timedQueue' THEN 'По времени'
+                    WHEN reg.queue_type = 'liveQueue' THEN 'Живая очередь'
+                    END AS queue_type,
+                COUNT(*) AS amount
+                FROM seo_registration reg
+            WHERE (archived IS NULL OR archived = false)
+                AND DATE(reg.created_on) BETWEEN DATE(:fromDate) AND DATE(:toDate)
+                AND ((reg.ccp = :ccp) OR (:fullInfo = true))
+            GROUP BY queue_type
+            ]]>
+        </dataset>
+        <category key="queue_type" type="text"/>
+        <series key="amount" type="bar" title="Amount"/>
+    </chart>
+</object-views>

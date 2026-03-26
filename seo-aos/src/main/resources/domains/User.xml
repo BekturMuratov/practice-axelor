@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+    <module name="auth" package="com.axelor.auth.db"/>
+    <entity name="User">
+
+        <many-to-one name="ccp" title="CCP" ref="com.axelor.apps.seo.db.CustomsCheckpoint"/>                            <!--CCP-->
+        <string name="phoneNumber" title="Phone Number"/>                                                               <!--Номер телефона-->
+
+        <track>
+            <field name="group"/>
+            <field name="code"/>
+            <field name="passwordUpdatedOn"/>
+        </track>
+        <entity-listener class="com.axelor.apps.seo.events.listeners.UserListener"/>
+    </entity>
+</domain-models>

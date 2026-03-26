@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+    <!-- Author:  Taalai-->
+    <!-- date: 25.09.2025 -->
+
+    <menuitem name="seo.menu-item" title="SEO" icon-background="cyan"
+              icon="fa-handshake-o" tag="SEO" tag-style="important"/>                                                   <!--Главное меню-->
+
+    <menuitem name="seo.dictionary-item" title="Dictionaries" parent="seo.menu-item"/>                                  <!--Справочники-->
+    <menuitem name="seo.objects-item" title="Objects"  parent="seo.menu-item"/>                                         <!--Обьекты-->
+    <menuitem name="seo.reports-item" title="Reports" parent="seo.menu-item"/>                                          <!--Отчеты-->
+    <menuitem name="seo.charts-item" title="Charts" parent="seo.reports-item"/>                                         <!--Графики-->
+    <menuitem name="seo.event-menu-item" title="Event menu" parent="seo.dictionary-item"/>                              <!--Меню событий-->
+
+    <menuitem name="seo.registration.menu-item" title="Registration"
+              action="seo.registration.action-view" parent="seo.menu-item"/>                                            <!--Регистрация-->
+    <action-view name="seo.registration.action-view" title="Registration card ATS"
+                 model="com.axelor.apps.seo.db.Registration">
+        <view type="grid" name="seo.registration-grid"/>
+        <view type="form" name="seo.registration-form"/>
+    </action-view>
+
+    <menuitem name="seo.call.control.menu-item" title="Call control"
+              action="seo.call.control.action-view" parent="seo.menu-item"/>                                            <!--Управление вызовом-->
+    <action-view name="seo.call.control.action-view" title="Call control"
+                 model="com.axelor.apps.seo.db.Registration">
+        <view type="form" name="seo.calling.queue-form"/>
+
+    </action-view>
+
+    <menuitem name="seo.user.menu-item" title="Users"
+              action="seo.user.action-view" parent="seo.objects-item"/>                                                 <!--Пользователи-->
+    <action-view name="seo.user.action-view" title="Users"
+                 model="com.axelor.auth.db.User">
+        <view type="grid" name="seo.user-grid"/>
+        <view type="form" name="seo.user-form"/>
+    </action-view>
+
+    <menuitem name="seo.country.menu-item" title="Countries"
+              action="seo.country.action-view" parent="seo.dictionary-item"/>                                           <!--Страны-->
+    <action-view name="seo.country.action-view" title="Countries"
+                 model="com.axelor.apps.base.db.Country">
+        <view type="grid" name="seo.country-grid"/>
+        <view type="form" name="seo.country-form"/>
+    </action-view>
+
+    <menuitem name="seo.customs-office.menu-item" title="Customs office"
+              action="seo.customs-office.action-view" parent="seo.dictionary-item"/>                                    <!--Таможенные органы-->
+    <action-view name="seo.customs-office.action-view" title="Customs office"
+                 model="com.axelor.apps.seo.db.CustomsOffice">
+        <view type="grid" name = "seo.customs-office-grid"/>
+        <view type="form" name="seo.customs-office-form"/>
+    </action-view>
+
+    <menuitem name="seo.tnved-position-code.menu-item" title="Tnved position code"
+              action="seo.tnved-position-code.action-view" parent="seo.dictionary-item"/>                               <!--Коды ТНВЕД-->
+    <action-view name="seo.tnved-position-code.action-view" title="Tnved position code"
+                 model="com.axelor.apps.seo.db.TnvedPositionCode">
+        <view type="grid" name="seo.tnved-grid"/>
+        <view type="form" name="seo.tnved-form"/>
+    </action-view>
+
+    <menuitem name="seo.login.event.menu-item" title="Login event tracker"
+              action="seo.login.event.action-view" parent="seo.event-menu-item"/>                                       <!--Отслеживание событий входа в систему-->
+    <action-view name="seo.login.event.action-view" title="Login event tracker"
+                 model="com.axelor.apps.seo.db.LoginEventTracker">
+        <view type="grid" name="seo.login.event.tracker-grid"/>
+        <view type="form" name="seo.login.event.tracker-form"/>
+    </action-view>
+
+    <menuitem name="seo.custom-checkpoint.menu-item" title="Customs checkpoint"
+              action="seo.custom-checkpoint.action-view" parent="seo.dictionary-item"/>                                 <!--Пункт пропуска-->
+    <action-view name="seo.custom-checkpoint.action-view" title="Customs checkpoint"
+                 model="com.axelor.apps.seo.db.CustomsCheckpoint">
+        <view type="grid" name="seo.custom-checkpoint-grid"/>
+        <view type="form" name="seo.custom-checkpoint-form"/>
+    </action-view>
+
+    <menuitem name="seo.booking.menu-item" title="Booking"
+              action="seo.booking.action-view" parent="seo.objects-item"/>                                              <!--Бронирование-->
+    <action-view name="seo.booking.action-view" title="Booking"
+                 model="com.axelor.apps.seo.db.Booking">
+        <view type="grid" name="seo.booking-grid"/>
+        <view type="form" name="seo.booking-form"/>
+    </action-view>
+
+    <menuitem name="seo.event.delete.menu-item" title="Event tracker"
+              action="seo.event.delete.action-view" parent="seo.event-menu-item"/>                                      <!--Отслеживание событий удаление записей-->
+    <action-view name="seo.event.delete.action-view" title="Event tracker"
+                 model="com.axelor.apps.seo.db.EventTracker">
+        <view type="grid" name="seo.event.tracker-grid"/>
+        <view type="form" name="seo.event.tracker-form"/>
+    </action-view>
+
+    <menuitem name="seo.led.ccp.link.menu-item" title="LED screens"
+              action="seo.led.cpp.link.action-view" parent="seo.objects-item"/>                                         <!--Сущность для связи Led и CCP-->
+    <action-view name="seo.led.cpp.link.action-view" title="LED screens"
+                 model="com.axelor.apps.seo.db.LedScreenAndCcp">
+        <view type="grid" name="seo.led.ccp.link-grid"/>
+        <view type="form" name="seo.led.ccp.link-form"/>
+    </action-view>
+
+    <menuitem name="seo.barrier.menu-item" title="Barriers"
+              action="seo.barrier.action-view" parent="seo.objects-item"/>                                              <!--Шлагбаумы-->
+    <action-view name="seo.barrier.action-view" title="Barriers"
+                 model="com.axelor.apps.seo.db.Barrier">
+        <view type="grid" name="seo.barrier-grid"/>
+        <view type="form" name="seo.barrier-form"/>
+    </action-view>
+
+    <menuitem name="seo.bandwidth-settings.menu-item" title="Bandwidth settings"
+              action="seo.bandwidth-settings.action-view" parent="seo.dictionary-item"/>                                <!--Настройки пропускной способности-->
+    <action-view name="seo.bandwidth-settings.action-view" title="Bandwidth settings"
+                 model="com.axelor.apps.seo.db.BandwidthSettings">
+        <view type="grid" name="seo.bandwidth-settings-grid"/>
+        <view type="form" name="seo.bandwidth-settings-form"/>
+    </action-view>
+
+    <menuitem name="seo.camera.menu-item" title="Camera"
+              action="seo.camera.action-view" parent="seo.objects-item"/>                                               <!--Камера-->
+    <action-view name="seo.camera.action-view" title="Camera"
+                 model="com.axelor.apps.seo.db.Camera">
+        <view type="grid" name="seo.camera-grid"/>
+        <view type="cards" name="seo.camera-cards"/>
+        <view type="form" name="seo.camera-form"/>
+    </action-view>
+
+    <menuitem name="seo.transactions.report.menu-item" parent="seo.reports-item"
+              title="Transactions report" action="seo.transactions.report.action-view"/>                                <!--Отчет транзакций-->
+    <action-view name="seo.transactions.report.action-view" title="Transactions report"
+                 model="com.axelor.utils.db.Wizard">
+        <view type="form" name="seo.transactions.report-form"/>
+    </action-view>
+
+    <action-view name="seo.transactions.registration.report.action-view" title="Detailing"
+                 model="com.axelor.utils.db.Wizard">                                                                    <!--Отчет транзакций по номеру регистрации-->
+        <view type="form" name="seo.transactions.registration.report-form"/>
+        <view-param name="popup" value="true"/>
+        <view-param name="popup-save" value="false"/>
+        <context name="reqNumber" expr="eval: __this__.requisite?.requisiteNumber"/>
+    </action-view>
+
+    <menuitem name="seo.camera.owner.link.menu-item" title="Camera Owner Link"
+              action="seo.camera.owner.link.action-view" parent="seo.dictionary-item"/>                                 <!--Сущность для связи Camera и OwnerRegistry-->
+    <action-view name="seo.camera.owner.link.action-view" title="Camera Owner Link"
+                 model="com.axelor.apps.seo.db.CameraOwnerLink">
+        <view type="grid" name="seo.camera-owner-link-grid"/>
+        <view type="form" name="seo.camera-owner-link-form"/>
+    </action-view>
+
+    <menuitem name="seo.all-json.menu-item" title="All massifs json"
+              action="seo.all-json.action-view" parent="seo.objects-item"/>                                             <!--Весь массив json-->
+    <action-view name="seo.all-json.action-view" title="All massifs json"
+                 model="com.axelor.apps.seo.db.AllMassifJson">
+        <view type="grid" name="seo.all-json-grid"/>
+        <view type="form" name="seo.all-json-form"/>
+    </action-view>
+
+    <menuitem name="seo.letter.menu-item" title="Letters"
+              action="seo.letter.action-view" parent="seo.objects-item"/>                                               <!--Письма-->
+    <action-view name="seo.letter.action-view" title="Letters"
+                 model="com.axelor.apps.seo.db.Letter">
+        <view type="grid" name="seo.letter-grid"/>
+        <view type="form" name="seo.letter-form"/>
+    </action-view>
+
+    <menuitem name="seo.requisite.menu-item" title="Requisites"
+              action="seo.requisite.action-view" parent="seo.objects-item"/>                                            <!--Реквизит-->
+    <action-view name="seo.requisite.action-view" title="Requisites"
+                 model="com.axelor.apps.seo.db.Requisite">
+        <view type="grid" name="seo.requisite-grid"/>
+        <view type="form" name="seo.requisite-form"/>
+    </action-view>
+
+    <menuitem name="seo.registration.chart.menu-item" title="Registration dashboards"
+              action="seo.registration.chart.action-view" parent="seo.charts-item"/>                                    <!--График регистрации-->
+    <action-view name="seo.registration.chart.action-view" title="Registration dashboards"
+                 model="com.axelor.utils.db.Wizard">
+        <view type="form" name="seo.registration.chart-form"/>
+    </action-view>
+
+    <menuitem name="seo.financial-indicators.chart.menu-item" title="Charts financial indicators"
+              action="seo.financial-indicators.chart.action-view" parent="seo.charts-item"/>                            <!--Графики финансовых показателей по месяцам-->
+    <action-view name="seo.financial-indicators.chart.action-view" title="Charts financial indicators"
+                 model="com.axelor.utils.db.Wizard">
+        <view type="form" name="seo.financial-indicators.dashboard-form"/>
+    </action-view>
+
+
+    <menuitem name="seo.payment.menu-item" title="Payments"
+              action="seo.payment.action-view" parent="seo.objects-item"/>                                              <!--Журнал запросов-->
+    <action-view name="seo.payment.action-view" title="Payments"
+                 model="com.axelor.apps.seo.db.Payment">
+        <view type="grid" name="seo.payment-grid"/>
+        <view type="form" name="seo.payment-form"/>
+    </action-view>
+</object-views>

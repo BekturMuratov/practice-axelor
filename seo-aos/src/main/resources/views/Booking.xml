@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+    <grid title="Booking" name="seo.booking-grid" model="com.axelor.apps.seo.db.Booking">
+        <field name="uIdBooking"/>
+        <field name="ccp.ccpName"/>
+        <field name="queueType" widget="singleSelect"/>
+        <field name="bookingDate"/>
+        <field name="bookingTime" widget="singleSelect"/>
+        <field name="fullNameDriver"/>
+        <field name="plateNo"/>
+        <field name="declarationType" widget="singleSelect"/>
+        <field name="declarationNumber"/>
+        <field name="typeOfCargo" widget="singleSelect"/>
+        <field name="requisite.requisiteNumber"/>
+        <field name="isPaid" widget="singleSelect"/>
+        <field name="bookingStatus" widget="singleSelect"/>
+        <field name="timeOfCancelBooking"/>
+    </grid>
+
+    <form title="Booking" name="seo.booking-form" model="com.axelor.apps.seo.db.Booking"
+          width="large" canAttach="false" canCopy="false" canArchive="false" onNew="seo.booking.on-new.action-group">
+        <panel name="mainPanel" title="Booking information">
+            <field name="uIdBooking" colSpan="3" readonly="true"/>
+            <field name="isPaid" widget="singleSelect" colSpan="3"/>
+            <field name="paymentNumber" colSpan="3"/>
+            <field name="paymentDate" colSpan="3"/>
+            <field name="queueType" widget="singleSelect" colSpan="3" readonly="true"/>
+            <field name="bookingStatus" widget="singleSelect" colSpan="3" readonly="true"/>
+            <field name="bookingDate" widget="Date" colSpan="3"/>
+            <field name="bookingTime" colSpan="3" widget="singleSelect"/>
+        </panel>
+
+        <panel name="driverInformation" title="Driver Information">
+            <field name="fullNameDriver" required="true" colSpan="6"
+                   onChange="com.axelor.apps.seo.web.RegisterController:validationOnRegistration"/>
+            <field name="phoneNumber" placeholder="+996" readonly="false" colSpan="6"/>
+        </panel>
+
+        <panel name="mainInformation" title="Main information">
+            <field name="plateNo" placeholder="08KG538AAA" readonly="false" colSpan="6"
+                   onChange="com.axelor.apps.seo.web.RegisterController:validationOnRegistration"/>
+            <field name="typeOfCargo" widget="singleSelect" colSpan="6"/>
+        </panel>
+
+        <panel name="declarationInformation" title="Declaration information">
+            <field name="declarationType" widget="singleSelect" colSpan="6"/>
+            <field name="declarationNumber" colSpan="6"/>
+        </panel>
+
+        <panel name="sidebar" sidebar="true" showTitle="false" showIf="id">
+            <field name="ccp" title="Checkpoint Name" readonly="false" grid-view="seo.custom-checkpoint-for-views-grid"
+                   target="com.axelor.apps.seo.db.CustomsCheckpoint"/>
+            <field name="createdOn" readonly="true"/>
+            <field name="codeWord" readonly="true"/>
+            <field name="clientIp" readonly="true"/>
+            <field name="timeOfCancelBooking" readonly="true"/>
+            <field name="requisite" target-name="requisiteNumber" readonly="true" title="Requisite number"/>
+            <field name="registration.registrationStatus" readonly="true" title="Registration Status" widget="singleSelect"/>
+            <field name="onlinePayments" hidden="false" readonly="true"/>
+        </panel>
+
+        <panel-mail>
+            <mail-messages/>
+        </panel-mail>
+    </form>
+
+    <action-method name="seo.booking.on-refresh">
+        <call class="com.axelor.apps.seo.web.RegisterController" method="registrationOnRefresh"/>
+    </action-method>
+
+    <!--On-new Action-group (Booking)-->
+    <action-group name="seo.booking.on-new.action-group">
+        <action name="seo.registration.set.attrs"/>
+    </action-group>
+
+    <!--1. On-new Action-group-->
+    <action-attrs name="seo.booking.set.attrs">
+        <attribute for="ccp" name="value" expr="eval: __user__.ccp"/>
+    </action-attrs>
+</object-views>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+    <module name="seo" package="com.axelor.apps.seo.db"/>
+
+    <entity name="CustomsOffice">
+        <integer name="code" title="Code"/>                                                                             <!-- Код-->
+        <string name="name" title="Name CO"/>                                                                           <!-- Название таможенного органа-->
+        <string name="fullName" title="Full name"/>                                                                     <!-- Полное название таможенного органа-->
+        <many-to-one name="countryCode" title="Country code"
+                     ref="com.axelor.apps.base.db.Country"/>
+        <finder-method name="findByFullName" using="fullName"/>                                                         <!-- Код страны-->
+    </entity>
+</domain-models>
