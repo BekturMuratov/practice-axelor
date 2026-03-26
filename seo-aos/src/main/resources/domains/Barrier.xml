@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+    <module name="seo" package="com.axelor.apps.seo.db"/>
+
+    <entity name="Barrier">
+        <integer name="barrierId" title="Barrier id"/>                                                                  <!-- ID шлагбаума-->
+        <many-to-one name="ccp" title="CCP" ref="com.axelor.apps.seo.db.CustomsCheckpoint"/>                            <!-- КПП-->
+        <boolean name="isActive" title="Is active"/>                                                                    <!-- Активировать -->
+        <string name="direction" title="Direction" selection="seo.barrier.direction.type.select"/>                      <!-- Направление-->
+        <string name="apiBarrier" title="Api barrier"/>                                                                 <!-- Ip шлагбаума -->
+        <integer name="portBarrier" title="Port barrier"/>                                                              <!-- Порт шлагбаума -->
+
+        <track>
+            <field name="barrierId"/>
+            <field name="isActive"/>
+            <field name="direction"/>
+            <field name="apiBarrier"/>
+            <field name="portBarrier"/>
+        </track>
+    </entity>
+</domain-models>

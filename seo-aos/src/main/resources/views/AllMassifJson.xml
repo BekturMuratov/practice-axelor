@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+    <grid name="seo.all-json-grid" title="All massifs json" model="com.axelor.apps.seo.db.AllMassifJson"
+          canEdit="false" canNew="false" canDelete="false" canArchive="false" edit-icon="false">
+        <field name="createdOn"/>
+        <field name="crossRecordSyscode"/>
+        <field name="allJson"/>
+    </grid>
+    <form name="seo.all-json-form" title="All massifs json" model="com.axelor.apps.seo.db.AllMassifJson"
+          canAttach="false" canEdit="false" canNew="false" canDelete="false" canArchive="false">
+        <panel name="mainPanel">
+            <field name="createdOn" colSpan="6"/>
+            <field name="crossRecordSyscode" colSpan="6"/>
+            <field name="allJson" colSpan="12" widget="code-editor" x-code-syntax="xml" height="400"/>
+        </panel>
+    </form>
+</object-views>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+    <module name="seo" package="com.axelor.apps.seo.db"/>
+
+    <entity name="CustomsCheckpoint">
+        <string name="specialIdentifier" title="Special identifier"/>                                                   <!-- Специальный номер-->
+        <many-to-many name="customsOffice"
+                      title="The customs authority in the region of activity of which the CCP is located"
+                      ref="com.axelor.apps.seo.db.CustomsOffice"/>                                                      <!-- Таможенный орган в регионе деятельности которого расположен ПП-->
+        <string name="ccpName" title="Name CP" namecolumn="true"/>                                                      <!-- Пункт пропуска-->
+        <string name="address" title="Address"/>                                                                        <!-- Адрес пункта пропуска-->
+        <string name="cpCustoms" title="CP Customs" selection="seo.customs.select"/>                                    <!-- Принадлежность к таможне-->
+        <integer name="serviceId" title="Service ID"/>                                                                  <!-- Код услуги поставщика-->
+        <string name="direction" title="Direction"/>                                                                    <!-- Направление-->
+        <string name="onlinePayments" title="Online payments" selection="seo.customs.online.payments.select"/>          <!-- Имеется онлайн платежи-->
+        <integer name="priceForBooking" title="Price for booking"/>                                                     <!-- Цена за услуги бронирования-->
+
+        <string name="accountNo" title="Account No"/>                                                                   <!-- Счет получателя-->
+        <integer name="currencyId" title="Currency Id"/>                                                                <!-- Код валюты счета получателя-->
+        <string name="qrTtlUnits" title="QR TTL Units" selection="seo.payment.qr.ttl.units.select"/>                    <!-- Единицы времени жизни QR-кода-->
+        <integer name="qrTtl" title="QR TTL" selection="seo.payment.qr.ttl.select"/>                                    <!-- Время жизни QR-кода-->
+
+        <finder-method name="findByServiceId" using="serviceId"/>
+        <finder-method name="findByCcpName" using="ccpName"/>
+
+        <track>
+            <field name="specialIdentifier"/>
+            <field name="ccpName"/>
+            <field name="address"/>
+            <field name="cpCustoms"/>
+        </track>
+    </entity>
+</domain-models>

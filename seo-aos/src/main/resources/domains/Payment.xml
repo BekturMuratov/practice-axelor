@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+    <module name="seo" package="com.axelor.apps.seo.db"/>
+
+    <entity name="Payment">
+        <string name="accountNo" title="Account No"/>                                                                   <!-- Счет получателя-->
+        <integer name="currencyId" title="Currency Id"/>                                                                <!-- Код валюты счета получателя-->
+        <decimal name="amount" title="Transaction amount"/>                                                             <!-- Сумма транзакции-->
+        <string name="operationID" title="Operation ID"/>                                                               <!-- ID операции-->
+        <string name="qrTtlUnits" title="QR TTL Units" selection="seo.payment.qr.ttl.units.select"/>                    <!-- Единицы времени жизни QR-кода-->
+        <integer name="qrTtl" title="QR TTL" min="1" selection="seo.payment.qr.ttl.select"/>                            <!-- Время жизни QR-кода-->
+
+        <string name="qrImage" title="Qr image"/>                                                                       <!-- Изображение QR-кода-->
+        <string name="qrLink" title="Qr link"/>                                                                         <!-- URL QR-кода-->
+        <string name="qrImageWithFrame" title="Qr image with frame"/>                                                   <!-- Изображение QR-кода с рамкой-->
+
+        <string name="status" title="Status" selection="seo.payment.status.select" required="true"/>                    <!-- Статус операции-->
+        <string name="operationType" title="Operation Type" selection="seo.payment.operation.type.select"/>             <!-- Тип оплаты-->
+
+        <string name="requisite" title="Requisite"/>                                                                    <!-- Реквизит-->
+        <string name="ipAddress" title="Ip address"/>                                                                   <!-- ip адрес-->
+        <many-to-one name="ccp" title="CCP" ref="com.axelor.apps.seo.db.CustomsCheckpoint"/>                            <!-- ПП-->
+
+        <string name="paymentNumber" title="Payment Number"/>                                                           <!-- № Платежа-->
+        <date name="paymentDate" title="Payment Date"/>                                                                 <!-- Дата платежа-->
+        <string name="elQrId" title="ELQR Id"/>                                                                         <!-- ELQR Id-->
+    </entity>
+</domain-models>

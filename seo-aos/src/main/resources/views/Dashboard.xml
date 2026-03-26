@@ -1,0 +1,203 @@
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+    <form title="Registration chart" name="seo.registration.chart-form" model="com.axelor.utils.db.Wizard"
+          canEdit="true" canSave="false" canNew="false" canArchive="false" canAttach="false"
+          onNew="seo.charts.on-new" onLoad="seo.charts.on-load" width="large" canDelete="false">
+        <panel name="searchForAdmins" hidden="true">
+            <field name="customsCheckpoint" required="true" type="many-to-one" title="CCP" target="com.axelor.apps.seo.db.CustomsCheckpoint"
+                   target-name="ccpName"  onChange="action-dashboard-registration-info-refresh" canView="false" showIf="needFullInfo == false" canEdit="true"
+                   grid-view="seo.custom-checkpoint-for-views-grid" colSpan="6"/>
+            <field name="needFullInfo" required="true" type="boolean" title="Need full info" onChange="action-dashboard-registration-info-refresh"  canEdit="true" colSpan="6"/>
+        </panel>
+        <panel>
+            <field name="fromDateLocal" title="From Date" type="date" x-required="true" onChange="action-dashboard-registration-info-refresh" colSpan="6"/>
+            <field name="toDateLocal" title="To Date" type="date" x-required="true" onChange="action-dashboard-registration-info-refresh" colSpan="6"/>
+        </panel>
+
+        <panel>
+            <panel-dashlet name="dashlet.custom.seo.registration.statuses" action="dashlet.custom.seo.registration.statuses.action.view" colSpan="4" height="350"  css="report-box dashlet-no-dropdown"/>
+            <panel-dashlet name="dashlet.seo.registration.statuses" action="dashlet.seo.registration.statuses.action.view" colSpan="8" height="350"  css="report-box dashlet-no-dropdown"/>
+        </panel>
+        <panel>
+            <panel-dashlet name="dashlet.custom.seo.registration.queue.type" action="dashlet.custom.seo.registration.queue.type.action.view" colSpan="4" height="350"  css="report-box dashlet-no-dropdown"/>
+            <panel-dashlet name="dashlet.seo.registration.queue.type" action="dashlet.seo.registration.queue.type.action.view" colSpan="8" height="350"  css="report-box dashlet-no-dropdown"/>
+        </panel>
+
+        <panel title="Number of registrations by day">
+            <menu>
+                <item name="exportItem" title="Export" action="com.axelor.apps.seo.web.DashboardController:exportRegistrationNumberByDay"/>
+            </menu>
+
+            <field name="fromDateForDailyIndicators" title="From Date" type="date" x-required="true" onChange="action-dashboard-registration-info-refresh" colSpan="6"/>
+            <field name="toDateForDailyIndicators" title="To Date" type="date" x-required="true" onChange="action-dashboard-registration-info-refresh" colSpan="6"/>
+
+            <panel-dashlet name="dashlet.seo.registration.number.by.daily" action="dashlet.seo.registration.number.by.day.action.view" colSpan="12" height="350"  css="report-box dashlet-no-dropdown"/>
+            <panel-dashlet name="dashlet.custom.registration.number.by.daily" action="dashlet.custom.registration.number.by.day.action.view" colSpan="12" height="350"  css="report-box dashlet-no-dropdown"/>
+        </panel>
+
+        <panel title="Number of registrations by month">
+            <menu>
+                <item name="exportItem" title="Export" action="com.axelor.apps.seo.web.DashboardController:exportRegistrationNumberByMonth"/>
+            </menu>
+
+            <field name="fromDateForMonthlyIndicators" title="From Date" type="date" x-required="true" onChange="action-dashboard-registration-info-refresh" colSpan="6"/>
+            <field name="toDateForMonthlyIndicators" title="To Date" type="date" x-required="true" onChange="action-dashboard-registration-info-refresh" colSpan="6"/>
+
+            <panel-dashlet name="dashlet.seo.registration.number.by.month" action="dashlet.seo.registration.number.by.month.action.view" colSpan="12" height="350"  css="report-box dashlet-no-dropdown"/>
+            <panel-dashlet name="dashlet.custom.registration.number.by.month" action="dashlet.custom.registration.number.by.month.action.view" colSpan="12" height="350"  css="report-box dashlet-no-dropdown"/>
+        </panel>
+    </form>
+
+    <!--Табличный формат-->
+    <custom name="custom.seo.registration.statuses" title="Registration statuses table format"  css="report-box dashlet-no-dropdown">
+        <field name="registration_status" title="Registration statuses" type="string"/>
+        <field name="amount" title="Amount" type="integer"/>
+        <dataset type="sql">
+            <![CDATA[
+            SELECT 'Количество регистраций' AS registration_status, COUNT(*) AS amount
+                FROM seo_registration reg
+            WHERE (archived IS NULL OR archived = false)
+                AND DATE(reg.created_on) BETWEEN DATE(:fromDate) AND DATE(:toDate)
+                AND ((reg.ccp = :ccp) OR (:fullInfo = true))
+            UNION ALL
+            SELECT
+                CASE
+                    WHEN reg.registration_status = 'pending' THEN 'В ожидании'
+                    WHEN reg.registration_status = 'formulation' THEN 'Оформление'
+                    WHEN reg.registration_status = 'arrived' THEN 'Прибыл'
+                    WHEN reg.registration_status = 'called' THEN 'Вызван'
+                    WHEN reg.registration_status = 'departed' THEN 'Выехал'
+                    WHEN reg.registration_status = 'officialCar' THEN 'Служебное АТС'
+                END AS registration_status,
+                COUNT(*) AS amount
+            FROM seo_registration reg
+                WHERE (archived IS NULL OR archived = false)
+                AND DATE(reg.created_on) BETWEEN DATE(:fromDate) AND DATE(:toDate)
+                AND ((reg.ccp = :ccp) OR (:fullInfo = true))
+            GROUP BY registration_status
+        ]]>
+        </dataset>
+        <template>
+            <![CDATA[
+            <div style="max-height: 400px; overflow-y: auto;">
+                <report-table data='data' columns='registration_status,amount'/>
+            </div>
+            ]]>
+        </template>
+    </custom>
+
+    <custom name="custom.seo.registration.queue.type" title="Registration queue type table format"  css="report-box dashlet-no-dropdown">
+        <field name="queue_type" title="Registration queue type" type="string"/>
+        <field name="amount" title="Amount" type="integer"/>
+        <dataset type="sql">
+            <![CDATA[
+            SELECT 'Всего' AS queue_type, COUNT(*) AS amount
+                FROM seo_registration reg
+            WHERE (archived IS NULL OR archived = false)
+                AND DATE(reg.created_on) BETWEEN DATE(:fromDate) AND DATE(:toDate)
+                AND ((reg.ccp = :ccp) OR (:fullInfo = true))
+            UNION ALL
+            SELECT
+                CASE
+                    WHEN reg.queue_type = 'timedQueue' THEN 'По времени'
+                    WHEN reg.queue_type = 'liveQueue' THEN 'Живая очередь'
+                    END AS queue_type,
+                COUNT(*) AS amount
+                FROM seo_registration reg
+            WHERE (archived IS NULL OR archived = false)
+                AND DATE(reg.created_on) BETWEEN DATE(:fromDate) AND DATE(:toDate)
+                AND ((reg.ccp = :ccp) OR (:fullInfo = true))
+            GROUP BY queue_type
+            ]]>
+        </dataset>
+        <template>
+            <![CDATA[
+            <div style="max-height: 400px; overflow-y: auto;">
+                <report-table data='data' columns='queue_type,amount'/>
+            </div>
+            ]]>
+        </template>
+    </custom>
+
+    <action-view name="dashlet.custom.seo.registration.statuses.action.view"
+                 title="Registration statuses table format" model="com.axelor.utils.db.Wizard">
+        <view type="custom" name="custom.seo.registration.statuses"/>
+        <context name="todayDate" expr="eval:__config__.date"/>
+        <context name="ccp" expr="eval: customsCheckpoint != null? customsCheckpoint.id : __user__.ccp.id"/>
+        <context name="fullInfo" expr="eval: needFullInfo == null? false : needFullInfo" />
+        <context name="fromDate" expr="eval: fromDateLocal != null? fromDateLocal :  __date__"/>
+        <context name="toDate" expr="eval: toDateLocal != null? toDateLocal : __date__"/>
+    </action-view>
+
+    <action-view name="dashlet.custom.seo.registration.queue.type.action.view"
+                 title="Registration queue type table format" model="com.axelor.utils.db.Wizard">
+        <view type="custom" name="custom.seo.registration.queue.type"/>
+        <context name="todayDate" expr="eval:__config__.date"/>
+        <context name="ccp" expr="eval: customsCheckpoint != null? customsCheckpoint.id : __user__.ccp.id"/>
+        <context name="fullInfo" expr="eval: needFullInfo == null? false : needFullInfo" />
+        <context name="fromDate" expr="eval: fromDateLocal != null? fromDateLocal :  __date__"/>
+        <context name="toDate" expr="eval: toDateLocal != null? toDateLocal : __date__"/>
+    </action-view>
+
+    <action-view name="dashlet.seo.registration.statuses.action.view"
+                 title="Registration statuses" model="com.axelor.utils.db.Wizard">
+        <view type="chart" name="chart.seo.registration.statuses"/>
+        <context name="todayDate" expr="eval:__config__.date"/>
+        <context name="ccp" expr="eval: customsCheckpoint != null? customsCheckpoint.id : __user__.ccp.id"/>
+        <context name="fullInfo" expr="eval: needFullInfo == null? false : needFullInfo" />
+        <context name="fromDate" expr="eval: fromDateLocal != null? fromDateLocal :  __date__"/>
+        <context name="toDate" expr="eval: toDateLocal != null? toDateLocal : __date__"/>
+    </action-view>
+
+    <action-view name="dashlet.seo.registration.queue.type.action.view"
+                 title="Registration queue type" model="com.axelor.utils.db.Wizard">
+        <view type="chart" name="chart.seo.registration.queue.type"/>
+        <context name="todayDate" expr="eval:__config__.date"/>
+        <context name="ccp" expr="eval: customsCheckpoint != null? customsCheckpoint.id : __user__.ccp.id"/>
+        <context name="fullInfo" expr="eval: needFullInfo == null? false : needFullInfo" />
+        <context name="fromDate" expr="eval: fromDateLocal != null? fromDateLocal :  __date__"/>
+        <context name="toDate" expr="eval: toDateLocal != null? toDateLocal : __date__"/>
+    </action-view>
+
+    <action-attrs name="action-dashboard-registration-info-refresh">
+        <attribute name="refresh" expr="eval: true" for="dashlet.seo.registration.statuses"/>
+        <attribute name="refresh" expr="eval: true" for="dashlet.custom.seo.registration.statuses"/>
+
+        <attribute name="refresh" expr="eval: true" for="dashlet.custom.seo.registration.queue.type"/>
+        <attribute name="refresh" expr="eval: true" for="dashlet.seo.registration.queue.type"/>
+
+        <attribute name="refresh" expr="eval: true" for="dashlet.seo.registration.number.by.month"/>
+        <attribute name="refresh" expr="eval: true" for="dashlet.custom.registration.number.by.month"/>
+
+        <attribute name="refresh" expr="eval: true" for="dashlet.seo.registration.number.by.daily"/>
+        <attribute name="refresh" expr="eval: true" for="dashlet.custom.registration.number.by.daily"/>
+    </action-attrs>
+
+    <!--On-new-->
+    <action-attrs name="seo.charts.on-new" model="com.axelor.utils.db.Wizard">
+        <attribute for="customsCheckpoint" name="value" expr="eval: __user__.ccp"/>
+        <attribute for="needFullInfo" name="value" expr="eval: false"/>
+        <attribute for="searchForAdmins" name="hidden" expr="false" if="__user__.group.name in ['Admin GPTI', 'Super Admin', 'Admins']"/>
+        <attribute for="fromDateLocal" name="value" expr="eval: __date__"/>
+        <attribute for="toDateLocal" name="value" expr="eval: __date__"/>
+        <attribute for="fromDateForMonthlyIndicators" name="value" expr="eval:LocalDate.now().withDayOfYear(1)"/>
+        <attribute for="toDateForMonthlyIndicators" name="value" expr="eval:LocalDate.now()"/>
+        <attribute for="fromDateForDailyIndicators" name="value" expr="eval:LocalDate.now().withDayOfMonth(1)"/>
+        <attribute for="toDateForDailyIndicators" name="value" expr="eval:LocalDate.now().with(java.time.temporal.TemporalAdjusters.lastDayOfMonth())"/>
+    </action-attrs>
+
+    <!--On-load-->
+    <action-attrs name="seo.charts.on-load" model="com.axelor.utils.db.Wizard">
+        <attribute for="customsCheckpoint" name="value" expr="eval: __user__.ccp"/>
+        <attribute for="needFullInfo" name="value" expr="eval: false"/>
+        <attribute for="searchForAdmins" name="hidden" expr="false" if="__user__.group.name in ['Admin GPTI', 'Super Admin', 'Admins']"/>
+        <attribute for="fromDateLocal" name="value" expr="eval: __date__"/>
+        <attribute for="toDateLocal" name="value" expr="eval: __date__"/>
+        <attribute for="fromDateForMonthlyIndicators" name="value" expr="eval:LocalDate.now().withDayOfYear(1)"/>
+        <attribute for="toDateForMonthlyIndicators" name="value" expr="eval:LocalDate.now()"/>
+        <attribute for="fromDateForDailyIndicators" name="value" expr="eval:LocalDate.now().withDayOfMonth(1)"/>
+        <attribute for="toDateForDailyIndicators" name="value" expr="eval:LocalDate.now().with(java.time.temporal.TemporalAdjusters.lastDayOfMonth())"/>
+    </action-attrs>
+</object-views>

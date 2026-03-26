@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+    <grid name="seo.barrier-grid" title="Barriers" model="com.axelor.apps.seo.db.Barrier"
+          canNew="true" canEdit="false" canDelete="false" canArchive="false" edit-icon="false">
+        <field name="barrierId"/>
+        <field name="ccp.ccpName"/>
+        <field name="isActive"/>
+        <field name="direction" widget="MultiSelect"/>
+        <field name="apiBarrier"/>
+        <field name="portBarrier"/>
+    </grid>
+
+    <form name="seo.barrier-form" title="Barrier" model="com.axelor.apps.seo.db.Barrier"
+          width="large" onLoad="seo.barrier.on-load" canDelete="false" canArchive="false" canAttach="false">
+        <panel name="mainPanel">
+            <field name="barrierId"/>
+            <field name="ccp" target-name="ccpName"/>
+            <field name="isActive"/>
+            <field name="direction" widget="MultiSelect"/>
+            <field name="apiBarrier"/>
+            <field name="portBarrier"/>
+        </panel>
+        <panel-mail>
+            <mail-messages/>
+        </panel-mail>
+    </form>
+
+    <!--2. On-load (Admins)-->
+    <action-attrs name="seo.barrier.on-load" model="com.axelor.apps.seo.db.Barrier">
+        <attribute for="apiBarrier" name="readonly" expr="true" if="__user__.group.name != 'Admins'"/>
+        <attribute for="portBarrier" name="readonly" expr="true" if="__user__.group.name != 'Admins'"/>
+        <attribute for="ccp" name="readonly" expr="true" if="__user__.group.name != 'Admins'"/>
+        <attribute for="isActive" name="readonly" expr="true" if="__user__.group.name != 'Admins'"/>
+        <attribute for="barrierId" name="hidden" expr="true" if="__user__.group.name != 'Admins'"/>
+        <attribute for="isActive" name="hidden" expr="true" if="__user__.group.name != 'Admins'"/>
+    </action-attrs>
+
+</object-views>

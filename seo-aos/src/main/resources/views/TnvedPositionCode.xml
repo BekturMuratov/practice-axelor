@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+    <grid title="Tnved position code" name="seo.tnved-grid" model="com.axelor.apps.seo.db.TnvedPositionCode"
+          canEdit="false" canNew="false" canDelete="false" canArchive="false" edit-icon="false">
+        <field name="name"/>
+        <field name="code"/>
+        <field name="noCodePosition"/>
+        <field name="parent"/>
+    </grid>
+
+    <form title="Tnved position code" name="seo.tnved-form" model="com.axelor.apps.seo.db.TnvedPositionCode"
+          canAttach="false" canEdit="false" canNew="false" canDelete="false" canArchive="false">
+        <panel>
+            <field name="name" colSpan="6"/>
+            <field name="code" colSpan="2"/>
+            <field name="noCodePosition" colSpan="2"/>
+            <field name="parent" colSpan="2"/>
+        </panel>
+    </form>
+</object-views>

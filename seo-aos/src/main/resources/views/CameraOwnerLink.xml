@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+    <grid name="seo.camera-owner-link-grid" title="Camera Owner Link" model="com.axelor.apps.seo.db.CameraOwnerLink"
+          canNew="false" canEdit="false" canDelete="false" canArchive="false" edit-icon="false" orderBy="ccp.ccpName">
+        <hilite background="bluegrey" if="archived"/>
+        <field name="cameraCode"/>
+        <field name="ccp.ccpName"/>
+        <field name="createRegistration"/>
+        <field name="typeOfCamera" widget="singleSelect"/>
+        <field name="useCurrentTime"/>
+        <field name="exitControl"/>
+        <field name="archived"/>
+    </grid>
+
+    <form name="seo.camera-owner-link-form" title="Camera Owner Link" model="com.axelor.apps.seo.db.CameraOwnerLink" width="large"
+          canDelete="false" canArchive="false" canAttach="false" onLoad="seo.camera-owner-link.on-load">
+        <panel name="mainPanel">
+            <field name="cameraCode" colSpan="4"/>
+            <field name="ccp" target-name="ccpName" colSpan="4"/>
+            <field name="createRegistration" widget="boolean-switch" colSpan="4"/>
+            <field name="typeOfCamera" widget="singleSelect" colSpan="4"/>
+            <field name="useCurrentTime" widget="boolean-switch" colSpan="4"/>
+            <field name="exitControl" widget="boolean-switch" colSpan="4"/>
+        </panel>
+        <panel-mail>
+            <mail-messages/>
+        </panel-mail>
+    </form>
+
+    <!--2. On-load (Admins)-->
+    <action-attrs name="seo.camera-owner-link.on-load" model="com.axelor.apps.seo.db.CameraOwnerLink">
+        <attribute for="cameraCode" name="readonly" expr="true" if="__user__.group.name != 'Admins'"/>
+        <attribute for="ccp" name="readonly" expr="true" if="__user__.group.name != 'Admins'"/>
+        <attribute for="createRegistration" name="readonly" expr="true" if="__user__.group.name != 'Admins'"/>
+        <attribute for="typeOfCamera" name="readonly" expr="true" if="__user__.group.name != 'Admins'"/>
+    </action-attrs>
+</object-views>

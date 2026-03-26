@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+    <grid title="Custom Checkpoint" name="seo.custom-checkpoint-grid" model="com.axelor.apps.seo.db.CustomsCheckpoint"
+          orderBy="specialIdentifier" canArchive="false" canDelete="false">
+        <field name="specialIdentifier"/>
+        <field name="ccpName"/>
+        <field name="address"/>
+        <field name="customsOffice.name" ref="com.axelor.apps.seo.CustomsOffice"/>
+        <field name="onlinePayments"/>
+        <field name="priceForBooking"/>
+        <field name="direction"/>
+    </grid>
+
+    <!--Регистрационная информация-->
+    <form title="Custom Checkpoint" name="seo.custom-checkpoint-form" model="com.axelor.apps.seo.db.CustomsCheckpoint"
+          canAttach="false" canDelete="false" canArchive="false">
+
+        <!--Владелец-->
+        <panel name="namePanel" title="Basic information">
+            <field name="ccpName"/>
+            <field name="specialIdentifier"/>
+        </panel>
+
+        <!--Местонахождение-->
+        <panel name="location" title="Location">
+            <field name="address" colSpan="6"/>
+            <field name="direction" colSpan="6"/>
+            <field name="onlinePayments" colSpan="6"/>
+            <field name="priceForBooking" colSpan="6"/>
+            <field name="customsOffice" ref="com.axelor.apps.seo.CustomsOffice" colSpan="12" canNew="false"/>
+            <field name="cpCustoms" widget="singleSelect"/>
+        </panel>
+
+        <!--Мбанк-->
+        <panel name="mbank" title="Mbank">
+            <field name="serviceId" title="Service ID" readonly="true"/>
+        </panel>
+
+        <panel name="bakai" title="Bakai">
+            <field name="accountNo" colSpan="6"/>
+            <field name="currencyId" colSpan="6"/>
+            <field name="qrTtlUnits" colSpan="6"/>
+            <field name="qrTtl" colSpan="6"/>
+        </panel>
+        <panel-mail>
+            <mail-messages/>
+        </panel-mail>
+    </form>
+
+    <grid title="Custom Checkpoint" name="seo.custom-checkpoint-for-views-grid"
+          model="com.axelor.apps.seo.db.CustomsCheckpoint" orderBy="specialIdentifier">
+        <field name="ccpName"/>
+    </grid>
+</object-views>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+    <grid name="seo.payment-grid" title="Payments" model="com.axelor.apps.seo.db.Payment">
+        <field name="operationID"/>
+        <field name="createdOn"/>
+        <field name="accountNo"/>
+        <field name="currencyId"/>
+        <field name="amount"/>
+        <field name="qrTtlUnits"/>
+        <field name="qrTtl"/>
+        <field name="status"/>
+        <field name="operationType" widget="singleSelect"/>
+        <field name="requisite"/>
+        <field name="ipAddress"/>
+        <field name="ccp.ccpName"/>
+    </grid>
+
+    <form name="seo.payment-form" title="Payment" model="com.axelor.apps.seo.db.Payment" width="large">
+        <panel name="mainInformation" title="Main information">
+            <field name="operationID"/>
+            <field name="createdOn"/>
+            <field name="accountNo"/>
+            <field name="currencyId"/>
+            <field name="amount"/>
+            <field name="qrTtlUnits"/>
+            <field name="qrTtl"/>
+            <field name="status"/>
+            <field name="operationType" widget="singleSelect"/>
+            <field name="requisite"/>
+            <field name="ipAddress"/>
+            <field name="ccp" target-name="ccpName"/>
+        </panel>
+
+        <panel name="additionalPaymentNotificationInfo" title="Payment notification information" showIf="operationType == 'bank_notification'">
+            <field name="paymentNumber" colSpan="4"/>
+            <field name="elQrId" colSpan="4"/>
+            <field name="paymentDate" colSpan="4"/>
+        </panel>
+
+        <panel name="qrInformation" title="Qr information" showIf="operationType == 'qr_request'">
+            <field name="qrLink" colSpan="12"/>
+            <panel name="media" colSpan="6">
+                <field name="qrImage" colSpan="3" canNew="false" canSelect="false" canEdit="false" canRemove="false"
+                       widget="QrImage"/>
+            </panel>
+            <panel name="media" colSpan="6">
+                <field name="qrImageWithFrame" colSpan="4" canNew="false" canSelect="false" canEdit="false" canRemove="false"
+                       widget="QrImage"/>
+            </panel>
+        </panel>
+    </form>
+</object-views>

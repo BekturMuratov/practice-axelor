@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+    <grid name="seo.led.ccp.link-grid" title="LED screens" model="com.axelor.apps.seo.db.LedScreenAndCcp"
+          canNew="true" canEdit="false" canDelete="false" canArchive="false" edit-icon="false">
+        <field name="ledId"/>
+        <field name="ccp.ccpName"/>
+        <field name="isActive"/>
+        <field name="locationType" widget="MultiSelect"/>
+    </grid>
+
+    <form name="seo.led.ccp.link-form" title="LED screen" model="com.axelor.apps.seo.db.LedScreenAndCcp" width="large"
+          canDelete="false" canArchive="false" canAttach="false" onLoad="seo.led.ccp.link.on-load">
+        <panel name="mainPanel">
+            <field name="ledId"/>
+            <field name="ccp" target-name="ccpName"/>
+            <field name="isActive"/>
+            <field name="locationType" widget="MultiSelect"/>
+        </panel>
+        <panel-mail>
+            <mail-messages/>
+        </panel-mail>
+    </form>
+
+    <!--1. On-load (Admins)-->
+    <action-attrs name="seo.led.ccp.link.on-load" model="com.axelor.apps.seo.db.LedScreenAndCcp">
+        <attribute for="ledId" name="readonly" expr="true" if="__user__.group.name != 'Admins'"/>
+        <attribute for="ccp" name="readonly" expr="true" if="__user__.group.name != 'Admins'"/>
+        <attribute for="isActive" name="readonly" expr="true" if="__user__.group.name != 'Admins'"/>
+        <attribute for="transportType" name="readonly" expr="true" if="__user__.group.name != 'Admins'"/>
+    </action-attrs>
+</object-views>

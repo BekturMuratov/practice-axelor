@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+    <grid title="Event tracker" name="seo.event.tracker-grid" model="com.axelor.apps.seo.db.EventTracker"
+          orderBy="-createdOn" canEdit="false" canNew="false" canArchive="false" canDelete="false" edit-icon="false">
+        <field name="typeOfEvent" widget="singleSelect"/>
+        <field name="entity"/>
+        <field name="numberOfRegistration"/>
+        <field name="savedData"/>
+        <field name="userName" target-name="name"/>
+        <field name="userGroup" target-name="name"/>
+        <field name="ccp.ccpName"/>
+        <field name="eventTime"/>
+        <field name="clientIp"/>
+    </grid>
+
+    <form title="Event tracker"  name="seo.event.tracker-form" model="com.axelor.apps.seo.db.EventTracker"
+          canAttach="false" canEdit="false" canNew="false" canArchive="false" canDelete="false" width="large">
+        <panel name="mainPanel" title="Main information">
+            <field name="typeOfEvent" colSpan="3"/>
+            <field name="entity" colSpan="3"/>
+            <field name="numberOfRegistration" colSpan="3"/>
+            <field name="userName" target-name="name" colSpan="3"/>
+            <field name="userGroup" target-name="name" colSpan="3"/>
+            <field name="eventTime" colSpan="3"/>
+            <field name="ccp" target-name="ccpName" colSpan="3"/>
+            <field name="clientIp" colSpan="3"/>
+        </panel>
+
+        <panel name="savedData" colSpan="12" title="">
+            <field name="savedData" colSpan="12" widget="Text"/>
+        </panel>
+
+        <panel name="mediaPanel" title="Media" colSpan="12">
+            <field name="vehiclePicEntry" colSpan="12" canNew="false" canSelect="false" canEdit="false" canRemove="false" widget="VehicleImage"/>
+        </panel>
+
+        <panel name="mediaPanel" title="Media" colSpan="12">
+            <field name="vehiclePicExit" colSpan="12" canNew="false" canSelect="false" canEdit="false" canRemove="false" widget="VehicleImage"/>
+        </panel>
+    </form>
+</object-views>

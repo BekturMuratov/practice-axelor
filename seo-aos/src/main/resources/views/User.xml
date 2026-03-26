@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+    <grid name="seo.user-grid" title="Users" model="com.axelor.auth.db.User" canDelete="false">
+        <field name="name"/>
+        <field name="group"/>
+        <field name="code"/>
+        <field name="ccp.ccpName"/>
+        <field name="blocked"/>
+    </grid>
+
+    <form name="seo.user-form" title="Users" model="com.axelor.auth.db.User" onSave="action-group-user-default-save"
+          onNew="seo.user.on-new"  onLoad="seo.user.on-load" canAttach="false" canDelete="false">
+        <panel name="User" title="User">
+            <panel title="Personal information" colSpan="12">
+                <field name="name" colSpan="12" placeholder="user name"
+                       onChange="action-condition-user-validName" validIf="name.length >= 2"/>
+                <field name="code" title="Login" colSpan="12" placeholder="login name" onChange="action-condition-user-validCode" validIf="code.length >= 2"/>
+                <field name="phoneNumber" colSpan="3" placeholder="+996" readonly="false" widget="phone"/>
+                <field name="ccp" colSpan="12" placeholder="CCP" required="true"/>
+                <field name="group" title="Group" colSpan="12" placeholder="user group" grid-view="ens.group-grid"/>
+            </panel>
+
+            <panel name="securitySettings" title="Security settings" colSpan="12">
+                <field name="blocked" colSpan="6"/>
+                <field name="forcePasswordChange" showIf="id &amp;&amp; !$readonly()" colSpan="6" widget="boolean"/>
+                <field name="change" title="Change password?" showIf="id &amp;&amp; !$readonly()" widget="boolean"/>
+                <panel name="allPasswordsPanel" title="" showIf="change || !id" colSpan="12" itemSpan="12">
+                    <field name="oldPassword" title="Your password" placeholder="your password" widget="password" requiredIf="change || !id"/>
+                    <panel name="passwordPanel" itemSpan="12">
+                        <field name="newPassword" title="New password" placeholder="new password" widget="password"
+                               onChange="action-user-validate-password" requiredIf="change || !id" validIf="(!change &amp;&amp; id) || newPassword.length >= 4"/>
+                        <field name="chkPassword" title="Confirm password" placeholder="confirm password" widget="password"
+                               requiredIf="change || !id" validIf="chkPassword === newPassword"/>
+                        <label name="passwordPatternDescriptionLabel" css="label-danger"/>
+                        <field name="passwordUpdatedOn" readonly="true"/>
+                    </panel>
+                </panel>
+            </panel>
+        </panel>
+        <panel name="button">
+            <button name="custom-save" title="Save" colSpan="12" css="btn-success" icon="fa-check-square-o" onClick="action-group-user-default-save,save"/>
+        </panel>
+
+        <panel-mail>
+            <mail-messages/>
+        </panel-mail>
+    </form>
+
+    <action-attrs name="seo.user.on-new" model="com.axelor.auth.db.User">
+        <attribute for="group" name="domain" expr="self.code != 'admins'" if="__user__.group.code == 'AD'"/>
+        <attribute for="blocked" name="value" expr="false"/>
+    </action-attrs>
+
+    <action-attrs name="seo.user.on-load" model="com.axelor.auth.db.User">
+        <attribute for="group" name="domain" expr="self.code != 'admins'" if="__user__.group.code == 'AD'"/>
+        <attribute if="__user__.group.code == 'OP'" name="readonly" expr="true" for="group"/>
+        <attribute for="group" name="readonly" expr="true" if="__user__.group.code != 'admins' &amp;&amp; group.code == 'admins'"/>
+        <attribute for="securitySettings" name="hidden" expr="true" if="__user__.group.code != 'admins' &amp;&amp; group.code == 'admins'"/>
+    </action-attrs>
+
+
+    <action-record name="action-record-stepStatus" model="com.axelor.auth.db.User">
+        <field name="stepStatusSelect" expr="5"/>
+        <field name="language" expr="ru"/>
+        <field name="theme" expr="blue-max"/>
+    </action-record>
+
+    <action-method name="action-controller-validate">
+        <call class="com.axelor.apps.base.web.UserController" method="validate"/>
+    </action-method>
+
+    <action-record name="action-record-home-action" model="com.axelor.auth.db.User">
+        <field name="homeAction" expr="seo.registration.action-view" if="__user__.group.name == 'Operator'"/>
+    </action-record>
+
+    <action-group name="action-group-user-default-save">
+        <action name="action-record-stepStatus"/>
+        <action name="action-record-home-action"/>
+        <action name="action-controller-validate"/>
+        <action name="save"/>
+    </action-group>
+</object-views>

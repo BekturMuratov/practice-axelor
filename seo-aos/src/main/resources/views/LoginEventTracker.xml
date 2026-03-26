@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+    <grid title="Login event tracker" name="seo.login.event.tracker-grid" model="com.axelor.apps.seo.db.LoginEventTracker"
+          orderBy="-createdOn" canEdit="false" canNew="false" canArchive="false" canDelete="false" edit-icon="false">
+        <field name="status" widget="singleSelect"/>
+        <field name="userCode"/>
+        <field name="timestamp"/>
+        <field name="clientIp"/>
+        <field name="userAgent"/>
+        <field name="userName" target-name="name"/>
+        <field name="userGroup" target-name="name"/>
+    </grid>
+    <form title="Login event tracker"  name="seo.login.event.tracker-form" model="com.axelor.apps.seo.db.LoginEventTracker"
+          canAttach="false" canEdit="false" canNew="false" canArchive="false" canDelete="false" width="large">
+        <panel name="mainPanel" title="Main information">
+            <field name="status" colSpan="2" widget="singleSelect"/>
+            <field name="userCode" colSpan="2"/>
+            <field name="timestamp" colSpan="2"/>
+            <field name="clientIp" colSpan="2"/>
+            <field name="userName" target-name="name" colSpan="2"/>
+            <field name="userGroup" target-name="name" colSpan="2"/>
+            <field name="userAgent" colSpan="12"/>
+        </panel>
+    </form>
+</object-views>

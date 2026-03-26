@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+    <module name="seo" package="com.axelor.apps.seo.db"/>
+
+    <entity name="Requisite">
+        <string name="requisiteNumber" title="Requisite number"/>                                                       <!-- Номер реквизита-->
+        <string name="requisiteType" title="Registration or Booking" selection="seo.requisite.type.select"/>            <!-- Регистрация или бронирование-->
+        <one-to-one name="registration" title="UID" ref="com.axelor.apps.seo.db.Registration"/>
+        <one-to-one name="booking" title="UID Booking" ref="com.axelor.apps.seo.db.Booking"/>
+
+        <entity-listener class="com.axelor.apps.seo.events.listeners.RequisiteListener"/>
+    </entity>
+</domain-models>

@@ -1,0 +1,26 @@
+plugins {
+    id 'com.axelor.app'
+}
+
+apply from: "../libs.gradle"
+apply from: "../version.gradle"
+
+apply {
+    version = openSuiteVersion
+}
+
+axelor {
+    title "SEO"
+}
+
+dependencies {
+    api project(":modules:axelor-base")
+    api project(":modules:custom-api")
+
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.13.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.0'
+
+    implementation 'com.rabbitmq:amqp-client:5.22.0'
+    compileOnly 'javax.websocket:javax.websocket-api:1.1'
+}

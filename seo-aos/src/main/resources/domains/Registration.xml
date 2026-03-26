@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+    <module name="seo" package="com.axelor.apps.seo.db"/>
+
+    <entity name="Registration">
+        <datetime name="createdOn" title="Created on registration"/>                                                    <!-- Дата создания регистрации-->
+        <string name="uId" title="UID"/>                                                                                <!-- Номер регистрации-->
+        <string name="registrationStatus" title="Registration Status" selection="seo.registration.status.select"/>      <!-- Статус регистрации-->
+        <string name="isPaid" title="Is paid" selection="seo.service.status.paid.select" default="no"/>                 <!-- Оплачено-->
+        <string name="paymentNumber" title="Payment Number"/>                                                           <!-- № Платежа-->
+        <date name="paymentDate" title="Payment Date"/>                                                                 <!-- дата платежа-->
+
+
+        <many-to-one name="ccp" title="CCP" ref="com.axelor.apps.seo.db.CustomsCheckpoint"/>                            <!-- КПП-->
+        <one-to-one name="booking" ref="com.axelor.apps.seo.db.Booking" title="Booking"/>                               <!-- Бронирование-->
+        <string name="queueType" title="Queue type" selection="seo.registration.queue.type.select"/>                    <!-- Тип очереди-->
+        <date name="bookingDate" title="Booking date"/>                                                                 <!-- Дата брони-->
+        <string name="bookingTime" title="Booking time" selection="seo.booking.slots.select"/>                          <!-- Время брони-->
+        <string name="declarationType" title="Declaration type"
+                selection="seo.registration.declaration.type.select"/>                                                  <!-- Тип декларации-->
+        <string name="declarationNumber" title="Declaration number"/>                                                   <!-- Номер декларации-->
+        <string name="typeOfCargo" title="Type of cargo" selection="seo.registration.type.of.cargo.select"/>            <!-- Тип груза-->
+
+
+        <string name="plateNo" title="PlateNO"/>                                                                        <!-- Гос.номер АТС-->
+        <string name="plateNoTrailer" title="PlateNO trailer"/>                                                         <!-- Гос.номер прицепа-->
+        <many-to-one name="country" title="Country of Import" ref="com.axelor.apps.base.db.Country"/>                   <!-- Страна-->
+        <string name="fullNameDriver" title="Full name driver"/>                                                        <!-- ФИО водителя-->
+        <string name="phoneNumber" title="Phone number"/>                                                               <!-- Номер телефона-->
+
+        <decimal name="onlinePayments" title="Online payments"/>                                                        <!-- Онлайн платежи-->
+
+        <!--В ожидании-->
+        <string name="plateNoCameraEntry" title="PlateNO camera entry"/>                                                <!-- Гос.номер с камеры въезда-->
+        <string name="vehiclePicEntry" title="Vehicle pic uri entry"/>                                                  <!-- Фото въезда-->
+        <datetime name="crossTimeEntry" title="Cross time entry"/>                                                      <!-- Дата и время въезда-->
+
+        <string name="plateNoCameraExit" title="PlateNO camera exit"/>                                                  <!-- Гос.номер с камеры выезда-->
+        <string name="vehiclePicExit" title="Vehicle pic uri exit"/>                                                    <!-- Фото выезда-->
+        <datetime name="crossTimeExit" title="Cross time exit"/>                                                        <!-- Дата и время выезда-->
+
+        <one-to-one name="requisite" title="Requisite" ref="com.axelor.apps.seo.db.Requisite"
+                    mappedBy="registration"/>                                                                           <!-- Реквизит-->
+
+        <datetime name="dateTimeCall" title="Date and time of the call"/>                                               <!-- Дата и время вызова-->
+        <string name="sortingType" title="Sorting type"
+                selection="seo.registration.sort.type.select"/>                                                         <!-- Тип сортировки-->
+
+        <datetime name="entryGateOpenedAt" title="Gate opening time"/>                                                  <!-- Время открытия шлагбаума-->
+        <datetime name="exitGateOpenedAt" title="Gate opening time"/>                                                   <!-- Время открытия шлагбаума-->
+
+        <finder-method name="findById" using="uId"/>                                                                    <!-- Метод помогающий найти по uId-->
+
+        <track>
+            <field name="uId"/>
+            <field name="registrationStatus"/>
+            <field name="fullNameDriver"/>
+            <field name="plateNo"/>
+            <field name="plateNoTrailer"/>
+            <field name="crossTimeEntry"/>
+            <field name="crossTimeExit"/>
+            <field name="bookingDate"/>
+            <field name="bookingTime"/>
+            <field name="dateTimeCall"/>
+            <field name="sortingType"/>
+            <field name="declarationType"/>
+            <field name="declarationNumber"/>
+            <field name="typeOfCargo"/>
+            <field name="isPaid"/>
+            <field name="paymentNumber"/>
+            <field name="paymentDate"/>
+            <field name="entryGateOpenedAt"/>
+            <field name="exitGateOpenedAt"/>
+            <field name="onlinePayments"/>
+        </track>
+
+        <entity-listener class="com.axelor.apps.seo.events.listeners.RegistrationListener"/>
+    </entity>
+</domain-models>

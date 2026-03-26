@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+    <grid title="Letter" name="seo.letter-grid" model="com.axelor.apps.seo.db.Letter"
+          orderBy="-createdOn" canEdit="true" canNew="true" canDelete="true" canArchive="false" edit-icon="false">
+        <field name="createdOn"/>
+        <field name="fullNameSender"/>
+        <field name="email"/>
+    </grid>
+
+    <form title="Letter" name="seo.letter-form" model="com.axelor.apps.seo.db.Letter"
+          canAttach="false" canEdit="true" canNew="true" canDelete="true" canArchive="false">
+        <panel name="mainPanel">
+            <field name="createdOn" colSpan="12" readonly="true"/>
+            <field name="fullNameSender" widget="Text" colSpan="12" height="1"/>
+            <field name="email" widget="Text" colSpan="12" height="1"/>
+            <field name="messageContent" widget="Text" colSpan="12" height="1"/>
+        </panel>
+    </form>
+</object-views>

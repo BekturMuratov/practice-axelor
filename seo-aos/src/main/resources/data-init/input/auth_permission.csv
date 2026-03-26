@@ -1,0 +1,56 @@
+"name";"object";"canRead";"canWrite";"canCreate";"canRemove";"canExport";"condition";"conditionParams"
+"perm.seo.op.metaMenu.rwc";"com.axelor.meta.db.MetaMenu";"true";"false";"false";"false";"false";;
+"perm.seo.op.country.r";"com.axelor.apps.base.db.Country";"true";"false";"false";"false";"false";;
+"perm.seo.op.customs-office.r";"com.axelor.apps.seo.db.CustomsOffice";"true";"false";"false";"false";"false";;
+"perm.seo.op.tnved-position-code.r";"com.axelor.apps.seo.db.TnvedPositionCode";"true";"false";"false";"false";"false";;
+"perm.seo.op.utils.wizard.r";"com.axelor.utils.db.Wizard";"true";"true";"true";"false";"false";;
+"perm.seo.op.bandwidth.settings.r";"com.axelor.apps.seo.db.BandwidthSettings";"true";"false";"false";"false";"false";"self.ccp.id = ?";"__user__.ccp.id"
+"perm.seo.op.registration.rwce";"com.axelor.apps.seo.db.Registration";"true";"true";"true";"false";"true";"self.ccp.id = ?";"__user__.ccp.id"
+"perm.seo.op.booking.r";"com.axelor.apps.seo.db.Booking";"true";"false";"false";"false";"false";"self.ccp.id = ?";"__user__.ccp.id"
+"perm.seo.op.call.control.r";"com.axelor.apps.seo.db.Registration";"true";"false";"false";"false";"false";"self.ccp.id = ?";"__user__.ccp.id"
+"perm.seo.op.requisite.r";"com.axelor.apps.seo.db.Requisite";"true";"false";"false";"false";"false";;
+
+
+"perm.seo.ad.metaMenu.rwc";"com.axelor.meta.db.MetaMenu";"true";"false";"false";"false";"false";;
+"perm.seo.ad.user.rwce";"com.axelor.auth.db.User";"true";"true";"true";"true";"false";;
+"perm.seo.ad.country.r";"com.axelor.apps.base.db.Country";"true";"false";"false";"false";"false";;
+"perm.seo.ad.customs-office.r";"com.axelor.apps.seo.db.CustomsOffice";"true";"false";"false";"false";"false";;
+"perm.seo.ad.tnved-position-code.r";"com.axelor.apps.seo.db.TnvedPositionCode";"true";"false";"false";"false";"false";;
+"perm.seo.ad.custom-checkpoint.r";"com.axelor.apps.seo.db.CustomsCheckpoint";"true";"false";"false";"false";"false";;
+"perm.seo.ad.booking.rwce";"com.axelor.apps.seo.db.Booking";"true";"true";"true";"true";"false";;
+"perm.seo.ad.registration.rwce";"com.axelor.apps.seo.db.Registration";"true";"true";"true";"false";"true";;
+"perm.seo.ad.led.ccp.link.r";"com.axelor.apps.seo.db.LedScreenAndCcp";"true";"false";"false";"false";"false";;
+"perm.seo.ad.barrier.r";"com.axelor.apps.seo.db.Barrier";"true";"false";"false";"false";"false";;
+"perm.seo.ad.bandwidth-settings.rwce";"com.axelor.apps.seo.db.BandwidthSettings";"true";"true";"true";"true";"false";;
+"perm.seo.ad.camera.menu-item.r";"com.axelor.apps.seo.db.Camera";"true";"false";"false";"false";"false";;
+"perm.seo.ad.camera.owner.link.r";"com.axelor.apps.seo.db.CameraOwnerLink";"true";"false";"false";"false";"false";;
+"perm.seo.ad.utils.wizard.r";"com.axelor.utils.db.Wizard";"true";"true";"true";"false";"false";;
+"perm.seo.ad.requisite.r";"com.axelor.apps.seo.db.Requisite";"true";"false";"false";"false";"false";;
+"perm.seo.ad.call.control.r";"com.axelor.apps.seo.db.Registration";"true";"false";"false";"false";"true";;
+"perm.seo.ad.payment.r";"com.axelor.apps.seo.db.Payment";"true";"false";"false";"false";"true";;
+
+
+"perm.seo.su.metaMenu.rwc";"com.axelor.meta.db.MetaMenu";"true";"false";"false";"false";"false";;
+"perm.seo.su.user.rwce";"com.axelor.auth.db.User";"true";"true";"true";"true";"false";;
+"perm.seo.su.country.r";"com.axelor.apps.base.db.Country";"true";"false";"false";"false";"false";;
+"perm.seo.su.customs-office.r";"com.axelor.apps.seo.db.CustomsOffice";"true";"false";"false";"false";"false";;
+"perm.seo.su.tnved-position-code.r";"com.axelor.apps.seo.db.TnvedPositionCode";"true";"false";"false";"false";"false";;
+"perm.seo.su.login.event.r";"com.axelor.apps.seo.db.LoginEventTracker";"true";"false";"false";"false";"false";;
+"perm.seo.su.custom-checkpoint.r";"com.axelor.apps.seo.db.CustomsCheckpoint";"true";"false";"false";"false";"false";;
+"perm.seo.su.booking.rwce";"com.axelor.apps.seo.db.Booking";"true";"true";"true";"true";"false";;
+"perm.seo.su.registration.rwce";"com.axelor.apps.seo.db.Registration";"true";"true";"true";"false";"true";;
+"perm.seo.su.led.ccp.link.r";"com.axelor.apps.seo.db.LedScreenAndCcp";"true";"false";"false";"false";"false";;
+"perm.seo.su.barrier.r";"com.axelor.apps.seo.db.Barrier";"true";"false";"false";"false";"false";;
+"perm.seo.su.bandwidth-settings.rwce";"com.axelor.apps.seo.db.BandwidthSettings";"true";"true";"true";"true";"false";;
+"perm.seo.su.camera.menu-item.r";"com.axelor.apps.seo.db.Camera";"true";"false";"false";"false";"false";;
+"perm.seo.su.camera.owner.link.r";"com.axelor.apps.seo.db.CameraOwnerLink";"true";"false";"false";"false";"false";;
+"perm.seo.su.event.tracker.rwc";"com.axelor.apps.seo.db.EventTracker";"true";"true";"true";"false";"false";;
+"perm.seo.su.utils.wizard.r";"com.axelor.utils.db.Wizard";"true";"true";"true";"false";"false";;
+"perm.seo.su.letter.r";"com.axelor.apps.seo.db.Letter";"true";"false";"false";"false";"false";;
+"perm.seo.su.requisite.r";"com.axelor.apps.seo.db.Requisite";"true";"false";"false";"false";"false";;
+"perm.seo.su.call.control.r";"com.axelor.apps.seo.db.Registration";"true";"false";"false";"false";"true";;
+"perm.seo.su.all.json.r";"com.axelor.apps.seo.db.AllMassifJson";"true";"false";"false";"false";"true";;
+"perm.seo.su.payment.r";"com.axelor.apps.seo.db.Payment";"true";"false";"false";"false";"true";;
+
+"perm.seo.uca.metaMenu.rwc";"com.axelor.meta.db.MetaMenu";"true";"false";"false";"false";"false";;
+"perm.seo.uca.camera.menu-item.r";"com.axelor.apps.seo.db.Camera";"true";"false";"false";"false";"false";;

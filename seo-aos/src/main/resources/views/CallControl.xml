@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+    <form title="Call control" name="seo.calling.queue-form" model="com.axelor.apps.seo.db.Registration"
+          canEdit="true" canSave="false" canNew="false" canArchive="false" canAttach="false" width="large" canDelete="false" onLoad="" >
+        <panel name="mainPanel" colSpan="12">
+            <panel-dashlet action="dashlet.registration.call.card.1" canSearch="true" height="800" colSpan="5"/>
+            <panel name="buttonPanel" colSpan="2">
+                <button name="callingQueue" title="Call" onClick="com.axelor.apps.seo.web.RegisterController:callingQueue" colSpan="12" css="btn-success"/>
+                <button name="updateQueue" title="Update" onClick="com.axelor.apps.seo.web.RegisterController:registrationOnRefresh" colSpan="12" css="btn-primary"/>
+                <button name="sortingQueue" title="Sorting" onClick="com.axelor.apps.seo.web.RegisterController:recalculateQueueSortingCont" colSpan="12" css="btn-danger"/>
+            </panel>
+            <panel-dashlet action="dashlet.registration.call.card.2" canSearch="true" height="800" colSpan="5"/>
+        </panel>
+    </form>
+
+        <action-view name="dashlet.registration.call.card.1" title="Candidates"
+                     model="com.axelor.apps.seo.db.Registration">
+            <view type="grid" name="seo.registration.call.control.arrived-grid"/>
+            <view type="form" name="seo.registration-form"/>
+            <domain>self.registrationStatus = 'arrived' AND self.sortingType != null</domain>
+        </action-view>
+
+        <action-view name="dashlet.registration.call.card.2" title="On the way to the checkpoint"
+                     model="com.axelor.apps.seo.db.Registration">
+            <view type="grid" name="seo.registration.call.control.called-grid"/>
+            <view type="form" name="seo.registration-form"/>
+            <domain>self.registrationStatus = 'called'</domain>
+        </action-view>
+
+    <grid name="seo.registration.call.control.arrived-grid" title="Candidates" model="com.axelor.apps.seo.db.Registration"
+          canEdit="false" edit-icon="false" orderBy="sortingType, crossTimeEntry">
+        <field name="plateNo"/>
+        <field name="crossTimeEntry"/>
+        <field name="sortingType" widget="singleSelect"/>
+        <field name="bookingDate"/>
+        <field name="bookingTime" widget="singleSelect"/>
+    </grid>
+
+    <grid name="seo.registration.call.control.called-grid" title="Candidates" model="com.axelor.apps.seo.db.Registration"
+          canEdit="false" edit-icon="false" orderBy="-dateTimeCall">
+        <field name="plateNo"/>
+        <field name="sortingType" widget="singleSelect"/>
+        <field name="crossTimeEntry"/>
+        <field name="dateTimeCall"/>
+        <field name="bookingTime" widget="singleSelect"/>
+    </grid>
+
+
+</object-views>

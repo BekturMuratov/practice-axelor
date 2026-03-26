@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+    <form title="Financial indicators" name="seo.financial-indicators.dashboard-form" model="com.axelor.utils.db.Wizard"
+          canEdit="true" canSave="false" canNew="false" canArchive="false" canAttach="false" canDelete="false"
+          width="large" onNew="action-attrs-from-date-change-for-financial-indicators" onLoad="action-attrs-from-date-change-for-financial-indicators">
+        <panel name="searchForAdmins" hidden="true">
+            <field name="customsCheckpoint" required="true" type="many-to-one" title="Checkpoint Name" target="com.axelor.apps.seo.db.CustomsCheckpoint"
+                   target-name="ccpName"  onChange="action-attrs.finance.refresh-on-date-and-seo-change" canView="false" showIf="needFullInfo == false" canEdit="true"
+                   colSpan="6"/>
+            <field name="needFullInfo" required="true" type="boolean" title="Need full info" onChange="action-attrs.finance.refresh-on-date-and-seo-change"  canEdit="true" colSpan="6"/>
+        </panel>
+
+        <panel title="Financial indicators by month">
+            <menu>
+                <item name="exportItem" title="Export" action="com.axelor.apps.seo.web.DashboardController:exportFinancialIndicatorsByMonth"/>
+            </menu>
+
+            <field name="fromDateForMonthlyIndicators" title="From Date" type="date" x-required="true" onChange="action-attrs.finance.refresh-on-date-and-seo-change" colSpan="6"/>
+            <field name="toDateForMonthlyIndicators" title="To Date" type="date" x-required="true" onChange="action-attrs.finance.refresh-on-date-and-seo-change" colSpan="6"/>
+
+            <panel-dashlet name="dashlet.seo.registration.finance.by.month" action="dashlet.seo.registration.finance.by.month.action.view" colSpan="12" height="450" css="report-box dashlet-no-dropdown"/>
+            <panel-dashlet name="dashlet.custom.registration.finance.by.month" action="dashlet.custom.registration.finance.by.month.action.view" colSpan="12" height="450" css="report-box dashlet-no-dropdown"/>
+        </panel>
+
+        <panel title="Financial indicators by day">
+            <menu>
+                <item name="exportItem" title="Export" action="com.axelor.apps.seo.web.DashboardController:exportFinancialIndicatorsByDay"/>
+            </menu>
+
+            <field name="fromDateForDailyIndicators" title="From Date" type="date" x-required="true" onChange="action-attrs.finance.refresh-on-date-and-seo-change" colSpan="6"/>
+            <field name="toDateForDailyIndicators" title="To Date" type="date" x-required="true" onChange="action-attrs.finance.refresh-on-date-and-seo-change" colSpan="6"/>
+
+            <panel-dashlet name="dashlet.seo.registration.finance.by.day" action="dashlet.seo.registration.finance.by.day.action.view" colSpan="12" height="450" css="report-box dashlet-no-dropdown"/>
+            <panel-dashlet name="dashlet.custom.registration.finance.by.day" action="dashlet.custom.registration.finance.by.day.action.view" colSpan="12" height="450" css="report-box dashlet-no-dropdown"/>
+        </panel>
+
+    </form>
+
+    <!-- Финансовые показатели по месяцам -->
+    <chart title="" name="chart.seo.registration.finance.by.month" onInit="action-attrs-charts-from-date-change-for-monthly-indicators"
+           stacked="true">
+        <search-fields>
+            <field name="fromDate" title="From Date" type="date" x-required="true" hidden="true"/>
+            <field name="toDate" title="To Date" type="date" x-required="true" hidden="true"/>
+        </search-fields>
+        <dataset type="sql">
+            <![CDATA[
+                SELECT
+                    dates.date AS release_month,
+                    COALESCE(SUM(ccp.price_for_booking), 0) / 1000.0 AS total_sum
+                FROM (
+                    SELECT DATE_TRUNC('month', DATE(:fromDate) + (x * INTERVAL '1 month')) AS date
+                    FROM (
+                        SELECT generate_series(0, 11) AS x
+                    ) AS n
+                    WHERE DATE_TRUNC('month', DATE(:fromDate) + (x * INTERVAL '1 month'))
+                          <= DATE_TRUNC('month', DATE(:toDate))
+                ) dates
+                LEFT JOIN seo_registration r
+                    ON dates.date = DATE_TRUNC('month', r.created_on)
+                    AND (r.archived IS NULL OR r.archived = false)
+                    AND DATE(r.created_on) BETWEEN DATE(:fromDate) AND DATE(:toDate)
+                    AND (:fullInfo = true OR r.ccp = :ccp)
+                LEFT JOIN seo_customs_checkpoint ccp
+                    ON ccp.id = r.ccp
+                GROUP BY dates.date
+                ORDER BY dates.date;
+            ]]>
+        </dataset>
+        <category key="release_month" type="date" title="Date" />
+        <series key="total_sum" type="bar" title="Total Sum (thousand)"/>
+        <config name="xFormat" value="MM/YY"/>
+        <config name="colors" value="blue"/>
+    </chart>
+
+    <!-- Финансовые показатели по дням -->
+    <chart title="Financial indicators by day" name="chart.seo.registration.finance.by.day" onInit="action-attrs-charts-from-date-change-for-daily-indicators"
+           stacked="true">
+        <search-fields>
+            <field name="fromDate" title="From Date" type="date" x-required="true" hidden="true"/>
+            <field name="toDate" title="To Date" type="date" x-required="true" hidden="true"/>
+        </search-fields>
+        <dataset type="sql">
+            <![CDATA[
+                SELECT
+                    dates.date AS release_day,
+                    COALESCE(SUM(ccp.price_for_booking), 0) / 1000.0 AS total_sum
+                FROM
+                    (SELECT DATE_TRUNC('day', DATE(:fromDate) + (x * INTERVAL '1 day')) AS date
+                    FROM (
+                    SELECT generate_series(0, (DATE(:toDate) - DATE(:fromDate))) AS x) AS n
+                    WHERE DATE_TRUNC('day', DATE(:fromDate) + (x * INTERVAL '1 day')) <= DATE_TRUNC('day', DATE(:toDate))
+                    ) dates
+                LEFT JOIN seo_registration r
+                    ON dates.date = DATE_TRUNC('day', r.created_on)
+                    AND (r.archived IS NULL OR r.archived = false)
+                    AND DATE(r.created_on) BETWEEN DATE(:fromDate) AND DATE(:toDate)
+                    AND ((r.ccp = :ccp) OR (:fullInfo = true))
+                LEFT JOIN seo_customs_checkpoint ccp
+                    ON ccp.id = r.ccp
+                GROUP BY release_day
+                ORDER BY release_day;
+            ]]>
+        </dataset>
+        <category key="release_day" type="date" title="Date" />
+        <series key="total_sum" type="bar" title="Total Sum (thousand)"/>
+        <config name="xFormat" value="DD/MM/YY"/>
+        <config name="colors" value="blue"/>
+    </chart>
+
+    <!--  Финансовые показатели по месяцам в табличном виде -->
+    <custom name="custom.registration.finance.by.month" title="Financial indicators by month in table format">
+        <field name="release_month" title="Date" type="string"/>
+        <field name="total_sum" title="Total sum" type="decimal" x-scale="3"/>
+        <dataset type="sql">
+            <![CDATA[
+                SELECT
+                    TO_CHAR(dates.date, 'MM/YYYY') AS release_month,
+                    COALESCE(SUM(ccp.price_for_booking), 0) / 1000.0 AS total_sum
+                FROM (
+                    SELECT DATE_TRUNC('month', DATE(:fromDate) + (x * INTERVAL '1 month')) AS date
+                    FROM (
+                        SELECT generate_series(0, 11) AS x
+                    ) AS n
+                    WHERE DATE_TRUNC('month', DATE(:fromDate) + (x * INTERVAL '1 month'))
+                          <= DATE_TRUNC('month', DATE(:toDate))
+                ) dates
+                LEFT JOIN seo_registration r
+                    ON dates.date = DATE_TRUNC('month', r.created_on)
+                    AND (r.archived IS NULL OR r.archived = false)
+                    AND DATE(r.created_on) BETWEEN DATE(:fromDate) AND DATE(:toDate)
+                    AND (:fullInfo = true OR r.ccp = :ccp)
+                LEFT JOIN seo_customs_checkpoint ccp
+                    ON ccp.id = r.ccp
+                GROUP BY dates.date
+                ORDER BY dates.date;
+            ]]>
+        </dataset>
+        <template>
+            <![CDATA[
+            <div style="max-height: 440px; overflow-y: auto; width: 100%; box-sizing: border-box;">
+                <report-table data='data' columns='release_month,total_sum'/>
+            </div>
+            ]]>
+        </template>
+    </custom>
+
+    <!--  Финансовые показатели по дням в табличном виде -->
+    <custom name="custom.registration.finance.by.day" title="Financial indicators by day in table format">
+        <field name="release_day" title="Date" type="string"/>
+        <field name="total_sum" title="Total sum" type="decimal" x-scale="3"/>
+        <dataset type="sql">
+            <![CDATA[
+                SELECT
+                    TO_CHAR(dates.date, 'DD/MM/YYYY') AS release_day,
+                    COALESCE(SUM(ccp.price_for_booking), 0) / 1000.0 AS total_sum
+                FROM (
+                    SELECT DATE_TRUNC('day', DATE(:fromDate) + (x * INTERVAL '1 day')) AS date
+                    FROM (
+                        SELECT generate_series(0, (DATE(:toDate) - DATE(:fromDate))) AS x
+                    ) AS n
+                    WHERE DATE_TRUNC('day', DATE(:fromDate) + (x * INTERVAL '1 day')) <= DATE_TRUNC('day', DATE(:toDate))
+                ) dates
+                LEFT JOIN seo_registration r
+                    ON dates.date = DATE_TRUNC('day', r.created_on)
+                    AND (r.archived IS NULL OR r.archived = false)
+                    AND DATE(r.created_on) BETWEEN DATE(:fromDate) AND DATE(:toDate)
+                    AND ((r.ccp = :ccp) OR (:fullInfo = true))
+                LEFT JOIN seo_customs_checkpoint ccp
+                    ON ccp.id = r.ccp
+                GROUP BY dates.date
+                ORDER BY dates.date;
+            ]]>
+        </dataset>
+        <template>
+            <![CDATA[
+            <div style="max-height: 440px; overflow-y: auto; width: 100%; box-sizing: border-box;">
+                <report-table data='data' columns='release_day,total_sum'/>
+            </div>
+            ]]>
+        </template>
+    </custom>
+
+    <action-view name="dashlet.seo.registration.finance.by.month.action.view" title="" model="com.axelor.utils.db.Wizard">
+        <view type="chart" name="chart.seo.registration.finance.by.month"/>
+        <context name="ccp" expr="eval: customsCheckpoint != null? customsCheckpoint.id : __user__.ccp.id"/>
+        <context name="fullInfo" expr="eval: needFullInfo == null? false : needFullInfo" />
+        <context name="fromDate" expr="eval: fromDateForMonthlyIndicators != null ? fromDateForMonthlyIndicators : LocalDate.now().withDayOfYear(1)"/>
+        <context name="toDate" expr="eval: toDateForMonthlyIndicators != null ? toDateForMonthlyIndicators : LocalDate.now()"/>
+    </action-view>
+
+    <action-view name="dashlet.custom.registration.finance.by.month.action.view"
+                 title="Financial indicators by month in table format" model="com.axelor.utils.db.Wizard">
+        <view type="custom" name="custom.registration.finance.by.month"/>
+        <context name="ccp" expr="eval: customsCheckpoint != null? customsCheckpoint.id : __user__.ccp.id"/>
+        <context name="fullInfo" expr="eval: needFullInfo == null? false : needFullInfo" />
+        <context name="fromDate" expr="eval: fromDateForMonthlyIndicators != null ? fromDateForMonthlyIndicators : LocalDate.now().withDayOfYear(1)"/>
+        <context name="toDate" expr="eval: toDateForMonthlyIndicators != null ? toDateForMonthlyIndicators : LocalDate.now()"/>
+    </action-view>
+
+    <action-view name="dashlet.seo.registration.finance.by.day.action.view" title="" model="com.axelor.utils.db.Wizard">
+        <view type="chart" name="chart.seo.registration.finance.by.day"/>
+        <context name="ccp" expr="eval: customsCheckpoint != null? customsCheckpoint.id : __user__.ccp.id"/>
+        <context name="fullInfo" expr="eval: needFullInfo == null? false : needFullInfo" />
+        <context name="fromDate" expr="eval: fromDateForDailyIndicators != null ? fromDateForDailyIndicators : LocalDate.now().withDayOfMonth(1)"/>
+        <context name="toDate" expr="eval: toDateForDailyIndicators != null ? toDateForDailyIndicators : LocalDate.now().with(java.time.temporal.TemporalAdjusters.lastDayOfMonth())"/>
+    </action-view>
+
+    <action-view name="dashlet.custom.registration.finance.by.day.action.view"
+                 title="Financial indicators by day in table format" model="com.axelor.utils.db.Wizard">
+        <view type="custom" name="custom.registration.finance.by.day"/>
+        <context name="ccp" expr="eval: customsCheckpoint != null? customsCheckpoint.id : __user__.ccp.id"/>
+        <context name="fullInfo" expr="eval: needFullInfo == null? false : needFullInfo" />
+        <context name="fromDate" expr="eval: fromDateForDailyIndicators != null ? fromDateForDailyIndicators : LocalDate.now().withDayOfMonth(1)"/>
+        <context name="toDate" expr="eval: toDateForDailyIndicators != null ? toDateForDailyIndicators : LocalDate.now().with(java.time.temporal.TemporalAdjusters.lastDayOfMonth())"/>
+    </action-view>
+
+    <action-attrs name="action-attrs-from-date-change-for-financial-indicators">
+        <attribute for="customsCheckpoint" name="value" expr="eval: __user__.ccp"/>
+        <attribute for="needFullInfo" name="value" expr="eval: false"/>
+        <attribute for="searchForAdmins" name="hidden" expr="false" if="__user__.group.name == 'Admin GPTI' ||
+        __user__.group.name == 'Super Admin' || __user__.group.name == 'Admins'"/>
+        <attribute for="fromDateForMonthlyIndicators" name="value" expr="eval:LocalDate.now().withDayOfYear(1)"/>
+        <attribute for="toDateForMonthlyIndicators" name="value" expr="eval:LocalDate.now()"/>
+        <attribute for="fromDateForDailyIndicators" name="value" expr="eval:LocalDate.now().withDayOfMonth(1)"/>
+        <attribute for="toDateForDailyIndicators" name="value" expr="eval:LocalDate.now().with(java.time.temporal.TemporalAdjusters.lastDayOfMonth())"/>
+    </action-attrs>
+
+    <action-attrs name="action-attrs-charts-from-date-change-for-monthly-indicators">
+        <attribute for="fromDate" name="value" expr="eval: LocalDate.now().withDayOfYear(1)"/>
+        <attribute for="toDate" name="value" expr="eval: LocalDate.now()"/>
+    </action-attrs>
+
+    <action-attrs name="action-attrs.finance.refresh-on-date-and-seo-change">
+        <attribute for="dashlet.seo.registration.finance.by.month" name="refresh" expr="eval: true"/>
+        <attribute for="dashlet.custom.registration.finance.by.month" name="refresh" expr="eval: true"/>
+
+        <attribute for="dashlet.seo.registration.finance.by.day" name="refresh" expr="eval: true"/>
+        <attribute for="dashlet.custom.registration.finance.by.day" name="refresh" expr="eval: true"/>
+    </action-attrs>
+
+</object-views>

@@ -1,0 +1,7 @@
+.black-field-svh{
+    background-color: black !important;
+}
+
+.no-refresh-dashlet .dropdown-menu li:first-of-type a {
+    display: none !important;
+}
